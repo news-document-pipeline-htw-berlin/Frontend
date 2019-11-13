@@ -1,8 +1,33 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Additionally, a Dockerfile is included to run the project without installing dependencies locally.
 
-## Available Scripts
+## Run the project with Docker
 
-In the project directory, you can run:
+Install Docker
+Linux: https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-engine---community-1
+Mac / Windows: https://docs.docker.com/get-started/
+
+Navigate to the project folder.
+
+Create the Docker  image: 
+  ### `docker build -t news-app .`
+
+You created an image with the tag news-app. You can now display a list of all images on your system and check if an image tagged news-app is included:
+  ### `docker image ls`
+
+Run a Docker container based on the news-app image:
+### `docker run -p 3000:80 news-app`
+
+The application is now running on http://localhost:3000.
+
+## Run the project locally without Docker
+
+If you want to run the project locally, you need to install [NodeJs](https://nodejs.org/en/) **>= 8.10**. To install the dependencies and start the app, you can choose between npm and [yarn](https://yarnpkg.com/lang/en/docs/install). Below, all commands are listed with yarn.
+
+First, navigate to the project folder and install the dependencies. Once this is finished, you'll see that a node_modules folder was created. To install the dependencies, run the following command:
+
+### `yarn`
+
+In the project directory, you can then run:
 
 ### `yarn start`
 
@@ -42,27 +67,3 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
