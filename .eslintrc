@@ -11,9 +11,11 @@
     "prettier/prettier": "error",
     "react/jsx-fragments": ["warn", "element"],
     "react/forbid-prop-types": ["warn", { "forbid": ["any"] }],
-    "import/newline-after-import": ["warn", { "count": 1 }]
+    "import/newline-after-import": ["warn", { "count": 1 }],
+    "import/prefer-default-export": "off"
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "jest": true
   }
 }

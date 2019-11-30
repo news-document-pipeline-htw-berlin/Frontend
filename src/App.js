@@ -1,16 +1,14 @@
 import React from 'react';
-import Blog from './containers/Blog/Blog';
 import { ThemeProvider } from '@material-ui/core/styles';
-import Theme from './layout/Theme'
+import Blog from './containers/Blog/Blog';
+import Theme from './layout/Theme';
 import Layout from './layout/Layout/Layout';
 
 function App() {
   return (
-    <div >
+    <div>
       <ThemeProvider theme={Theme}>
-        <Layout>
-         
-        </Layout>
+        <Layout />
         <Blog />
       </ThemeProvider>
     </div>

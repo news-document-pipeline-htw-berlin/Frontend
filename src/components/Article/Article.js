@@ -9,57 +9,55 @@ import { Slide, DialogContent, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} />;
+  return <Slide direction="up" ref={ref} />;
 });
 
 const Article = ({ open, article, handleClose }) => {
-    if (!open) {
-        return null;
-    }
-    return (
-        <Dialog
-            fullScreen
-            open={open}
-            onClose={handleClose}
-            TransitionComponent={Transition}
-        >
-            <AppBar position="sticky">
-                <Toolbar>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        onClick={handleClose}
-                        aria-label="close"
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                    <Grid container justify="center">
-                        <Grid item xs={6}>
-                            <Typography variant="h6">
-                                {article.title}
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                </Toolbar>
-            </AppBar>
-            <Grid container justify="center">
-                <Grid item xs={6}>
-                    <DialogContent>
-                        <Typography>{article.body}</Typography>
-                    </DialogContent>
-                </Grid>
+  if (!open) {
+    return null;
+  }
+  return (
+    <Dialog
+      fullScreen
+      open={open}
+      onClose={handleClose}
+      TransitionComponent={Transition}
+    >
+      <AppBar position="sticky">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            onClick={handleClose}
+            aria-label="close"
+          >
+            <CloseIcon />
+          </IconButton>
+          <Grid container justify="center">
+            <Grid item xs={6}>
+              <Typography variant="h6">{article.title}</Typography>
             </Grid>
-        </Dialog>
-    );
+          </Grid>
+        </Toolbar>
+      </AppBar>
+      <Grid container justify="center">
+        <Grid item xs={6}>
+          <DialogContent>
+            <Typography>{article.body}</Typography>
+          </DialogContent>
+        </Grid>
+      </Grid>
+    </Dialog>
+  );
 };
 
 Article.propTypes = {
-    open: PropTypes.bool.isRequired,
-    article: PropTypes.shape({
-        title: PropTypes.string,
-        body: PropTypes.string
-    }).isRequired,
-    handleClose: PropTypes.func.isRequired
+  open: PropTypes.bool.isRequired,
+  article: PropTypes.shape({
+    title: PropTypes.string,
+    body: PropTypes.string
+  }).isRequired,
+  handleClose: PropTypes.func.isRequired
 };
 
 export default Article;
