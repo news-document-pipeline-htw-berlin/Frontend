@@ -29,7 +29,7 @@ export function loadArticles() {
             const articles = await unauthorized({method, path});
             console.log(articles)
             dispatch(updateAsync(false, null));
-            dispatch(articlesLoaded(articles.slice(0, 9)))
+            dispatch(articlesLoaded(articles.slice(0, 12)))
         }
         catch(e) {
             dispatch(updateAsync(false, e));
