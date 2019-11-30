@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import propTypes from 'prop-types';
-import Post from '../../components/Post/Post';
+import PostPreview from '../../components/PostPreview/PostPreview';
 import './Blog.css';
 import Grid from '@material-ui/core/Grid';
 import * as articleActions from '../../state/article/actions';
 import { connect } from 'react-redux';
 import { getArticleAsync, getArticles } from '../../state/article/selectors';
 import Search from '../../components/Search/Search';
+import Article from '../../components/Article/Article';
 
 
 const Blog = props => {
-    const [selectedPostId, setSelectedPostId] = useState(null);
+    const [openArticle, setOpenArticle] = useState(null);
 
     const { loadArticles, articles, async } = props;
 
@@ -18,9 +19,13 @@ const Blog = props => {
         loadArticles();         
     }, [loadArticles])
 
-    function handlePostClick(id) {
-        setSelectedPostId(id === selectedPostId ? null : id)
+    function handleArticleClick(article) {
+        setOpenArticle(article)
     }
+
+    function handleClose() {
+        setOpenArticle(null);
+    }    
 
     function renderArticles() {
         const { error, isLoading } = async;
@@ -29,9 +34,13 @@ const Blog = props => {
         articles.map(article => {
             const {id, title} = article;
             return (
+                <React.Fragment>
                 <Grid xs={12} sm={6} md={4} item style={{marginBottom: 20}} key={`grid${id}`}>
-                    <Post title={title} key={id} author='Author' onClick={() => handlePostClick(id)} isLoading={isLoading}/>
-                </Grid>
+                    <PostPreview title={title} key={id} author='Author' onClick={() => handleArticleClick(article)} isLoading={isLoading}/>
+                </Grid>                
+                <Article open={!!openArticle} handleClose={handleClose} article={openArticle}/>               
+                
+                </React.Fragment>
             )
         })
     }

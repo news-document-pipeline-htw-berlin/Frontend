@@ -6,7 +6,7 @@ import headerPhoto from '../../assets/images/stock.jpg';
 import LoadingAnimation from './LoadingAnimation/LoadingAnimation';
 
 
-const Post = props => {
+const PostPreview = props => {
 
     const {title, author = '', onClick, isLoading, categories} = props;
 
@@ -31,7 +31,7 @@ const Post = props => {
     </Card>
 )};
 
-Post.propTypes = {
+PostPreview.propTypes = {
     title: propTypes.string.isRequired,
     author: propTypes.string,
     categories: propTypes.arrayOf(propTypes.object),
@@ -39,9 +39,9 @@ Post.propTypes = {
     isLoading: propTypes.bool.isRequired,
 }
 
-Post.defaultProps = {
+PostPreview.defaultProps = {
     author: '',
     categories: [{id: 1, name: 'Politik'}, {id: 2, name: 'Wirtschaft'}]
 }
 
-export default Post;
+export default PostPreview;
