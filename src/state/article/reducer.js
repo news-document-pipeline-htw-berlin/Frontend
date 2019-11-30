@@ -6,19 +6,19 @@ const initial = {
         isLoading: false,
         error: null
     }
-}
+};
 
 export function articleReducer(state = initial, action) {
-    switch(action.type) {
+    switch (action.type) {
         case types.ARTICLE_ASYNC: {
-            const {isLoading, error} = action.data;
+            const { isLoading, error } = action.data;
             return {
                 ...state,
                 asyncIndicators: {
                     isLoading,
                     error
                 }
-            }
+            };
         }
         case types.ARTICLE_LIST: {
             const { articles } = action.data;
@@ -27,7 +27,7 @@ export function articleReducer(state = initial, action) {
                 entries: articles
             };
         }
-        default: 
+        default:
             return state;
     }
 }

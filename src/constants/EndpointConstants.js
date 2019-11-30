@@ -1,3 +1,3 @@
 export default {
-    ARTICLE_LIST: {method: 'GET', path: 'posts'}
-}
+    ARTICLE_LIST: { method: 'GET', path: 'posts' }
+};

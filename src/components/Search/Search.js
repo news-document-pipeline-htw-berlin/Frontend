@@ -1,5 +1,5 @@
 import React from 'react';
-import {  TextField, InputAdornment } from '@material-ui/core';
+import { TextField, InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 const Search = () => (
@@ -12,12 +12,11 @@ const Search = () => (
         InputProps={{
             startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon />
+                    <SearchIcon />
                 </InputAdornment>
             )
-          }}
-        
+        }}
     />
-)
+);
 
 export default Search;
