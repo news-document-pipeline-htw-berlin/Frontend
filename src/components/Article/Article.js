@@ -5,24 +5,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
-import { Slide, DialogContent, Grid } from '@material-ui/core';
+import { DialogContent, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} />;
-});
-
-const Article = ({ open, article, handleClose }) => {
-  if (!open) {
+const Article = ({ article, handleClose }) => {
+  if (!article) {
     return null;
   }
   return (
-    <Dialog
-      fullScreen
-      open={open}
-      onClose={handleClose}
-      TransitionComponent={Transition}
-    >
+    <Dialog fullScreen open={!!article} onClose={handleClose}>
       <AppBar position="sticky">
         <Toolbar>
           <IconButton
@@ -52,12 +43,15 @@ const Article = ({ open, article, handleClose }) => {
 };
 
 Article.propTypes = {
-  open: PropTypes.bool.isRequired,
   article: PropTypes.shape({
     title: PropTypes.string,
     body: PropTypes.string
-  }).isRequired,
+  }),
   handleClose: PropTypes.func.isRequired
+};
+
+Article.defaultProps = {
+  article: null
 };
 
 export default Article;

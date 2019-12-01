@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
@@ -8,6 +8,7 @@ import * as articleActions from '../../state/article/actions';
 import { getArticleAsync, getArticles } from '../../state/article/selectors';
 import Search from '../../components/Search/Search';
 import Article from '../../components/Article/Article';
+import Pagination from '../Pagination/Pagination';
 
 const Blog = props => {
   const [openArticle, setOpenArticle] = useState(null);
@@ -15,7 +16,7 @@ const Blog = props => {
   const { loadArticles, articles, async } = props;
 
   useEffect(() => {
-    loadArticles();
+    loadArticles(1);
   }, [loadArticles]);
 
   function handleArticleClick(article) {
@@ -26,15 +27,20 @@ const Blog = props => {
     setOpenArticle(null);
   }
 
+  function handlePageChange(page) {
+    console.log(page);
+    console.log('page change!');
+  }
+
   function renderArticles() {
     const { error, isLoading } = async;
     return error ? (
       <p> An error occurred</p>
     ) : (
-      articles.map(article => {
-        const { id, title } = article;
-        return (
-          <Fragment>
+      <Grid container>
+        {articles.map(article => {
+          const { id, title } = article;
+          return (
             <Grid
               xs={12}
               sm={6}
@@ -51,14 +57,10 @@ const Blog = props => {
                 isLoading={isLoading}
               />
             </Grid>
-            <Article
-              open={!!openArticle}
-              handleClose={handleClose}
-              article={openArticle}
-            />
-          </Fragment>
-        );
-      })
+          );
+        })}
+        <Article handleClose={handleClose} article={openArticle} />
+      </Grid>
     );
   }
 
@@ -75,6 +77,11 @@ const Blog = props => {
         </Grid>
       </Grid>
       {renderArticles()}
+      <Grid container justify="center">
+        <Grid item xs={6}>
+          <Pagination onPageChange={handlePageChange} maxPages={10} />
+        </Grid>
+      </Grid>
     </Grid>
   );
 };
