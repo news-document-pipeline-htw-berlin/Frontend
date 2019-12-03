@@ -9,49 +9,51 @@ import { DialogContent, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 const Article = ({ article, handleClose }) => {
-  if (!article) {
-    return null;
-  }
-  return (
-    <Dialog fullScreen open={!!article} onClose={handleClose}>
-      <AppBar position="sticky">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={handleClose}
-            aria-label="close"
-          >
-            <CloseIcon />
-          </IconButton>
-          <Grid container justify="center">
-            <Grid item xs={6}>
-              <Typography variant="h6">{article.title}</Typography>
+    if (!article) {
+        return null;
+    }
+    return (
+        <Dialog fullScreen open={!!article} onClose={handleClose}>
+            <AppBar position="sticky">
+                <Toolbar>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        onClick={handleClose}
+                        aria-label="close"
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                    <Grid container justify="center">
+                        <Grid item xs={6}>
+                            <Typography variant="h6">
+                                {article.title}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Toolbar>
+            </AppBar>
+            <Grid container justify="center">
+                <Grid item xs={6}>
+                    <DialogContent>
+                        <Typography>{article.body}</Typography>
+                    </DialogContent>
+                </Grid>
             </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-      <Grid container justify="center">
-        <Grid item xs={6}>
-          <DialogContent>
-            <Typography>{article.body}</Typography>
-          </DialogContent>
-        </Grid>
-      </Grid>
-    </Dialog>
-  );
+        </Dialog>
+    );
 };
 
 Article.propTypes = {
-  article: PropTypes.shape({
-    title: PropTypes.string,
-    body: PropTypes.string
-  }),
-  handleClose: PropTypes.func.isRequired
+    article: PropTypes.shape({
+        title: PropTypes.string,
+        body: PropTypes.string
+    }),
+    handleClose: PropTypes.func.isRequired
 };
 
 Article.defaultProps = {
-  article: null
+    article: null
 };
 
 export default Article;

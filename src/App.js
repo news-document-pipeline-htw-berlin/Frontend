@@ -5,14 +5,14 @@ import Theme from './layout/Theme';
 import Layout from './layout/Layout/Layout';
 
 function App() {
-  return (
-    <div>
-      <ThemeProvider theme={Theme}>
-        <Layout />
-        <Blog />
-      </ThemeProvider>
-    </div>
-  );
+    return (
+        <div>
+            <ThemeProvider theme={Theme}>
+                <Layout />
+                <Blog />
+            </ThemeProvider>
+        </div>
+    );
 }
 
 export default App;
