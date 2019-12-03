@@ -30,8 +30,8 @@ export function loadArticles(offset, amount) {
                 method,
                 path: path(offset, amount)
             });
-            dispatch(updateAsync(false, null));
             dispatch(articlesLoaded(articles.slice(0, 12)));
+            dispatch(updateAsync(false, null));
         } catch (e) {
             dispatch(updateAsync(false, e));
         }
