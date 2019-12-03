@@ -9,6 +9,7 @@
       }
     ],
     "prettier/prettier": "error",
+    "no-unused-vars": ["warn"],
     "react/jsx-fragments": ["warn", "element"],
     "react/forbid-prop-types": ["warn", { "forbid": ["any"] }],
     "import/newline-after-import": ["warn", { "count": 1 }],
