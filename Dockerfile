@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm install --silent
-RUN npm install react-scripts -g --silent
-RUN npm run build
+RUN yarn install --silent
+RUN yarn add react-scripts -g --silent
+RUN yarn build
 
 FROM nginx:alpine
 
