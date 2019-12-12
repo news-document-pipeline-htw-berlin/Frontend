@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import headerPhoto from '../../assets/images/stock.jpg';
-import LoadingAnimation from './LoadingAnimation/LoadingAnimation';
+import LoadingAnimation from '../common/LoadingAnimation';
 
 const PostPreview = props => {
     const { title, author = '', onClick, isLoading, categories } = props;
