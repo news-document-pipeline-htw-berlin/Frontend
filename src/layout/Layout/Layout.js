@@ -1,5 +1,12 @@
 import React from 'react';
-import { AppBar, Toolbar, Button, Divider, Grid } from '@material-ui/core';
+import {
+    AppBar,
+    Toolbar,
+    Button,
+    Divider,
+    Grid,
+    Typography
+} from '@material-ui/core';
 
 const Layout = () => {
     const categories = ['Politik', 'Wirtschaft', 'Wissenschaft', 'Sport'];
@@ -7,9 +14,9 @@ const Layout = () => {
         <AppBar position="sticky" style={{ background: '#fff', color: '#000' }}>
             <Toolbar>
                 <Grid container justify="center">
-                    <Grid item>
-                        <Button color="inherit">News Pipeline</Button>
-                    </Grid>
+                    <Button color="inherit">
+                        <Typography variant="button">iNews</Typography>
+                    </Button>
                 </Grid>
             </Toolbar>
             <Divider variant="middle" />
@@ -17,7 +24,11 @@ const Layout = () => {
                 <Grid container justify="center">
                     {categories.map(category => (
                         <Grid item key={category}>
-                            <Button color="inherit">{category}</Button>
+                            <Button color="inherit">
+                                <Typography variant="button">
+                                    {category}
+                                </Typography>
+                            </Button>
                         </Grid>
                     ))}
                 </Grid>
