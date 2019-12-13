@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
-import PostPreview from '../../components/PostPreview/PostPreview';
-import './Blog.css';
+import PostPreview from '../../components/article/ArticlePreview';
 import * as articleActions from '../../state/article/actions';
 import { getArticleAsync, getArticles } from '../../state/article/selectors';
-import Search from '../../components/Search/Search';
-import Article from '../../components/Article/Article';
-import Pagination from '../Pagination/Pagination';
+import Article from '../../components/article/Article';
+import Pagination from '../../components/common/Pagination';
+import Toolbar from '../../components/toolbar/Toolbar';
 
 const Blog = props => {
     const [openArticle, setOpenArticle] = useState(null);
@@ -74,11 +73,7 @@ const Blog = props => {
             justify="space-between"
             alignItems="stretch"
         >
-            <Grid container justify="center">
-                <Grid item xs={6}>
-                    <Search />
-                </Grid>
-            </Grid>
+            <Toolbar />
             {renderArticles()}
             <Grid container justify="center">
                 <Grid item xs={6}>

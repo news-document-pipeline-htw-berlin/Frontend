@@ -7,7 +7,7 @@ const LoadingAnimation = () => (
         direction="row"
         alignItems="center"
         justify="center"
-        style={{ minHeight: '100%', minWidht: '100%' }}
+        style={{ minHeight: '100%', minWidth: '100%' }}
     >
         <Grid item>
             <CircularProgress size={68} color="secondary" />

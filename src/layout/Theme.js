@@ -25,6 +25,11 @@ const theme = createMuiTheme({
         ].join(',')
     },
     overrides: {
+        MuiTypography: {
+            button: {
+                letterSpacing: '0.2em'
+            }
+        },
         MuiCard: {
             root: {
                 margin: 40
@@ -45,6 +50,11 @@ const theme = createMuiTheme({
             root: {
                 width: 500,
                 height: 450
+            }
+        },
+        MuiDivider: {
+            root: {
+                backgroundColor: '#000'
             }
         }
     }
