@@ -3,18 +3,27 @@ name: Test
 on: [push]
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v1
-            - uses: actions/setup-node@v1
-              with:
-                  node-version: "10.x"
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "10.x"
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
-            - name: Install dependencies
-              run: yarn install
+      - name: Install dependencies
+        run: yarn install
 
-            - name: Run tests
-              run: yarn test
-              env:
-                  CI: ${{ true }}
+      - name: Run tests
+        run: yarn test
+        env:
+          CI: ${{ true }}
