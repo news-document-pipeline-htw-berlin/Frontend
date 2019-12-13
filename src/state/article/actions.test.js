@@ -1,14 +1,11 @@
-import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
 import * as articleActions from './actions';
 import { unauthorized } from '../httpClient';
 import types from './types';
+import mockStore from '../../mocks/mockStore';
 
 jest.mock('../httpClient');
 
 describe('Test article actions', () => {
-    const middlewares = [thunk];
-    const mockStore = configureMockStore(middlewares);
     const store = mockStore({
         entries: [],
         asyncIndicators: {
@@ -68,6 +65,13 @@ describe('Test article actions', () => {
                 isLoading: false,
                 error: 'error'
             }
+        });
+    });
+    it('should dispatch action to update toolbar', () => {
+        store.dispatch(articleActions.updateToolbar({ offset: 1 }));
+        expect(store.getActions()[0]).toEqual({
+            type: types.ARTICLE_UPDATE_TOOLBAR,
+            data: { offset: 1 }
         });
     });
 });

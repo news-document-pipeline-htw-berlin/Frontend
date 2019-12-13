@@ -1,4 +1,4 @@
-import { getArticleAsync, getArticles } from './selectors';
+import { getArticleAsync, getArticles, getToolbar } from './selectors';
 
 describe('Test article selectors', () => {
     const store = {
@@ -7,7 +7,8 @@ describe('Test article selectors', () => {
             asyncIndicators: {
                 isLoading: true,
                 error: 'error'
-            }
+            },
+            toolbar: { foo: 'bar' }
         }
     };
     it('should return article entries', () => {
@@ -19,5 +20,8 @@ describe('Test article selectors', () => {
             isLoading: true,
             error: 'error'
         });
+    });
+    it('should return async indicators', () => {
+        expect(getToolbar(store)).toEqual({ foo: 'bar' });
     });
 });

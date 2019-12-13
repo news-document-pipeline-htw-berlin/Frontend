@@ -12,6 +12,13 @@ function updateAsync(isLoading, error = null) {
     };
 }
 
+export function updateToolbar(toolbar) {
+    return {
+        type: types.ARTICLE_UPDATE_TOOLBAR,
+        data: toolbar
+    };
+}
+
 function articlesLoaded(articles) {
     return {
         type: types.ARTICLE_LIST,

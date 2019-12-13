@@ -7,6 +7,12 @@ describe('Test article reducer', () => {
         asyncIndicators: {
             isLoading: true,
             error: 2
+        },
+        toolbar: {
+            offset: 2,
+            query: 'search query',
+            author: 'authorA',
+            department: 'sports'
         }
     };
     it('should return initial state', () => {
@@ -15,20 +21,32 @@ describe('Test article reducer', () => {
             asyncIndicators: {
                 isLoading: false,
                 error: null
+            },
+            toolbar: {
+                offset: 0,
+                query: '',
+                author: '',
+                department: ''
             }
         });
     });
     it('should handle ARTICLE_ASYNC', () => {
         expect(
-            articleReducer(undefined, {
-                type: types.ARTICLE_ASYNC,
-                data: {
-                    isLoading: true,
-                    error: 1
+            articleReducer(
+                {
+                    prop: 'test',
+                    asyncIndicators: { isLoading: true, error: 1 }
+                },
+                {
+                    type: types.ARTICLE_ASYNC,
+                    data: {
+                        isLoading: true,
+                        error: 1
+                    }
                 }
-            })
+            )
         ).toEqual({
-            entries: [],
+            prop: 'test',
             asyncIndicators: {
                 isLoading: true,
                 error: 1
@@ -37,17 +55,51 @@ describe('Test article reducer', () => {
     });
     it('should handle ARTICLE_LIST', () => {
         expect(
-            articleReducer(undefined, {
-                type: types.ARTICLE_LIST,
-                data: {
-                    articles: ['foo']
+            articleReducer(
+                {
+                    prop: 'test',
+                    entries: ['foo', 'bar']
+                },
+                {
+                    type: types.ARTICLE_LIST,
+                    data: {
+                        articles: ['foo']
+                    }
                 }
-            })
+            )
         ).toEqual({
-            entries: ['foo'],
-            asyncIndicators: {
-                isLoading: false,
-                error: null
+            prop: 'test',
+            entries: ['foo']
+        });
+    });
+    it('should handle ARTICLE_UPDATE_TOOLBAR', () => {
+        expect(
+            articleReducer(
+                {
+                    prop: 'test',
+                    toolbar: {
+                        offset: 0,
+                        query: '',
+                        author: '',
+                        department: 'sports'
+                    }
+                },
+                {
+                    type: types.ARTICLE_UPDATE_TOOLBAR,
+                    data: {
+                        offset: 1,
+                        query: 'my query',
+                        author: 'my author'
+                    }
+                }
+            )
+        ).toEqual({
+            prop: 'test',
+            toolbar: {
+                offset: 1,
+                query: 'my query',
+                author: 'my author',
+                department: 'sports'
             }
         });
     });

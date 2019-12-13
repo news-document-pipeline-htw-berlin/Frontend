@@ -5,19 +5,21 @@ const initial = {
     asyncIndicators: {
         isLoading: false,
         error: null
+    },
+    toolbar: {
+        offset: 0,
+        query: '',
+        author: '',
+        department: ''
     }
 };
 
 function articleReducer(state = initial, action) {
     switch (action.type) {
         case types.ARTICLE_ASYNC: {
-            const { isLoading, error } = action.data;
             return {
                 ...state,
-                asyncIndicators: {
-                    isLoading,
-                    error
-                }
+                asyncIndicators: action.data
             };
         }
         case types.ARTICLE_LIST: {
@@ -25,6 +27,15 @@ function articleReducer(state = initial, action) {
             return {
                 ...state,
                 entries: articles
+            };
+        }
+        case types.ARTICLE_UPDATE_TOOLBAR: {
+            return {
+                ...state,
+                toolbar: {
+                    ...state.toolbar,
+                    ...action.data
+                }
             };
         }
         default:
