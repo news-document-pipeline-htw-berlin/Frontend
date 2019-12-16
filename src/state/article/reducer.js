@@ -7,10 +7,11 @@ const initial = {
         error: null
     },
     toolbar: {
-        offset: 0,
         query: '',
         author: '',
-        department: ''
+        department: '',
+        // 'sz' || 'taz' || 'zeit'
+        source: []
     }
 };
 

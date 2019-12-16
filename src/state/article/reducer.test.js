@@ -23,10 +23,10 @@ describe('Test article reducer', () => {
                 error: null
             },
             toolbar: {
-                offset: 0,
                 query: '',
                 author: '',
-                department: ''
+                department: '',
+                source: []
             }
         });
     });
@@ -78,16 +78,15 @@ describe('Test article reducer', () => {
                 {
                     prop: 'test',
                     toolbar: {
-                        offset: 0,
                         query: '',
                         author: '',
-                        department: 'sports'
+                        department: 'sports',
+                        source: []
                     }
                 },
                 {
                     type: types.ARTICLE_UPDATE_TOOLBAR,
                     data: {
-                        offset: 1,
                         query: 'my query',
                         author: 'my author'
                     }
@@ -96,10 +95,10 @@ describe('Test article reducer', () => {
         ).toEqual({
             prop: 'test',
             toolbar: {
-                offset: 1,
                 query: 'my query',
                 author: 'my author',
-                department: 'sports'
+                department: 'sports',
+                source: []
             }
         });
     });

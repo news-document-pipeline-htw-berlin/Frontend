@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
     FormControl,
     InputLabel,
@@ -9,7 +10,7 @@ import {
     Select
 } from '@material-ui/core';
 
-const SelectNewspaper = () => {
+const SelectNewspaper = ({ handleToolbarUpdate }) => {
     const newspapers = [
         { title: 'Süddeutsche Zeitung' },
         { title: 'taz' },
@@ -20,6 +21,7 @@ const SelectNewspaper = () => {
 
     function handleChange(e) {
         setSelectedNewspapers(e.target.value);
+        handleToolbarUpdate();
     }
 
     return (
@@ -46,6 +48,10 @@ const SelectNewspaper = () => {
             </Select>
         </FormControl>
     );
+};
+
+SelectNewspaper.propTypes = {
+    handleToolbarUpdate: PropTypes.func.isRequired
 };
 
 export default SelectNewspaper;

@@ -7,10 +7,18 @@ jest.mock('../httpClient');
 
 describe('Test article actions', () => {
     const store = mockStore({
-        entries: [],
-        asyncIndicators: {
-            isLoading: false,
-            error: null
+        article: {
+            entries: [],
+            asyncIndicators: {
+                isLoading: false,
+                error: null
+            },
+            toolbar: {
+                query: '',
+                author: '',
+                department: '',
+                source: []
+            }
         }
     });
 
@@ -68,10 +76,10 @@ describe('Test article actions', () => {
         });
     });
     it('should dispatch action to update toolbar', () => {
-        store.dispatch(articleActions.updateToolbar({ offset: 1 }));
+        store.dispatch(articleActions.updateToolbar({ query: 'foo' }));
         expect(store.getActions()[0]).toEqual({
             type: types.ARTICLE_UPDATE_TOOLBAR,
-            data: { offset: 1 }
+            data: { query: 'foo' }
         });
     });
 });

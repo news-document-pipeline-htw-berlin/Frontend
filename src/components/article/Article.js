@@ -36,7 +36,7 @@ const Article = ({ article, handleClose }) => {
             <Grid container justify="center">
                 <Grid item xs={6}>
                     <DialogContent>
-                        <Typography>{article.body}</Typography>
+                        <Typography>{article.text}</Typography>
                     </DialogContent>
                 </Grid>
             </Grid>
@@ -47,7 +47,7 @@ const Article = ({ article, handleClose }) => {
 Article.propTypes = {
     article: PropTypes.shape({
         title: PropTypes.string,
-        body: PropTypes.string
+        text: PropTypes.string
     }),
     handleClose: PropTypes.func.isRequired
 };

@@ -2,24 +2,29 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
-import PostPreview from '../../components/article/ArticlePreview';
-import * as articleActions from '../../state/article/actions';
-import { getArticleAsync, getArticles } from '../../state/article/selectors';
-import Article from '../../components/article/Article';
+import { articleActions } from '../../state/actions';
+import {
+    getArticleAsync,
+    getArticles,
+    getToolbar
+} from '../../state/article/selectors';
 import Pagination from '../../components/common/Pagination';
 import Toolbar from '../../components/toolbar/Toolbar';
+import { ToolbarPropTypes } from '../../constants/NewsPropTypes';
+import ArticleOverview from '../../components/article/ArticleOverview';
+import Article from '../../components/article/Article';
 
-const Blog = props => {
+const ELEMENTS_PER_PAGE = 12;
+
+const Articles = props => {
     const [openArticle, setOpenArticle] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrenPage] = useState(1);
 
-    const ELEMENTS_PER_PAGE = 12;
-
-    const { loadArticles, articles, async } = props;
+    const { loadArticles, articles, async, toolbar } = props;
 
     useEffect(() => {
-        loadArticles(0, ELEMENTS_PER_PAGE);
-    }, [loadArticles]);
+        loadArticles(currentPage - 1, ELEMENTS_PER_PAGE);
+    }, [loadArticles, currentPage]);
 
     function handleArticleClick(article) {
         setOpenArticle(article);
@@ -30,40 +35,11 @@ const Blog = props => {
     }
 
     function handlePageChange(page) {
-        setCurrentPage(page);
-        loadArticles(page - 1, ELEMENTS_PER_PAGE);
+        setCurrenPage(page);
     }
 
-    function renderArticles() {
-        const { error, isLoading } = async;
-        return error ? (
-            <p> An error occurred</p>
-        ) : (
-            <Grid container>
-                {articles.map(article => {
-                    const { id, title } = article;
-                    return (
-                        <Grid
-                            xs={12}
-                            sm={6}
-                            md={4}
-                            item
-                            style={{ marginBottom: 20 }}
-                            key={`grid${id}`}
-                        >
-                            <PostPreview
-                                title={title}
-                                key={id}
-                                author="Author"
-                                onClick={() => handleArticleClick(article)}
-                                isLoading={isLoading}
-                            />
-                        </Grid>
-                    );
-                })}
-                <Article handleClose={handleClose} article={openArticle} />
-            </Grid>
-        );
+    function handleToolbarUpdate() {
+        loadArticles(0, ELEMENTS_PER_PAGE, () => setCurrenPage(1));
     }
 
     return (
@@ -73,8 +49,15 @@ const Blog = props => {
             justify="space-between"
             alignItems="stretch"
         >
-            <Toolbar />
-            {renderArticles()}
+            <Toolbar
+                handleToolbarUpdate={handleToolbarUpdate}
+                toolbar={toolbar}
+            />
+            <ArticleOverview
+                articles={articles}
+                async={async}
+                handleArticleClick={handleArticleClick}
+            />
             <Grid container justify="center">
                 <Grid item xs={6}>
                     <Pagination
@@ -85,23 +68,27 @@ const Blog = props => {
                     />
                 </Grid>
             </Grid>
+            <Article handleClose={handleClose} article={openArticle} />
         </Grid>
     );
 };
 
 const mapStateToProps = state => ({
     async: getArticleAsync(state),
-    articles: getArticles(state)
+    articles: getArticles(state),
+    toolbar: getToolbar(state)
 });
 
 const mapDispatchToProps = {
-    loadArticles: articleActions.loadArticles
+    loadArticles: articleActions.loadArticles,
+    updatePage: articleActions.updatePage
 };
 
-Blog.propTypes = {
+Articles.propTypes = {
     async: PropTypes.object.isRequired,
     articles: PropTypes.array.isRequired,
-    loadArticles: PropTypes.func.isRequired
+    loadArticles: PropTypes.func.isRequired,
+    toolbar: ToolbarPropTypes.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Blog);
+export default connect(mapStateToProps, mapDispatchToProps)(Articles);

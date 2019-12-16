@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import headerPhoto from '../../assets/images/stock.jpg';
 import LoadingAnimation from '../common/LoadingAnimation';
 
-const PostPreview = props => {
+const ArticlePreview = props => {
     const { title, author = '', onClick, isLoading, categories } = props;
 
     const chips = categories.map(category => (
@@ -44,7 +44,7 @@ const PostPreview = props => {
     );
 };
 
-PostPreview.propTypes = {
+ArticlePreview.propTypes = {
     title: PropTypes.string.isRequired,
     author: PropTypes.string,
     categories: PropTypes.arrayOf(PropTypes.object),
@@ -52,7 +52,7 @@ PostPreview.propTypes = {
     isLoading: PropTypes.bool.isRequired
 };
 
-PostPreview.defaultProps = {
+ArticlePreview.defaultProps = {
     author: '',
     categories: [
         { id: 1, name: 'Politik' },
@@ -60,4 +60,4 @@ PostPreview.defaultProps = {
     ]
 };
 
-export default PostPreview;
+export default ArticlePreview;

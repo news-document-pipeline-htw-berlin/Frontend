@@ -1,4 +1,4 @@
-const serverPath = 'https://jsonplaceholder.typicode.com/';
+const serverPath = 'http://localhost:8080/api';
 
 const buildUrl = (path, query) => `${serverPath}${path}${query || ''}`;
 
