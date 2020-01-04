@@ -75,11 +75,4 @@ describe('Test article actions', () => {
             }
         });
     });
-    it('should dispatch action to update toolbar', () => {
-        store.dispatch(articleActions.updateToolbar({ query: 'foo' }));
-        expect(store.getActions()[0]).toEqual({
-            type: types.ARTICLE_UPDATE_TOOLBAR,
-            data: { query: 'foo' }
-        });
-    });
 });

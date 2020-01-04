@@ -72,36 +72,7 @@ describe('Test article reducer', () => {
             entries: ['foo']
         });
     });
-    it('should handle ARTICLE_UPDATE_TOOLBAR', () => {
-        expect(
-            articleReducer(
-                {
-                    prop: 'test',
-                    toolbar: {
-                        query: '',
-                        author: '',
-                        department: 'sports',
-                        source: []
-                    }
-                },
-                {
-                    type: types.ARTICLE_UPDATE_TOOLBAR,
-                    data: {
-                        query: 'my query',
-                        author: 'my author'
-                    }
-                }
-            )
-        ).toEqual({
-            prop: 'test',
-            toolbar: {
-                query: 'my query',
-                author: 'my author',
-                department: 'sports',
-                source: []
-            }
-        });
-    });
+
     it('should return current state if action is irrelevant', () => {
         expect(articleReducer(state, { type: 'irrelevant' })).toEqual(state);
     });

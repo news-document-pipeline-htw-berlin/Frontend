@@ -5,13 +5,6 @@ const initial = {
     asyncIndicators: {
         isLoading: false,
         error: null
-    },
-    toolbar: {
-        query: '',
-        author: '',
-        department: '',
-        // 'sz' || 'taz' || 'zeit'
-        source: []
     }
 };
 
@@ -28,15 +21,6 @@ function articleReducer(state = initial, action) {
             return {
                 ...state,
                 entries: articles
-            };
-        }
-        case types.ARTICLE_UPDATE_TOOLBAR: {
-            return {
-                ...state,
-                toolbar: {
-                    ...state.toolbar,
-                    ...action.data
-                }
             };
         }
         default:
