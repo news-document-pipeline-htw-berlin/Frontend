@@ -3,7 +3,8 @@ import { stringify } from 'query-string';
 export default {
     ARTICLE_LIST: {
         method: 'GET',
-        path: options => `/articles?${stringify(options)}`
+        path: options =>
+            `/articles?${stringify(options, { arrayFormat: 'comma' })}`
     },
     ARTICLE_GET: {
         method: 'GET',

@@ -1,45 +1,71 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
-import { articleActions } from '../../state/actions';
+import { stringify, parse } from 'query-string';
 import {
-    getArticleAsync,
-    getArticles,
-    getToolbar
-} from '../../state/article/selectors';
+    Route,
+    useLocation,
+    useHistory,
+    useRouteMatch
+} from 'react-router-dom';
+import { articleActions } from '../../state/actions';
+import { getArticleAsync, getArticles } from '../../state/article/selectors';
 import Pagination from '../../components/common/Pagination';
 import Toolbar from '../../components/toolbar/Toolbar';
-import { ToolbarPropTypes } from '../../constants/NewsPropTypes';
 import ArticleOverview from '../../components/article/ArticleOverview';
 import Article from '../../components/article/Article';
 
 const ELEMENTS_PER_PAGE = 12;
 
 const Articles = props => {
-    const [openArticle, setOpenArticle] = useState(null);
-    const [currentPage, setCurrenPage] = useState(1);
+    const { search } = useLocation();
+    const history = useHistory();
+    const match = useRouteMatch();
+    const queryParams = parse(search);
+    const { query, department, page, newspaper, author } = queryParams;
+    const currentPage = Number(page || 1);
+    const { loadArticles, articles, async } = props;
 
-    const { loadArticles, articles, async, toolbar } = props;
+    const newspaperStringified = newspaper && newspaper.join();
 
     useEffect(() => {
-        loadArticles(currentPage - 1, ELEMENTS_PER_PAGE);
-    }, [loadArticles, currentPage]);
+        const options = {
+            offset: currentPage - 1,
+            max: ELEMENTS_PER_PAGE,
+            department,
+            newspaperStringified,
+            query,
+            author
+        };
+        loadArticles(options);
+    }, [
+        loadArticles,
+        query,
+        currentPage,
+        department,
+        newspaperStringified,
+        author
+    ]);
 
     function handleArticleClick(article) {
-        setOpenArticle(article);
+        history.push(`/articles/${article.mongo_id}`);
     }
 
     function handleClose() {
-        setOpenArticle(null);
+        history.push(`/articles`);
     }
 
-    function handlePageChange(page) {
-        setCurrenPage(page);
+    function handlePageChange(newPage) {
+        history.push({
+            search: `?${stringify({ ...queryParams, page: newPage })}`
+        });
     }
 
-    function handleToolbarUpdate() {
-        loadArticles(0, ELEMENTS_PER_PAGE, () => setCurrenPage(1));
+    function handleToolbarChange(options) {
+        history.push({
+            search: `?${stringify({ ...queryParams, ...options })}`
+        });
     }
 
     return (
@@ -49,10 +75,7 @@ const Articles = props => {
             justify="space-between"
             alignItems="stretch"
         >
-            <Toolbar
-                handleToolbarUpdate={handleToolbarUpdate}
-                toolbar={toolbar}
-            />
+            <Toolbar reloadArticles={handleToolbarChange} />
             <ArticleOverview
                 articles={articles}
                 async={async}
@@ -68,15 +91,16 @@ const Articles = props => {
                     />
                 </Grid>
             </Grid>
-            <Article handleClose={handleClose} article={openArticle} />
+            <Route exact path={`${match.url}/:id`}>
+                <Article handleClose={handleClose} />
+            </Route>
         </Grid>
     );
 };
 
 const mapStateToProps = state => ({
     async: getArticleAsync(state),
-    articles: getArticles(state),
-    toolbar: getToolbar(state)
+    articles: getArticles(state)
 });
 
 const mapDispatchToProps = {
@@ -87,8 +111,7 @@ const mapDispatchToProps = {
 Articles.propTypes = {
     async: PropTypes.object.isRequired,
     articles: PropTypes.array.isRequired,
-    loadArticles: PropTypes.func.isRequired,
-    toolbar: ToolbarPropTypes.isRequired
+    loadArticles: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Articles);

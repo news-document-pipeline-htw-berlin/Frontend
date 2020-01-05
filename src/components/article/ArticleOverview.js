@@ -19,7 +19,7 @@ const ArticleOverview = ({ articles, async, handleArticleClick }) => {
                         md={4}
                         item
                         style={{ marginBottom: 20 }}
-                        key={`grid${id}`}
+                        key={id}
                     >
                         <ArticlePreview
                             title={title}
@@ -39,7 +39,7 @@ ArticleOverview.propTypes = {
     handleArticleClick: PropTypes.func.isRequired,
     async: PropTypes.shape({
         isLoading: PropTypes.bool.isRequired,
-        error: PropTypes.object.isRequired
+        error: PropTypes.object
     }).isRequired
 };
 export default ArticleOverview;

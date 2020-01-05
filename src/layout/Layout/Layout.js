@@ -1,34 +1,42 @@
 import React from 'react';
-import {
-    AppBar,
-    Toolbar,
-    Button,
-    Divider,
-    Grid,
-    Typography
-} from '@material-ui/core';
+import { AppBar, Toolbar, Divider, Grid, Typography } from '@material-ui/core';
+import { NavLink } from 'react-router-dom';
 
 const Layout = () => {
-    const categories = ['Politik', 'Wirtschaft', 'Wissenschaft', 'Sport'];
+    const categories = [
+        { title: 'Politik', url: 'politics' },
+        { title: 'Wirtschaft', url: 'economics' },
+        { title: 'Wissenschaft', url: 'science' },
+        { title: 'Sport', url: 'sports' }
+    ];
     return (
         <AppBar position="sticky" style={{ background: '#fff', color: '#000' }}>
             <Toolbar>
                 <Grid container justify="center">
-                    <Button color="inherit">
+                    <NavLink to="/articles">
                         <Typography variant="button">iNews</Typography>
-                    </Button>
+                    </NavLink>
                 </Grid>
             </Toolbar>
             <Divider variant="middle" />
             <Toolbar>
                 <Grid container justify="center">
                     {categories.map(category => (
-                        <Grid item key={category}>
-                            <Button color="inherit">
+                        <Grid
+                            item
+                            key={category}
+                            style={{ marginLeft: 10, marginRight: 10 }}
+                        >
+                            <NavLink
+                                to={{
+                                    pathname: '/articles',
+                                    search: `?department=${category.url}`
+                                }}
+                            >
                                 <Typography variant="button">
-                                    {category}
+                                    {category.title}
                                 </Typography>
-                            </Button>
+                            </NavLink>
                         </Grid>
                     ))}
                 </Grid>

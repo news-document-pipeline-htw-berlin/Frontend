@@ -12,12 +12,10 @@ function updateAsync(isLoading, error = null) {
     };
 }
 
-function articlesLoaded(articles) {
+function articlesLoaded(data) {
     return {
         type: types.ARTICLE_LIST,
-        data: {
-            articles
-        }
+        data
     };
 }
 
@@ -26,11 +24,11 @@ export function loadArticles(options) {
         dispatch(updateAsync(true, null));
         try {
             const { method, path } = EndpointConstants.ARTICLE_LIST;
-            const articles = await unauthorized({
+            const res = await unauthorized({
                 method,
                 path: path(options)
             });
-            dispatch(articlesLoaded(articles));
+            dispatch(articlesLoaded(res));
             dispatch(updateAsync(false, null));
         } catch (e) {
             dispatch(updateAsync(false, e));

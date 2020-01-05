@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Articles from './containers/articles/Articles';
 import Theme from './layout/Theme';
@@ -11,7 +11,12 @@ function App() {
             <ThemeProvider theme={Theme}>
                 <BrowserRouter>
                     <Layout />
-                    <Articles />
+                    <Switch>
+                        <Route path="/articles">
+                            <Articles />
+                        </Route>
+                        <Redirect from="/" to="/articles" />
+                    </Switch>
                 </BrowserRouter>
             </ThemeProvider>
         </div>

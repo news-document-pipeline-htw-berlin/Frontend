@@ -1,12 +1,5 @@
 import PropTypes from 'prop-types';
 
-export const ToolbarPropTypes = PropTypes.shape({
-    query: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    department: PropTypes.string.isRequired,
-    source: PropTypes.array.isRequired
-});
-
 export const ArticlePropTypes = PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,

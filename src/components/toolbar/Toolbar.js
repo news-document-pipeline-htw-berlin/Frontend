@@ -4,30 +4,25 @@ import PropTypes from 'prop-types';
 import Search from '../search/Search';
 import SearchAuthors from './SearchAuthors';
 import SelectNewspaper from './SelectNewspaper';
-import { ToolbarPropTypes } from '../../constants/NewsPropTypes';
 
-const Toolbar = ({ handleToolbarUpdate, toolbar }) => {
+const Toolbar = ({ reloadArticles }) => {
     return (
         <Grid container justify="space-around" style={{ marginTop: 20 }}>
             <Grid item xs={2}>
-                <Search handleToolbarUpdate={handleToolbarUpdate} />
+                <Search reloadArticles={reloadArticles} />
             </Grid>
             <Grid item xs={2}>
-                <SearchAuthors handleToolbarUpdate={handleToolbarUpdate} />
+                <SearchAuthors reloadArticles={reloadArticles} />
             </Grid>
             <Grid item xs={2}>
-                <SelectNewspaper
-                    handleToolbarUpdate={handleToolbarUpdate}
-                    toolbar={toolbar}
-                />
+                <SelectNewspaper reloadArticles={reloadArticles} />
             </Grid>
         </Grid>
     );
 };
 
 Toolbar.propTypes = {
-    toolbar: ToolbarPropTypes.isRequired,
-    handleToolbarUpdate: PropTypes.func.isRequired
+    reloadArticles: PropTypes.func.isRequired
 };
 
 export default Toolbar;
