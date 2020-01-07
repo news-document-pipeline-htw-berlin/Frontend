@@ -10,7 +10,7 @@ import {
     useRouteMatch
 } from 'react-router-dom';
 import { articleActions } from '../../state/actions';
-import { getArticleAsync, getArticles } from '../../state/article/selectors';
+import { getListAsync, getArticles } from '../../state/article/selectors';
 import Pagination from '../../components/common/Pagination';
 import Toolbar from '../../components/toolbar/Toolbar';
 import ArticleOverview from '../../components/article/ArticleOverview';
@@ -116,7 +116,7 @@ const Articles = props => {
 };
 
 const mapStateToProps = state => ({
-    async: getArticleAsync(state),
+    async: getListAsync(state),
     articles: getArticles(state)
 });
 

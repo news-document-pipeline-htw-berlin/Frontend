@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Divider, Grid, Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
+import './Layout.css';
 
 const Layout = () => {
     const categories = [
@@ -9,11 +10,12 @@ const Layout = () => {
         { title: 'Wissenschaft', url: 'science' },
         { title: 'Sport', url: 'sports' }
     ];
+
     return (
         <AppBar position="sticky" style={{ background: '#fff', color: '#000' }}>
             <Toolbar>
                 <Grid container justify="center">
-                    <NavLink to="/articles">
+                    <NavLink className="NavLink" to="/articles">
                         <Typography variant="button">iNews</Typography>
                     </NavLink>
                 </Grid>
@@ -32,6 +34,7 @@ const Layout = () => {
                                     pathname: '/articles',
                                     search: `?department=${category.url}`
                                 }}
+                                className="NavLink"
                             >
                                 <Typography variant="button">
                                     {category.title}
