@@ -4,52 +4,23 @@ import types from './types';
 describe('Test article reducer', () => {
     const state = {
         entries: [{ id: '1', title: 'foo' }],
-        asyncIndicators: {
+        listMetaInformation: {
+            total: 2
+        },
+        listAsyncIndicators: {
             isLoading: true,
             error: 2
-        },
-        toolbar: {
-            offset: 2,
-            query: 'search query',
-            author: 'authorA',
-            department: 'sports'
         }
     };
     it('should return initial state', () => {
         expect(articleReducer(undefined, {})).toEqual({
-            entries: [],
-            asyncIndicators: {
+            list: [],
+            listMetaInformation: {
+                total: 0
+            },
+            listAsyncIndicators: {
                 isLoading: false,
                 error: null
-            },
-            toolbar: {
-                query: '',
-                author: '',
-                department: '',
-                source: []
-            }
-        });
-    });
-    it('should handle ARTICLE_ASYNC', () => {
-        expect(
-            articleReducer(
-                {
-                    prop: 'test',
-                    asyncIndicators: { isLoading: true, error: 1 }
-                },
-                {
-                    type: types.ARTICLE_ASYNC,
-                    data: {
-                        isLoading: true,
-                        error: 1
-                    }
-                }
-            )
-        ).toEqual({
-            prop: 'test',
-            asyncIndicators: {
-                isLoading: true,
-                error: 1
             }
         });
     });
@@ -58,18 +29,68 @@ describe('Test article reducer', () => {
             articleReducer(
                 {
                     prop: 'test',
-                    entries: ['foo', 'bar']
+                    list: ['foo', 'bar']
                 },
                 {
                     type: types.ARTICLE_LIST,
                     data: {
-                        articles: ['foo']
+                        articles: ['foo'],
+                        resultCount: 1
                     }
                 }
             )
         ).toEqual({
             prop: 'test',
-            entries: ['foo']
+            list: ['foo'],
+            listMetaInformation: {
+                total: 1
+            }
+        });
+    });
+    it('should handle ARTICLE_LIST_ASYNC', () => {
+        expect(
+            articleReducer(
+                {
+                    prop: 'test',
+                    listAsyncIndicators: { isLoading: true, error: 1 }
+                },
+                {
+                    type: types.ARTICLE_LIST_ASYNC,
+                    data: {
+                        isLoading: true,
+                        error: 1
+                    }
+                }
+            )
+        ).toEqual({
+            prop: 'test',
+            listAsyncIndicators: {
+                isLoading: true,
+                error: 1
+            }
+        });
+    });
+    it('should handle ARTICLE_GET_ASYNC', () => {
+        expect(
+            articleReducer(
+                {
+                    prop: 'test',
+                    getAsyncIndicators: { isLoading: true, error: 1 }
+                },
+                {
+                    type: types.ARTICLE_GET_ASYNC,
+                    data: {
+                        isLoading: true,
+                        error: 1
+                    }
+                }
+            )
+        ).toEqual({
+            prop: 'test',
+            getAsyncIndicators: {
+                isLoading: true,
+                error: 1
+            }
         });
     });
 

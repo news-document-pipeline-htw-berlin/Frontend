@@ -1,9 +1,11 @@
 import types from './types';
 
 const initial = {
-    entries: [],
-    resultCount: 0,
-    asyncIndicators: {
+    list: [],
+    listMetaInformation: {
+        total: 0
+    },
+    listAsyncIndicators: {
         isLoading: false,
         error: null
     }
@@ -11,18 +13,20 @@ const initial = {
 
 function articleReducer(state = initial, action) {
     switch (action.type) {
-        case types.ARTICLE_ASYNC: {
-            return {
-                ...state,
-                asyncIndicators: action.data
-            };
-        }
         case types.ARTICLE_LIST: {
             const { articles, resultCount } = action.data;
             return {
                 ...state,
-                entries: articles,
-                resultCount
+                list: articles,
+                listMetaInformation: {
+                    total: resultCount
+                }
+            };
+        }
+        case types.ARTICLE_LIST_ASYNC: {
+            return {
+                ...state,
+                listAsyncIndicators: action.data
             };
         }
         default:
