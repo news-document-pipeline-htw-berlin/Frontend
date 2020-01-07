@@ -1,4 +1,21 @@
+import { stringify } from 'query-string';
+
 export default {
-    // TODO: add offset to path once backend is functioning
-    ARTICLE_LIST: { method: 'GET', path: (offset, amount) => 'posts' }
+    ARTICLE_LIST: {
+        method: 'GET',
+        path: options =>
+            `/articles?${stringify(options, { arrayFormat: 'comma' })}`
+    },
+    ARTICLE_GET: {
+        method: 'GET',
+        path: id => `/articles/${id}`
+    },
+    NEWSPAPER_LIST: {
+        method: 'GET',
+        path: '/articles/newspaper'
+    },
+    AUTHORS_LIST: {
+        method: 'GET',
+        path: 'articles/authors'
+    }
 };

@@ -1,23 +1,30 @@
-import { getArticleAsync, getArticles } from './selectors';
+import { getListAsync, getArticles } from './selectors';
 
 describe('Test article selectors', () => {
     const store = {
         article: {
-            entries: ['foo'],
-            asyncIndicators: {
+            list: ['foo'],
+            listMetaInformation: {
+                total: 3
+            },
+            listAsyncIndicators: {
                 isLoading: true,
                 error: 'error'
             }
         }
     };
-    it('should return article entries', () => {
-        expect(getArticles(store)).toEqual(['foo']);
+    describe('getArticles', () => {
+        it('should return article entries', () => {
+            expect(getArticles(store)).toEqual(['foo']);
+        });
     });
 
-    it('should return async indicators', () => {
-        expect(getArticleAsync(store)).toEqual({
-            isLoading: true,
-            error: 'error'
+    describe('getListAsync', () => {
+        it('should return async indicators', () => {
+            expect(getListAsync(store)).toEqual({
+                isLoading: true,
+                error: 'error'
+            });
         });
     });
 });

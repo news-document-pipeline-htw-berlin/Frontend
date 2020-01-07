@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
     FormControl,
     InputLabel,
@@ -9,17 +10,25 @@ import {
     Select
 } from '@material-ui/core';
 
-const SelectNewspaper = () => {
-    const newspapers = [
-        { title: 'Süddeutsche Zeitung' },
-        { title: 'taz' },
-        { title: 'Die Zeit' }
-    ];
+const SelectNewspaper = ({ reloadArticles }) => {
+    const newspapers = {
+        sz: 'Süddeutsche Zeitung',
+        taz: 'taz',
+        zeit: 'Die Zeit'
+    };
+
+    const newspapersDummy = ['taz', 'sz', 'zeit'];
 
     const [selectedNewspapers, setSelectedNewspapers] = useState([]);
 
     function handleChange(e) {
         setSelectedNewspapers(e.target.value);
+    }
+
+    function handleClose() {
+        reloadArticles({
+            newspaper: selectedNewspapers
+        });
     }
 
     return (
@@ -31,21 +40,25 @@ const SelectNewspaper = () => {
                 onChange={handleChange}
                 input={<Input />}
                 renderValue={selected => selected.join(', ')}
+                onClose={handleClose}
             >
-                {newspapers &&
-                    newspapers.map(entry => (
-                        <MenuItem key={entry.title} value={entry.title}>
-                            <Checkbox
-                                checked={selectedNewspapers.includes(
-                                    entry.title
-                                )}
-                            />
-                            <ListItemText primary={entry.title} />
-                        </MenuItem>
-                    ))}
+                {newspapersDummy.map(entry => (
+                    <MenuItem key={entry} value={newspapers[entry]}>
+                        <Checkbox
+                            checked={selectedNewspapers.includes(
+                                newspapers[entry]
+                            )}
+                        />
+                        <ListItemText primary={newspapers[entry]} />
+                    </MenuItem>
+                ))}
             </Select>
         </FormControl>
     );
+};
+
+SelectNewspaper.propTypes = {
+    reloadArticles: PropTypes.func.isRequired
 };
 
 export default SelectNewspaper;

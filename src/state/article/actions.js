@@ -2,9 +2,9 @@ import EndpointConstants from '../../constants/EndpointConstants';
 import types from './types';
 import { unauthorized } from '../httpClient';
 
-function updateAsync(isLoading, error = null) {
+function updateListAsync(isLoading, error = null) {
     return {
-        type: types.ARTICLE_ASYNC,
+        type: types.ARTICLE_LIST_ASYNC,
         data: {
             isLoading,
             error
@@ -12,28 +12,26 @@ function updateAsync(isLoading, error = null) {
     };
 }
 
-function articlesLoaded(articles) {
+function articlesLoaded(data) {
     return {
         type: types.ARTICLE_LIST,
-        data: {
-            articles
-        }
+        data
     };
 }
 
-export function loadArticles(offset, amount) {
+export function loadArticles(options) {
     return async dispatch => {
-        dispatch(updateAsync(true, null));
+        dispatch(updateListAsync(true, null));
         try {
             const { method, path } = EndpointConstants.ARTICLE_LIST;
-            const articles = await unauthorized({
+            const res = await unauthorized({
                 method,
-                path: path(offset, amount)
+                path: path(options)
             });
-            dispatch(articlesLoaded(articles.slice(0, 12)));
-            dispatch(updateAsync(false, null));
+            dispatch(articlesLoaded(res));
+            dispatch(updateListAsync(false, null));
         } catch (e) {
-            dispatch(updateAsync(false, e));
+            dispatch(updateListAsync(false, e));
         }
     };
 }
