@@ -102,14 +102,13 @@ const Pagination = ({
                 }
                 default:
                     return (
-                        <Grid item key={`grid${pageNo}`}>
+                        <Grid item key={pageNo}>
                             <Button
                                 color={
                                     currentPage === pageNo
                                         ? 'primary'
                                         : 'inherit'
                                 }
-                                key={`button${pageNo}`}
                                 onClick={() => handlePageChange(pageNo)}
                             >
                                 {pageNo}

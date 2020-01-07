@@ -28,7 +28,9 @@ describe('Test article actions', () => {
 
     it('should load articles and dispatch correct actions on success', async () => {
         unauthorized.mockResolvedValue(['foo']);
-        await store.dispatch(articleActions.loadArticles(1, 20));
+        await store.dispatch(
+            articleActions.loadArticles({ offset: 0, max: 20 })
+        );
         const actions = store.getActions();
         const [updateAsyncStart, articlesLoaded, updateAsyncEnd] = actions;
         expect(actions).toHaveLength(3);

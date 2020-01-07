@@ -22,7 +22,7 @@ const Articles = props => {
     const { search } = useLocation();
     const history = useHistory();
     const match = useRouteMatch();
-    const queryParams = parse(search);
+    const queryParams = parse(search, { arrayFormat: 'comma' });
     const { query, department, page, newspaper, author } = queryParams;
     const currentPage = Number(page || 1);
     const { loadArticles, articles, async } = props;
@@ -64,7 +64,10 @@ const Articles = props => {
 
     function handleToolbarChange(options) {
         history.push({
-            search: `?${stringify({ ...queryParams, ...options })}`
+            search: `?${stringify(
+                { ...queryParams, ...options, page: 1 },
+                { arrayFormat: 'comma' }
+            )}`
         });
     }
 
@@ -76,21 +79,35 @@ const Articles = props => {
             alignItems="stretch"
         >
             <Toolbar reloadArticles={handleToolbarChange} />
+            {!articles.length && (
+                <div
+                    style={{
+                        margin: 'auto',
+                        width: '100%',
+                        textAlign: 'center'
+                    }}
+                >
+                    <p>No articles found</p>
+                </div>
+            )}
             <ArticleOverview
                 articles={articles}
                 async={async}
                 handleArticleClick={handleArticleClick}
             />
-            <Grid container justify="center">
-                <Grid item xs={6}>
-                    <Pagination
-                        currentPage={currentPage}
-                        handlePageChange={handlePageChange}
-                        pageLimit={12}
-                        totalRecords={200}
-                    />
+            {!!articles.length && (
+                <Grid container justify="center">
+                    <Grid item xs={6}>
+                        <Pagination
+                            currentPage={currentPage}
+                            handlePageChange={handlePageChange}
+                            pageLimit={12}
+                            totalRecords={200}
+                        />
+                    </Grid>
                 </Grid>
-            </Grid>
+            )}
+
             <Route exact path={`${match.url}/:id`}>
                 <Article handleClose={handleClose} />
             </Route>
