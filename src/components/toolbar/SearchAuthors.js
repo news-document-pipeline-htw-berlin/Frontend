@@ -5,10 +5,7 @@
 import React, { useState, useEffect } from 'react';
 import { TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getAuthors } from '../../state/article/selectors';
-import { articleActions } from '../../state/actions';
 import EndpointConstants from '../../constants/EndpointConstants';
 import { unauthorized } from '../../state/httpClient';
 import useDebounce from '../../hooks/useDebounce';
@@ -78,12 +75,4 @@ Search.propTypes = {
     reloadArticles: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-    authors: getAuthors(state)
-});
-
-const mapDispatchToProps = {
-    loadAuthors: articleActions.loadAuthors
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default Search;
