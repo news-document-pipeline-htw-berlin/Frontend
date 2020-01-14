@@ -12,10 +12,10 @@ export default {
     },
     NEWSPAPER_LIST: {
         method: 'GET',
-        path: '/articles/newspaper'
+        path: '/articles/newspapers'
     },
     AUTHORS_LIST: {
         method: 'GET',
-        path: 'articles/authors'
+        path: query => `/articles/authors?query=${query}`
     }
 };
