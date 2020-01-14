@@ -26,26 +26,17 @@ const Articles = props => {
     const currentPage = Number(page || 1);
     const { loadArticles, articles, listMetaInformation, async } = props;
 
-    const newspaperStringified = newspaper && newspaper.join();
-
     useEffect(() => {
         const options = {
             offset: currentPage - 1,
             max: ARTICLES_PER_PAGE,
             department,
-            newspaperStringified,
+            newspaper,
             query,
             author
         };
         loadArticles(options);
-    }, [
-        loadArticles,
-        query,
-        currentPage,
-        department,
-        newspaperStringified,
-        author
-    ]);
+    }, [loadArticles, query, currentPage, department, newspaper, author]);
 
     function handleArticleClick(article) {
         history.push(`/articles/${article.id}`);
