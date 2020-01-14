@@ -10,13 +10,17 @@ import {
     useRouteMatch
 } from 'react-router-dom';
 import { articleActions } from '../../state/actions';
-import { getListAsync, getArticles } from '../../state/article/selectors';
+import {
+    getListAsync,
+    getArticles,
+    getListMetaInformation
+} from '../../state/article/selectors';
 import Pagination from '../../components/common/Pagination';
 import Toolbar from '../../components/toolbar/Toolbar';
 import ArticleOverview from '../../components/article/ArticleOverview';
 import Article from '../../components/article/Article';
 
-const ELEMENTS_PER_PAGE = 12;
+const ARTICLES_PER_PAGE = 24;
 
 const Articles = props => {
     const { search } = useLocation();
@@ -25,14 +29,14 @@ const Articles = props => {
     const queryParams = parse(search, { arrayFormat: 'comma' });
     const { query, department, page, newspaper, author } = queryParams;
     const currentPage = Number(page || 1);
-    const { loadArticles, articles, async } = props;
+    const { loadArticles, articles, listMetaInformation, async } = props;
 
     const newspaperStringified = newspaper && newspaper.join();
 
     useEffect(() => {
         const options = {
             offset: currentPage - 1,
-            max: ELEMENTS_PER_PAGE,
+            max: ARTICLES_PER_PAGE,
             department,
             newspaperStringified,
             query,
@@ -101,8 +105,8 @@ const Articles = props => {
                         <Pagination
                             currentPage={currentPage}
                             handlePageChange={handlePageChange}
-                            pageLimit={12}
-                            totalRecords={200}
+                            pageLimit={ARTICLES_PER_PAGE}
+                            totalRecords={listMetaInformation.total}
                         />
                     </Grid>
                 </Grid>
@@ -117,7 +121,8 @@ const Articles = props => {
 
 const mapStateToProps = state => ({
     async: getListAsync(state),
-    articles: getArticles(state)
+    articles: getArticles(state),
+    listMetaInformation: getListMetaInformation(state)
 });
 
 const mapDispatchToProps = {
@@ -128,7 +133,8 @@ const mapDispatchToProps = {
 Articles.propTypes = {
     async: PropTypes.object.isRequired,
     articles: PropTypes.array.isRequired,
-    loadArticles: PropTypes.func.isRequired
+    loadArticles: PropTypes.func.isRequired,
+    listMetaInformation: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Articles);
