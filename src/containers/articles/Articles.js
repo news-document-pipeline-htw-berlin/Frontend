@@ -49,7 +49,7 @@ const Articles = props => {
     ]);
 
     function handleArticleClick(article) {
-        history.push(`/articles/${article.mongo_id}`);
+        history.push(`/articles/${article.id}`);
     }
 
     function handleClose() {

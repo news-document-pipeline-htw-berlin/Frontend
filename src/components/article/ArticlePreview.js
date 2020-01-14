@@ -12,7 +12,7 @@ import headerPhoto from '../../assets/images/stock.jpg';
 import LoadingAnimation from '../common/LoadingAnimation';
 
 const ArticlePreview = props => {
-    const { title, author = '', onClick, isLoading, categories } = props;
+    const { title, authors, onClick, isLoading, categories } = props;
 
     const chips = categories.map(category => (
         <Chip
@@ -37,7 +37,7 @@ const ArticlePreview = props => {
                         {chips}
                     </Paper>
 
-                    <CardHeader title={title} subheader={author} />
+                    <CardHeader title={title} subheader={authors.join(', ')} />
                 </CardActionArea>
             )}
         </Card>
@@ -46,14 +46,14 @@ const ArticlePreview = props => {
 
 ArticlePreview.propTypes = {
     title: PropTypes.string.isRequired,
-    author: PropTypes.string,
+    authors: PropTypes.array,
     categories: PropTypes.arrayOf(PropTypes.object),
     onClick: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired
 };
 
 ArticlePreview.defaultProps = {
-    author: '',
+    authors: [],
     categories: [
         { id: 1, name: 'Politik' },
         { id: 2, name: 'Wirtschaft' }

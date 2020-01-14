@@ -11,7 +11,7 @@ const ArticleOverview = ({ articles, async, handleArticleClick }) => {
     ) : (
         <Grid container>
             {articles.map(article => {
-                const { mongo_id: id, title } = article;
+                const { id, title, authors } = article;
                 return (
                     <Grid
                         xs={12}
@@ -23,7 +23,7 @@ const ArticleOverview = ({ articles, async, handleArticleClick }) => {
                     >
                         <ArticlePreview
                             title={title}
-                            author={articles.authors && articles.authors.join()}
+                            authors={authors}
                             onClick={() => handleArticleClick(article)}
                             isLoading={isLoading}
                         />
