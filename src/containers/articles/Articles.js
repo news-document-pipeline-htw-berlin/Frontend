@@ -2,13 +2,8 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
-import { stringify, parse } from 'query-string';
-import {
-    Route,
-    useLocation,
-    useHistory,
-    useRouteMatch
-} from 'react-router-dom';
+import { stringify } from 'query-string';
+import { Route, useHistory, useRouteMatch } from 'react-router-dom';
 import { articleActions } from '../../state/actions';
 import {
     getListAsync,
@@ -19,14 +14,14 @@ import Pagination from '../../components/common/Pagination';
 import Toolbar from '../../components/toolbar/Toolbar';
 import ArticleOverview from '../../components/article/ArticleOverview';
 import Article from '../../components/article/Article';
+import useQueryParams from '../../hooks/useQueryParams';
 
 const ARTICLES_PER_PAGE = 24;
 
 const Articles = props => {
-    const { search } = useLocation();
     const history = useHistory();
     const match = useRouteMatch();
-    const queryParams = parse(search, { arrayFormat: 'comma' });
+    const queryParams = useQueryParams();
     const { query, department, page, newspaper, author } = queryParams;
     const currentPage = Number(page || 1);
     const { loadArticles, articles, listMetaInformation, async } = props;

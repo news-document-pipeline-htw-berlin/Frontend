@@ -5,9 +5,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
-import { DialogContent, Grid } from '@material-ui/core';
+import { DialogContent, Grid, Chip } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, useHistory } from 'react-router-dom';
+import { stringify } from 'query-string';
 import EndpointConstants from '../../constants/EndpointConstants';
 import { unauthorized } from '../../state/httpClient';
 import LoadingAnimation from '../common/LoadingAnimation';
@@ -19,6 +20,8 @@ const Article = props => {
     const {
         params: { id }
     } = useRouteMatch();
+
+    const history = useHistory();
 
     const [article, setArticle] = useState(null);
     const [async, setAsync] = useState({ isLoading: false, error: null });
@@ -46,7 +49,23 @@ const Article = props => {
         return null;
     }
 
-    console.log(async, !!async.error);
+    function handleClick(keyword) {
+        history.push({
+            pathname: '/articles',
+            search: `?${stringify({ query: keyword, page: 1 })}`
+        });
+    }
+
+    const chips = article.keywords.map(keyword => (
+        <Chip
+            color="secondary"
+            onClick={() => handleClick(keyword)}
+            key={keyword}
+            label={keyword}
+            clickable
+            variant="outlined"
+        />
+    ));
 
     return (
         <Dialog open fullScreen onClose={handleClose}>
@@ -77,6 +96,7 @@ const Article = props => {
                             <ErrorInfo message="An error occurred when loading the article. Please try to refresh the page" />
                         )}
                         <Typography>{article.text}</Typography>
+                        <div style={{ marginTop: 20 }}>{chips}</div>
                     </DialogContent>
                 </Grid>
             </Grid>
