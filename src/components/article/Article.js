@@ -13,6 +13,7 @@ import EndpointConstants from '../../constants/EndpointConstants';
 import { unauthorized } from '../../state/httpClient';
 import LoadingAnimation from '../common/LoadingAnimation';
 import ErrorInfo from '../common/ErrorInfo';
+import ReadingTime from './ReadingTime';
 
 const Article = props => {
     const { handleClose } = props;
@@ -95,6 +96,7 @@ const Article = props => {
                         {async.error && (
                             <ErrorInfo message="An error occurred when loading the article. Please try to refresh the page" />
                         )}
+                        <ReadingTime readingTime={article.readingTime} />
                         <Typography>{article.text}</Typography>
                         <div style={{ marginTop: 20 }}>{chips}</div>
                     </DialogContent>

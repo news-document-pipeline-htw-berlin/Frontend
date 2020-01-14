@@ -7,5 +7,6 @@ export const ArticlePropTypes = PropTypes.shape({
     description: PropTypes.string.isRequired,
     intro: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-    newsSite: PropTypes.string.isRequired
+    newsSite: PropTypes.string.isRequired,
+    imageLinks: PropTypes.arrayOf.isRequired
 });
