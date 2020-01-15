@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import Search from '../search/Search';
+import Search from './Search';
 import SearchAuthors from './SearchAuthors';
 import SelectNewspaper from './SelectNewspaper';
 

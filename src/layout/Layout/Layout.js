@@ -15,7 +15,7 @@ const Layout = () => {
         <AppBar position="sticky" style={{ background: '#fff', color: '#000' }}>
             <Toolbar>
                 <Grid container justify="center">
-                    <NavLink className="NavLink" to="/articles">
+                    <NavLink className="NavLink" to="/articles?page=1&count=24">
                         <Typography variant="button">iNews</Typography>
                     </NavLink>
                 </Grid>

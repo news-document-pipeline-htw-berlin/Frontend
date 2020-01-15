@@ -22,14 +22,15 @@ const Articles = props => {
     const history = useHistory();
     const match = useRouteMatch();
     const queryParams = useQueryParams();
-    const { query, department, page, newspaper, author } = queryParams;
+    const { page, department, newspaper, query, author } = queryParams;
     const currentPage = Number(page || 1);
+
     const { loadArticles, articles, listMetaInformation, async } = props;
 
     useEffect(() => {
         const options = {
             offset: currentPage - 1,
-            max: ARTICLES_PER_PAGE,
+            count: ARTICLES_PER_PAGE,
             department,
             newspaper,
             query,
@@ -42,8 +43,8 @@ const Articles = props => {
         history.push(`/articles/${article.id}`);
     }
 
-    function handleClose() {
-        history.push(`/articles`);
+    function handleArticleClose() {
+        history.goBack();
     }
 
     function handlePageChange(newPage) {
@@ -99,7 +100,7 @@ const Articles = props => {
             )}
 
             <Route exact path={`${match.url}/:id`}>
-                <Article handleClose={handleClose} />
+                <Article handleClose={handleArticleClose} />
             </Route>
         </Grid>
     );

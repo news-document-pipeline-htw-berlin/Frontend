@@ -27,7 +27,7 @@ describe('Test article actions', () => {
         it('should load articles and dispatch correct actions on success', async () => {
             unauthorized.mockResolvedValue({ articles: ['test'], total: 1 });
             await store.dispatch(
-                articleActions.loadArticles({ offset: 0, max: 20 })
+                articleActions.loadArticles({ offset: 0, count: 24 })
             );
             const actions = store.getActions();
             const [updateAsyncStart, articlesLoaded, updateAsyncEnd] = actions;
