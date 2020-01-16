@@ -6,18 +6,23 @@ import {
     MenuItem,
     Checkbox,
     ListItemText,
-    Input,
-    Select
+    Select,
+    OutlinedInput
 } from '@material-ui/core';
+import { useNewspaper } from '../../hooks/useNewspaper';
 
 const SelectNewspaper = ({ reloadArticles }) => {
-    const newspapers = {
-        sz: 'Süddeutsche Zeitung',
-        taz: 'taz',
-        zeit: 'Die Zeit'
-    };
+    const newspaperMapping = [
+        { tag: 'taz', label: 'taz' },
+        { tag: 'sz', label: 'Süddeutsche Zeitung' },
+        { tag: 'heise', label: 'Heise' }
+    ];
 
-    const newspapersDummy = ['taz', 'sz', 'zeit'];
+    const { newspapers: newspaperTags } = useNewspaper();
+
+    const newspapers = newspaperTags.map(newspaper =>
+        newspaperMapping.find(mappingEntry => mappingEntry.tag === newspaper)
+    );
 
     const [selectedNewspapers, setSelectedNewspapers] = useState([]);
 
@@ -27,29 +32,30 @@ const SelectNewspaper = ({ reloadArticles }) => {
 
     function handleClose() {
         reloadArticles({
-            newspaper: selectedNewspapers
+            newspaper: selectedNewspapers.map(
+                newspaper =>
+                    newspapers.find(entry => entry.label === newspaper).tag
+            )
         });
     }
 
     return (
-        <FormControl fullWidth>
-            <InputLabel>Newspapers</InputLabel>
+        <FormControl fullWidth style={{ margin: 20 }}>
+            <InputLabel style={{ marginLeft: 10 }}>Newspapers</InputLabel>
             <Select
                 multiple
                 value={selectedNewspapers}
                 onChange={handleChange}
-                input={<Input />}
+                input={<OutlinedInput />}
                 renderValue={selected => selected.join(', ')}
                 onClose={handleClose}
             >
-                {newspapersDummy.map(entry => (
-                    <MenuItem key={entry} value={newspapers[entry]}>
+                {newspapers.map(entry => (
+                    <MenuItem key={entry.label} value={entry.label}>
                         <Checkbox
-                            checked={selectedNewspapers.includes(
-                                newspapers[entry]
-                            )}
+                            checked={selectedNewspapers.includes(entry.label)}
                         />
-                        <ListItemText primary={newspapers[entry]} />
+                        <ListItemText primary={entry.label} />
                     </MenuItem>
                 ))}
             </Select>
