@@ -1,21 +1,22 @@
 import React from 'react';
 import { AppBar, Toolbar, Divider, Grid, Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
+import { stringify } from 'query-string';
 import './Layout.css';
+import { useDepartment } from '../../hooks/useDepartment';
+import { ARTICLES_PER_PAGE } from '../../constants/CommonConstants';
 
 const Layout = () => {
-    const categories = [
-        { title: 'Politik', url: 'politics' },
-        { title: 'Wirtschaft', url: 'economics' },
-        { title: 'Wissenschaft', url: 'science' },
-        { title: 'Sport', url: 'sports' }
-    ];
+    const { departments } = useDepartment();
 
     return (
         <AppBar position="sticky" style={{ background: '#fff', color: '#000' }}>
             <Toolbar>
                 <Grid container justify="center">
-                    <NavLink className="NavLink" to="/articles?page=1&count=24">
+                    <NavLink
+                        className="NavLink"
+                        to={`/articles?page=1&count=${ARTICLES_PER_PAGE}`}
+                    >
                         <Typography variant="button">iNews</Typography>
                     </NavLink>
                 </Grid>
@@ -23,21 +24,25 @@ const Layout = () => {
             <Divider variant="middle" />
             <Toolbar>
                 <Grid container justify="center">
-                    {categories.map(category => (
+                    {departments.map(department => (
                         <Grid
                             item
-                            key={category}
+                            key={department}
                             style={{ marginLeft: 10, marginRight: 10 }}
                         >
                             <NavLink
                                 to={{
                                     pathname: '/articles',
-                                    search: `?department=${category.url}`
+                                    search: `?${stringify({
+                                        department,
+                                        page: 1,
+                                        count: ARTICLES_PER_PAGE
+                                    })}`
                                 }}
                                 className="NavLink"
                             >
                                 <Typography variant="button">
-                                    {category.title}
+                                    {department}
                                 </Typography>
                             </NavLink>
                         </Grid>

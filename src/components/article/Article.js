@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
-import { DialogContent, Grid, Chip } from '@material-ui/core';
+import { DialogContent, Grid, Chip, Link, CardMedia } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import { stringify } from 'query-string';
@@ -96,9 +96,30 @@ const Article = props => {
                         {async.error && (
                             <ErrorInfo message="An error occurred when loading the article. Please try to refresh the page" />
                         )}
+                        {article.imageLinks.length && (
+                            <CardMedia
+                                image={article.imageLinks}
+                                title="title image"
+                                style={{ marginBottom: 20 }}
+                            />
+                        )}
+                        <Typography paragraph variant="h6">
+                            {article.description}
+                        </Typography>
                         <ReadingTime readingTime={article.readingTime} />
                         <Typography>{article.text}</Typography>
-                        <div style={{ marginTop: 20 }}>{chips}</div>
+                        <div style={{ margin: 20 }}>{chips}</div>
+                        {article.longUrl && (
+                            <div style={{ marginBottom: 20 }}>
+                                <Link
+                                    href={article.longUrl}
+                                    color="secondary"
+                                    underline="hover"
+                                >
+                                    {article.longUrl}
+                                </Link>
+                            </div>
+                        )}
                     </DialogContent>
                 </Grid>
             </Grid>

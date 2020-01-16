@@ -1,19 +1,24 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { stringify } from 'query-string';
-import { Route, useHistory, useRouteMatch } from 'react-router-dom';
+import {
+    Route,
+    useHistory,
+    useRouteMatch,
+    useLocation
+} from 'react-router-dom';
 import Pagination from '../../components/common/Pagination';
 import Toolbar from '../../components/toolbar/Toolbar';
 import ArticleOverview from '../../components/article/ArticleOverview';
 import Article from '../../components/article/Article';
 import useQueryParams from '../../hooks/useQueryParams';
 import { useArticles } from '../../hooks/useArticles';
-
-const ARTICLES_PER_PAGE = 24;
+import { ARTICLES_PER_PAGE } from '../../constants/CommonConstants';
 
 const Articles = () => {
     const history = useHistory();
     const match = useRouteMatch();
+    const location = useLocation();
     const queryParams = useQueryParams();
     const currentPage = Number(queryParams.page || 1);
 
@@ -32,16 +37,40 @@ const Articles = () => {
 
     function handlePageChange(newPage) {
         history.push({
-            search: `?${stringify({ ...queryParams, page: newPage })}`
+            search: `?${stringify({
+                ...queryParams,
+                page: newPage,
+                count: ARTICLES_PER_PAGE
+            })}`
         });
     }
 
     function handleToolbarChange(options) {
         history.push({
             search: `?${stringify(
-                { ...queryParams, ...options, page: 1 },
+                {
+                    ...queryParams,
+                    ...options,
+                    page: 1,
+                    count: ARTICLES_PER_PAGE
+                },
                 { arrayFormat: 'comma' }
             )}`
+        });
+    }
+
+    function resetFilters() {
+        const { department } = queryParams;
+        history.push({
+            pathname: location.pathname,
+            search: `?${stringify({
+                department,
+                page: 1,
+                count: ARTICLES_PER_PAGE,
+                query: '',
+                author: '',
+                newspaper: ''
+            })}`
         });
     }
 
@@ -52,7 +81,10 @@ const Articles = () => {
             justify="space-between"
             alignItems="stretch"
         >
-            <Toolbar reloadArticles={handleToolbarChange} />
+            <Toolbar
+                reloadArticles={handleToolbarChange}
+                resetFilters={resetFilters}
+            />
             {!articles.length && (
                 <div
                     style={{

@@ -9,7 +9,7 @@ export default function useQueryParams() {
     );
 
     useEffect(() => {
-        setQueryParams(parse(search));
+        setQueryParams(parse(search), { arrayFormat: 'comma' });
     }, [search]);
 
     return queryParams;

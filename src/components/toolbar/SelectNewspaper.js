@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
     FormControl,
@@ -10,8 +10,11 @@ import {
     OutlinedInput
 } from '@material-ui/core';
 import { useNewspaper } from '../../hooks/useNewspaper';
+import useQueryParams from '../../hooks/useQueryParams';
 
 const SelectNewspaper = ({ reloadArticles }) => {
+    const { newspaper: newspaperParam } = useQueryParams();
+
     const newspaperMapping = [
         { tag: 'taz', label: 'taz' },
         { tag: 'sz', label: 'Süddeutsche Zeitung' },
@@ -25,6 +28,10 @@ const SelectNewspaper = ({ reloadArticles }) => {
     );
 
     const [selectedNewspapers, setSelectedNewspapers] = useState([]);
+
+    useEffect(() => {
+        setSelectedNewspapers(!newspaperParam ? [] : newspaperParam.split());
+    }, [newspaperParam]);
 
     function handleChange(e) {
         setSelectedNewspapers(e.target.value);

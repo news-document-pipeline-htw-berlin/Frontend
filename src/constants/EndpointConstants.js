@@ -14,8 +14,12 @@ export default {
         method: 'GET',
         path: '/articles/newspapers'
     },
-    AUTHORS_LIST: {
+    AUTHOR_LIST: {
         method: 'GET',
         path: query => `/articles/authors?query=${query}`
+    },
+    DEPARTMENT_LIST: {
+        method: 'GET',
+        path: '/articles/newspapers'
     }
 };
