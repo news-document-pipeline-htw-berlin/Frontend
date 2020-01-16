@@ -30,9 +30,7 @@ export function useArticles(queryParams, articlesPerPage) {
 
                 setArticles(res.articles);
                 setListMetaInformation({
-                    listMetaInformation: {
-                        total: res.resultCount
-                    }
+                    total: res.resultCount
                 });
 
                 setAsync({ isLoading: false, error: null });
