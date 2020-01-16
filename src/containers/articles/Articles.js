@@ -1,43 +1,26 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { connect } from 'react-redux';
 import { stringify } from 'query-string';
 import { Route, useHistory, useRouteMatch } from 'react-router-dom';
-import { articleActions } from '../../state/actions';
-import {
-    getListAsync,
-    getArticles,
-    getListMetaInformation
-} from '../../state/article/selectors';
 import Pagination from '../../components/common/Pagination';
 import Toolbar from '../../components/toolbar/Toolbar';
 import ArticleOverview from '../../components/article/ArticleOverview';
 import Article from '../../components/article/Article';
 import useQueryParams from '../../hooks/useQueryParams';
+import { useArticles } from '../../hooks/useArticles';
 
 const ARTICLES_PER_PAGE = 24;
 
-const Articles = props => {
+const Articles = () => {
     const history = useHistory();
     const match = useRouteMatch();
     const queryParams = useQueryParams();
-    const { page, department, newspaper, query, author } = queryParams;
-    const currentPage = Number(page || 1);
+    const currentPage = Number(queryParams.page || 1);
 
-    const { loadArticles, articles, listMetaInformation, async } = props;
-
-    useEffect(() => {
-        const options = {
-            offset: currentPage - 1,
-            count: ARTICLES_PER_PAGE,
-            department,
-            newspaper,
-            query,
-            author
-        };
-        loadArticles(options);
-    }, [loadArticles, query, currentPage, department, newspaper, author]);
+    const { articles, listMetaInformation, async } = useArticles(
+        queryParams,
+        ARTICLES_PER_PAGE
+    );
 
     function handleArticleClick(article) {
         history.push(`/articles/${article.id}`);
@@ -106,22 +89,4 @@ const Articles = props => {
     );
 };
 
-const mapStateToProps = state => ({
-    async: getListAsync(state),
-    articles: getArticles(state),
-    listMetaInformation: getListMetaInformation(state)
-});
-
-const mapDispatchToProps = {
-    loadArticles: articleActions.loadArticles,
-    updatePage: articleActions.updatePage
-};
-
-Articles.propTypes = {
-    async: PropTypes.object.isRequired,
-    articles: PropTypes.array.isRequired,
-    loadArticles: PropTypes.func.isRequired,
-    listMetaInformation: PropTypes.object.isRequired
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Articles);
+export default Articles;
