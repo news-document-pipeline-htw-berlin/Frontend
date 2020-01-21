@@ -10,9 +10,7 @@ export const useNewspaper = () => {
             const { method, path } = EndpointConstants.NEWSPAPER_LIST;
             try {
                 setAsync({ isLoading: true, error: null });
-                // TODO: use endpoints once functional
-                // const res = await unauthorized({ path, method });
-                const res = ['taz', 'sz', 'heise'];
+                const res = await unauthorized({ path, method });
                 setNewspapers(res);
                 setAsync({ isLoading: false, error: null });
             } catch (err) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
     FormControl,
@@ -9,60 +9,82 @@ import {
     Select,
     OutlinedInput
 } from '@material-ui/core';
-import { useNewspaper } from '../../hooks/useNewspaper';
+import { useHistory } from 'react-router-dom';
+import { stringify } from 'query-string';
 import useQueryParams from '../../hooks/useQueryParams';
+import { useNewspaper } from '../../hooks/useNewspaper';
 
 const SelectNewspaper = ({ reloadArticles }) => {
-    const { newspaper: newspaperParam } = useQueryParams();
+    const history = useHistory();
+    const newspaperMapping = {
+        taz: 'Taz',
+        sz: 'Süddeutsche Zeitung',
+        heise: 'Heise'
+    };
 
-    const newspaperMapping = [
-        { tag: 'taz', label: 'taz' },
-        { tag: 'sz', label: 'Süddeutsche Zeitung' },
-        { tag: 'heise', label: 'Heise' }
-    ];
-
+    // ['sz', 'taz', 'heise']
     const { newspapers: newspaperTags } = useNewspaper();
 
-    const newspapers = newspaperTags.map(newspaper =>
-        newspaperMapping.find(mappingEntry => mappingEntry.tag === newspaper)
+    const queryParams = useQueryParams();
+
+    function getNewspaperParam() {
+        const { newspaper } = queryParams;
+        if (Array.isArray(newspaper)) {
+            return newspaper.map(entry => newspaperMapping[entry]);
+        }
+        if (!newspaper) {
+            return [];
+        }
+        return [newspaperMapping[newspaper]];
+    }
+
+    // ['sz']
+    const newspaperParam = getNewspaperParam();
+
+    const newspapers = newspaperTags.map(
+        newspaper => newspaperMapping[newspaper]
     );
 
-    const [selectedNewspapers, setSelectedNewspapers] = useState([]);
-
-    useEffect(() => {
-        setSelectedNewspapers(!newspaperParam ? [] : newspaperParam.split());
-    }, [newspaperParam]);
-
-    function handleChange(e) {
-        setSelectedNewspapers(e.target.value);
+    function getKeyByValue(object, value) {
+        return Object.keys(object).find(key => object[key] === value);
     }
 
     function handleClose() {
         reloadArticles({
-            newspaper: selectedNewspapers.map(
-                newspaper =>
-                    newspapers.find(entry => entry.label === newspaper).tag
+            newspaper: newspaperParam.map(newspaper =>
+                getKeyByValue(newspaperMapping, newspaper)
             )
         });
     }
 
+    function handleChange(e) {
+        const newParams = e.target.value.map(newspaper =>
+            getKeyByValue(newspaperMapping, newspaper)
+        );
+        history.push({
+            search: `?${stringify({
+                ...queryParams,
+                page: 1,
+                newspaper: newParams
+            })}`
+        });
+    }
+
     return (
-        <FormControl fullWidth style={{ margin: 20 }}>
+        <FormControl fullWidth>
             <InputLabel style={{ marginLeft: 10 }}>Newspapers</InputLabel>
             <Select
                 multiple
-                value={selectedNewspapers}
+                value={newspaperParam}
                 onChange={handleChange}
                 input={<OutlinedInput />}
                 renderValue={selected => selected.join(', ')}
                 onClose={handleClose}
             >
                 {newspapers.map(entry => (
-                    <MenuItem key={entry.label} value={entry.label}>
-                        <Checkbox
-                            checked={selectedNewspapers.includes(entry.label)}
-                        />
-                        <ListItemText primary={entry.label} />
+                    <MenuItem key={entry} value={entry}>
+                        <Checkbox checked={newspaperParam.includes(entry)} />
+                        <ListItemText primary={entry} />
                     </MenuItem>
                 ))}
             </Select>

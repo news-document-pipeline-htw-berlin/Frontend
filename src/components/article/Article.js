@@ -57,7 +57,7 @@ const Article = props => {
         });
     }
 
-    const chips = article.keywords.map(keyword => (
+    const chips = article.mostRelevantLemmas.map(keyword => (
         <Chip
             color="secondary"
             onClick={() => handleClick(keyword)}

@@ -4,12 +4,11 @@ import { parse } from 'query-string';
 
 export default function useQueryParams() {
     const { search } = useLocation();
-    const [queryParams, setQueryParams] = useState(
-        parse(search, { arrayFormat: 'comma' })
-    );
+
+    const [queryParams, setQueryParams] = useState(parse(search));
 
     useEffect(() => {
-        setQueryParams(parse(search), { arrayFormat: 'comma' });
+        setQueryParams(parse(search));
     }, [search]);
 
     return queryParams;

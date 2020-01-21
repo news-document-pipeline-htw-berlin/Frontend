@@ -39,23 +39,19 @@ const Articles = () => {
         history.push({
             search: `?${stringify({
                 ...queryParams,
-                page: newPage,
-                count: ARTICLES_PER_PAGE
+                page: newPage
             })}`
         });
     }
 
     function handleToolbarChange(options) {
         history.push({
-            search: `?${stringify(
-                {
-                    ...queryParams,
-                    ...options,
-                    page: 1,
-                    count: ARTICLES_PER_PAGE
-                },
-                { arrayFormat: 'comma' }
-            )}`
+            search: `?${stringify({
+                ...queryParams,
+                ...options,
+                page: 1,
+                count: ARTICLES_PER_PAGE
+            })}`
         });
     }
 
@@ -68,8 +64,8 @@ const Articles = () => {
                 page: 1,
                 count: ARTICLES_PER_PAGE,
                 query: '',
-                author: '',
-                newspaper: ''
+                author: ''
+                // newspaper: ''
             })}`
         });
     }
