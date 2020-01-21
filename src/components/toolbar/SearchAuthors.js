@@ -15,7 +15,7 @@ const Search = ({ reloadArticles }) => {
     const [async, setAsync] = useState({ isLoading: false, error: null });
 
     useEffect(() => {
-        setAuthors(authorParam);
+        setAuthors(authorParam || '');
     }, [authorParam]);
 
     function handleKeyPress(e) {
