@@ -8,11 +8,20 @@ import {
     Paper
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import headerPhoto from '../../assets/images/stock.jpg';
 import LoadingAnimation from '../common/LoadingAnimation';
+import ReadingTime from './ReadingTime';
+import { ArticlePropTypes } from '../../constants/NewsPropTypes';
+import headerPhoto from '../../assets/images/stock.jpg';
 
 const ArticlePreview = props => {
-    const { title, author = '', onClick, isLoading, categories } = props;
+    const { onClick, isLoading, article } = props;
+    const { title, authors, readingTime, imageLinks } = article;
+
+    // TODO: REMOVE
+    const categories = [
+        { id: 1, name: 'Wirtschaft' },
+        { id: 2, name: 'Politik' }
+    ];
 
     const chips = categories.map(category => (
         <Chip
@@ -20,7 +29,6 @@ const ArticlePreview = props => {
             key={category.id}
             label={category.name}
             component="a"
-            href=""
             clickable
             variant="outlined"
         />
@@ -32,12 +40,18 @@ const ArticlePreview = props => {
                 <LoadingAnimation />
             ) : (
                 <CardActionArea onClick={onClick}>
-                    <CardMedia image={headerPhoto} title="Stock photo" />
+                    <CardMedia
+                        image={imageLinks.length ? imageLinks[0] : headerPhoto}
+                        title="Stock photo"
+                    />
                     <Paper elevation={0} style={{ margin: 10 }}>
                         {chips}
+                        <div style={{ marginLeft: 5, marginTop: 10 }}>
+                            <ReadingTime readingTime={readingTime} />
+                        </div>
                     </Paper>
 
-                    <CardHeader title={title} subheader={author} />
+                    <CardHeader title={title} subheader={authors.join(', ')} />
                 </CardActionArea>
             )}
         </Card>
@@ -45,19 +59,11 @@ const ArticlePreview = props => {
 };
 
 ArticlePreview.propTypes = {
-    title: PropTypes.string.isRequired,
-    author: PropTypes.string,
-    categories: PropTypes.arrayOf(PropTypes.object),
+    article: ArticlePropTypes.isRequired,
     onClick: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired
 };
 
-ArticlePreview.defaultProps = {
-    author: '',
-    categories: [
-        { id: 1, name: 'Politik' },
-        { id: 2, name: 'Wirtschaft' }
-    ]
-};
+ArticlePreview.defaultProps = {};
 
 export default ArticlePreview;

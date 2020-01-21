@@ -1,4 +1,0 @@
-export default {
-    ARTICLE_LIST: 'ARTICLE_LIST',
-    ARTICLE_LIST_ASYNC: 'ARTICLE_LIST_ASYNC'
-};

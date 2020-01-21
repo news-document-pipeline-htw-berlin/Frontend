@@ -3,8 +3,7 @@ import { stringify } from 'query-string';
 export default {
     ARTICLE_LIST: {
         method: 'GET',
-        path: options =>
-            `/articles?${stringify(options, { arrayFormat: 'comma' })}`
+        path: options => `/articles?${stringify(options)}`
     },
     ARTICLE_GET: {
         method: 'GET',
@@ -12,10 +11,14 @@ export default {
     },
     NEWSPAPER_LIST: {
         method: 'GET',
-        path: '/articles/newspaper'
+        path: '/articles/newspapers'
     },
-    AUTHORS_LIST: {
+    AUTHOR_LIST: {
         method: 'GET',
-        path: 'articles/authors'
+        path: query => `/articles/authors?query=${query}`
+    },
+    DEPARTMENT_LIST: {
+        method: 'GET',
+        path: '/articles/newspapers'
     }
 };

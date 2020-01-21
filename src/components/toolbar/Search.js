@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
+import useQueryParams from '../../hooks/useQueryParams';
 
 const Search = ({ reloadArticles }) => {
-    const [query, setQuery] = useState('');
+    const { query } = useQueryParams();
+    const [searchQuery, setSearchQuery] = useState(query || '');
+
+    useEffect(() => {
+        setSearchQuery(query);
+    }, [query]);
 
     function handleKeyPress(e) {
         if (e.key === 'Enter') {
-            reloadArticles({ query });
+            reloadArticles({ query: searchQuery });
         }
     }
     return (
@@ -18,9 +24,9 @@ const Search = ({ reloadArticles }) => {
             onKeyPress={handleKeyPress}
             margin="normal"
             variant="outlined"
-            value={query}
+            value={searchQuery}
             fullWidth
-            onChange={e => setQuery(e.target.value)}
+            onChange={e => setSearchQuery(e.target.value)}
             InputProps={{
                 startAdornment: (
                     <InputAdornment position="start">

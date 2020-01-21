@@ -1,9 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faAngleDoubleRight,
-    faAngleDoubleLeft
-} from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { Button, Grid } from '@material-ui/core';
 import range from 'lodash/range';
@@ -77,7 +74,9 @@ const Pagination = ({
                         <Grid item key={LEFT_PAGE}>
                             <Button>
                                 <FontAwesomeIcon
-                                    icon={faAngleDoubleLeft}
+                                    style={{ padding: 3 }}
+                                    size="md"
+                                    icon={faAngleLeft}
                                     onClick={() =>
                                         handlePageChange(currentPage - 1)
                                     }
@@ -89,9 +88,11 @@ const Pagination = ({
                 case RIGHT_PAGE: {
                     return (
                         <Grid item key={RIGHT_PAGE}>
-                            <Button>
+                            <Button size="large">
                                 <FontAwesomeIcon
-                                    icon={faAngleDoubleRight}
+                                    style={{ padding: 3 }}
+                                    icon={faAngleRight}
+                                    size="md"
                                     onClick={() =>
                                         handlePageChange(currentPage + 1)
                                     }
@@ -119,7 +120,11 @@ const Pagination = ({
         });
     }
 
-    return <Grid container>{generatePages()}</Grid>;
+    return (
+        <Grid container justify="space-evenly">
+            {generatePages()}
+        </Grid>
+    );
 };
 
 Pagination.propTypes = {

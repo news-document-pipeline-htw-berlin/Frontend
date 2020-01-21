@@ -1,73 +1,72 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { connect } from 'react-redux';
-import { stringify, parse } from 'query-string';
+import { stringify } from 'query-string';
 import {
     Route,
-    useLocation,
     useHistory,
-    useRouteMatch
+    useRouteMatch,
+    useLocation
 } from 'react-router-dom';
-import { articleActions } from '../../state/actions';
-import { getListAsync, getArticles } from '../../state/article/selectors';
 import Pagination from '../../components/common/Pagination';
 import Toolbar from '../../components/toolbar/Toolbar';
 import ArticleOverview from '../../components/article/ArticleOverview';
 import Article from '../../components/article/Article';
+import useQueryParams from '../../hooks/useQueryParams';
+import { useArticles } from '../../hooks/useArticles';
+import { ARTICLES_PER_PAGE } from '../../constants/CommonConstants';
 
-const ELEMENTS_PER_PAGE = 12;
-
-const Articles = props => {
-    const { search } = useLocation();
+const Articles = () => {
     const history = useHistory();
     const match = useRouteMatch();
-    const queryParams = parse(search, { arrayFormat: 'comma' });
-    const { query, department, page, newspaper, author } = queryParams;
-    const currentPage = Number(page || 1);
-    const { loadArticles, articles, async } = props;
+    const location = useLocation();
+    const queryParams = useQueryParams();
+    const currentPage = Number(queryParams.page || 1);
 
-    const newspaperStringified = newspaper && newspaper.join();
-
-    useEffect(() => {
-        const options = {
-            offset: currentPage - 1,
-            max: ELEMENTS_PER_PAGE,
-            department,
-            newspaperStringified,
-            query,
-            author
-        };
-        loadArticles(options);
-    }, [
-        loadArticles,
-        query,
-        currentPage,
-        department,
-        newspaperStringified,
-        author
-    ]);
+    const { articles, listMetaInformation, async } = useArticles(
+        queryParams,
+        ARTICLES_PER_PAGE
+    );
 
     function handleArticleClick(article) {
-        history.push(`/articles/${article.mongo_id}`);
+        history.push(`/articles/${article.id}`);
     }
 
-    function handleClose() {
-        history.push(`/articles`);
+    function handleArticleClose() {
+        history.goBack();
     }
 
     function handlePageChange(newPage) {
         history.push({
-            search: `?${stringify({ ...queryParams, page: newPage })}`
+            search: `?${stringify({
+                ...queryParams,
+                page: newPage
+            })}`
         });
     }
 
     function handleToolbarChange(options) {
         history.push({
-            search: `?${stringify(
-                { ...queryParams, ...options, page: 1 },
-                { arrayFormat: 'comma' }
-            )}`
+            search: `?${stringify({
+                ...queryParams,
+                ...options,
+                page: 1,
+                count: ARTICLES_PER_PAGE
+            })}`
+        });
+    }
+
+    function resetFilters() {
+        const { department } = queryParams;
+        history.push({
+            pathname: location.pathname,
+            search: `?${stringify({
+                department,
+                page: 1,
+                count: ARTICLES_PER_PAGE,
+                query: '',
+                author: ''
+                // newspaper: ''
+            })}`
         });
     }
 
@@ -78,7 +77,10 @@ const Articles = props => {
             justify="space-between"
             alignItems="stretch"
         >
-            <Toolbar reloadArticles={handleToolbarChange} />
+            <Toolbar
+                reloadArticles={handleToolbarChange}
+                resetFilters={resetFilters}
+            />
             {!articles.length && (
                 <div
                     style={{
@@ -97,38 +99,22 @@ const Articles = props => {
             />
             {!!articles.length && (
                 <Grid container justify="center">
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                         <Pagination
                             currentPage={currentPage}
                             handlePageChange={handlePageChange}
-                            pageLimit={12}
-                            totalRecords={200}
+                            pageLimit={ARTICLES_PER_PAGE}
+                            totalRecords={listMetaInformation.total}
                         />
                     </Grid>
                 </Grid>
             )}
 
             <Route exact path={`${match.url}/:id`}>
-                <Article handleClose={handleClose} />
+                <Article handleClose={handleArticleClose} />
             </Route>
         </Grid>
     );
 };
 
-const mapStateToProps = state => ({
-    async: getListAsync(state),
-    articles: getArticles(state)
-});
-
-const mapDispatchToProps = {
-    loadArticles: articleActions.loadArticles,
-    updatePage: articleActions.updatePage
-};
-
-Articles.propTypes = {
-    async: PropTypes.object.isRequired,
-    articles: PropTypes.array.isRequired,
-    loadArticles: PropTypes.func.isRequired
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Articles);
+export default Articles;
