@@ -23,6 +23,6 @@ export default {
     },
     ANALYTICS_GET: {
         method: 'GET',
-        path: options => `/articles/analytics?${stringify(options)}`
+        path: options => `/analytics?${stringify(options)}`
     }
 };
