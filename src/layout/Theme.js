@@ -11,23 +11,15 @@ const theme = createMuiTheme({
         danger: 'orange'
     },
     typography: {
-        fontFamily: [
-            'Raleway Light',
-            'BlinkMacSystemFont',
-            '"Segoe UI"',
-            'Roboto',
-            '"Helvetica Neue"',
-            'Arial',
-            'sans-serif',
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"'
-        ].join(',')
+        fontFamily: ['Raleway', 'Arial', 'sans-serif'].join(',')
     },
     overrides: {
         MuiTypography: {
-            button: {
-                letterSpacing: '0.2em'
+            subtitle2: {
+                fontWeight: 700,
+                lineHeight: 1.75,
+                lineSpacing: '0.02857em',
+                textTransform: 'uppercase'
             }
         },
         MuiCard: {
@@ -55,6 +47,19 @@ const theme = createMuiTheme({
         MuiDivider: {
             root: {
                 backgroundColor: '#000'
+            }
+        },
+        MuiDrawer: {
+            paper: {
+                backgroundColor: '#373A48',
+                paddingTop: 20,
+                paddingLeft: 20
+            }
+        },
+        MuiAppBar: {
+            colorDefault: {
+                backgroundColor: '#fff',
+                color: '#000'
             }
         }
     }
