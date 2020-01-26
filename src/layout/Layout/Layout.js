@@ -33,7 +33,7 @@ const Layout = () => {
                             className="NavLink"
                             to={`/articles?page=1&count=${ARTICLES_PER_PAGE}`}
                         >
-                            <img src={logo} width={80} height={80} alt="logo" />
+                            <img src={logo} width={70} height={70} alt="logo" />
                         </NavLink>
                     </Grid>
                 </Toolbar>

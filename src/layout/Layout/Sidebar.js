@@ -17,7 +17,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
     const sideList = () => (
         <div
-            style={{ width: 250 }}
+            style={{ width: 250, marginBottom: 30 }}
             role="presentation"
             onClick={() => toggleSidebar(false)}
             onKeyDown={() => toggleSidebar(false)}

@@ -20,6 +20,9 @@ const theme = createMuiTheme({
                 lineHeight: 1.75,
                 lineSpacing: '0.02857em',
                 textTransform: 'uppercase'
+            },
+            button: {
+                fontWeight: 700
             }
         },
         MuiCard: {
@@ -60,6 +63,14 @@ const theme = createMuiTheme({
             colorDefault: {
                 backgroundColor: '#fff',
                 color: '#000'
+            }
+        },
+        MuiButton: {
+            outlined: {
+                '&:hover': {
+                    backgroundColor: '#373A48',
+                    color: '#fff'
+                }
             }
         }
     }
