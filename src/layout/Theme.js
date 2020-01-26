@@ -22,7 +22,8 @@ const theme = createMuiTheme({
                 textTransform: 'uppercase'
             },
             button: {
-                fontWeight: 700
+                fontWeight: 700,
+                letterSpacing: '0.08em'
             }
         },
         MuiCard: {
@@ -39,6 +40,12 @@ const theme = createMuiTheme({
         MuiChip: {
             root: {
                 margin: 5
+            },
+            colorPrimary: {
+                backgroundColor: '#009688'
+            },
+            colorSecondary: {
+                backgroundColor: '#960094'
             }
         },
         MuiGridList: {

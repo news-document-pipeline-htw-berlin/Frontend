@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-    AppBar,
-    Toolbar,
-    Grid,
-    Typography,
-    IconButton
-} from '@material-ui/core';
+import { AppBar, Toolbar, Grid, IconButton } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import './Layout.css';

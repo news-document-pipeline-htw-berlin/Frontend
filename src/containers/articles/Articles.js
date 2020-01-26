@@ -89,7 +89,7 @@ const Articles = () => {
                         textAlign: 'center'
                     }}
                 >
-                    <p>No articles found</p>
+                    <p>Keine Artikel gefunden</p>
                 </div>
             )}
             <ArticleOverview

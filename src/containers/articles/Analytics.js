@@ -1,45 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import {
-    HorizontalGridLines,
-    // LineSeries,
-    VerticalGridLines,
-    XAxis,
-    XYPlot,
-    YAxis,
-    VerticalBarSeries,
-    DiscreteColorLegend
-} from 'react-vis';
 import '../../../node_modules/react-vis/dist/style.css';
-import { TextField, Typography } from '@material-ui/core';
+import { TextField, Chip } from '@material-ui/core';
 import { unauthorized } from '../../state/httpClient';
 import EndpointConstants from '../../constants/EndpointConstants';
+import DatePicker from '../../components/analytics/DatePicker';
+import Chart from './Chart';
 
 const Analytics = () => {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [response, setResponse] = useState({
-        timeFrom: null,
-        timeTo: null,
-        query: '',
-        totalResults: null,
-        occurrences: []
-    });
-
+    const [keywords, setKeywords] = useState([]);
+    const [response, setResponse] = useState([]);
     const [async, setAsync] = useState({ isLoading: false, error: null });
+    const [dates, setDates] = useState({ startDate: null, endDate: null });
 
-    async function loadAnalytics() {
+    const [searchQuery, setSearchQuery] = useState('');
+
+    async function loadAnalytics(query) {
         const { method, path } = EndpointConstants.ANALYTICS_GET;
         try {
             setAsync({ isLoading: true, error: null });
             const res = await unauthorized({
                 method,
-                // path: path(query, timeFrom, timeTo)
                 path: path({
-                    query: searchQuery,
-                    timeFrom: 1575154800000
+                    query,
+                    timeFrom: dates.startDate.valueOf(),
+                    timeTo: dates.endDate.valueOf()
                 })
             });
-            setResponse(res);
+            setResponse([...response, res]);
         } catch (err) {
             setAsync({ isLoading: false, error: err });
         }
@@ -47,82 +35,71 @@ const Analytics = () => {
 
     function handleKeyPress(e) {
         if (e.key === 'Enter') {
-            loadAnalytics();
+            setKeywords([...keywords, e.target.value]);
+            loadAnalytics(e.target.value);
+            setSearchQuery('');
         }
     }
 
-    function renderGraph() {
-        // TODO: remove default value for occurrences array once endpoint
-        const { occurrences, timeFrom, timeTo, query } = response;
+    function handleDelete(index) {
+        setKeywords([
+            ...keywords.slice(0, index),
+            ...keywords.slice(index + 1)
+        ]);
+        setResponse([
+            ...response.slice(0, index),
+            ...response.slice(index + 1)
+        ]);
+        setSearchQuery('');
+    }
 
-        if (!occurrences.length) {
-            return (
-                <div>
-                    <p>Nothing here yet</p>
-                </div>
-            );
+    function renderKeyWords() {
+        if (!keywords.length) {
+            return null;
         }
-        const plotData = occurrences.map(item => {
-            return { x: item.date, y: item.occurrences };
-        });
-
-        const from = new Date(timeFrom);
-        const fromFormat = `${from.getDate()}.${from.getMonth() +
-            1}.${from.getFullYear()}`;
-        const to = new Date(timeTo);
-        const toFormat = `${to.getDate()}.${to.getMonth() +
-            1}.${to.getFullYear()}`;
-
-        return (
-            <Grid container justify="center">
-                <Grid item>
-                    <DiscreteColorLegend
-                        height={50}
-                        width={100}
-                        items={[{ title: query, color: '#3a3' }]}
-                    />
-                    <XYPlot width={1000} height={400} xType="time">
-                        <VerticalGridLines />
-                        <HorizontalGridLines />
-                        <XAxis title="X" tickLabelAngle={-45} />
-                        <YAxis title="Y" />
-                        <VerticalBarSeries
-                            data={plotData}
-                            color="#009688"
-                            barWidth={0.5}
-                        />
-                    </XYPlot>
-                </Grid>
-            </Grid>
-        );
+        return keywords.map((keyword, index) => (
+            <Chip
+                variant="outlined"
+                color={index === 0 ? 'primary' : 'secondary'}
+                label={keyword}
+                onDelete={() => handleDelete(index)}
+            />
+        ));
     }
 
     return (
-        <Grid container justify="center">
+        <Grid container justify="center" style={{ marginTop: 20 }}>
             <Grid item xs={10} md={4} xl={2}>
-                <TextField
-                    label="Search term"
-                    type="search"
-                    onKeyPress={handleKeyPress}
-                    margin="normal"
-                    variant="outlined"
-                    value={searchQuery}
-                    fullWidth
-                    onChange={e => setSearchQuery(e.target.value)}
-                />
-                {renderGraph()}
+                <Grid container>
+                    <Grid item xs={12}>
+                        <DatePicker dates={dates} handleDateChange={setDates} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            label="Suchbegriff"
+                            type="search"
+                            onKeyPress={handleKeyPress}
+                            margin="normal"
+                            variant="outlined"
+                            value={searchQuery}
+                            fullWidth
+                            onChange={e => setSearchQuery(e.target.value)}
+                            disabled={
+                                keywords.length === 2 ||
+                                dates.startDate === null ||
+                                dates.endDate === null
+                            }
+                            InputLabelProps={{ zIndex: 0 }}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        {renderKeyWords()}
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Chart data={response} async={async} />
+                    </Grid>
+                </Grid>
             </Grid>
-            {/* <Grid item>
-                <Typography variant="h4" gutterBottom>
-                    Query: {query}
-                </Typography>
-                <div>
-                    <Typography>
-                        Timeframe: {`${fromFormat} - ${toFormat}`}
-                    </Typography>
-                    <Typography>TotalHits: {totalResults}</Typography>
-                </div>
-            </Grid> */}
         </Grid>
     );
 };

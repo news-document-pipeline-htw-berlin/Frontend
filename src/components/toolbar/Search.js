@@ -19,7 +19,7 @@ const Search = ({ reloadArticles }) => {
     }
     return (
         <TextField
-            label="Search articles"
+            label="Stichwortsuche"
             type="search"
             onKeyPress={handleKeyPress}
             variant="outlined"
