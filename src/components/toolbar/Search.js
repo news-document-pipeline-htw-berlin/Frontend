@@ -22,7 +22,6 @@ const Search = ({ reloadArticles }) => {
             label="Search articles"
             type="search"
             onKeyPress={handleKeyPress}
-            margin="normal"
             variant="outlined"
             value={searchQuery}
             fullWidth
