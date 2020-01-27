@@ -41,6 +41,9 @@ const theme = createMuiTheme({
             root: {
                 margin: 5
             },
+            colorDefault: {
+                backgroundColor: '#373A48'
+            },
             colorPrimary: {
                 backgroundColor: '#009688'
             },

@@ -15,19 +15,13 @@ import headerPhoto from '../../assets/images/stock.jpg';
 
 const ArticlePreview = props => {
     const { onClick, isLoading, article } = props;
-    const { title, authors, readingTime, imageLinks } = article;
+    const { title, authors, readingTime, imageLinks, departments } = article;
 
-    // TODO: REMOVE
-    const categories = [
-        { id: 1, name: 'Wirtschaft' },
-        { id: 2, name: 'Politik' }
-    ];
-
-    const chips = categories.map(category => (
+    const chips = departments.map(department => (
         <Chip
-            color="secondary"
-            key={category.id}
-            label={category.name}
+            color="default"
+            key={department}
+            label={department}
             component="a"
             clickable
             variant="outlined"
