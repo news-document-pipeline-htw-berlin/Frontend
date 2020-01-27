@@ -13,7 +13,14 @@ const Toolbar = ({ reloadArticles, resetFilters }) => {
             alignItems="center"
             style={{ marginTop: 20 }}
         >
-            <Grid item xs={10} sm={8} md={2} style={{ marginBottom: 10 }}>
+            <Grid
+                item
+                xs={10}
+                sm={8}
+                md={2}
+                display={{ xs: 'block', md: 'inline' }}
+                style={{ marginBottom: 10 }}
+            >
                 <Search reloadArticles={reloadArticles} />
             </Grid>
             <Grid item xs={10} sm={8} md={2} style={{ marginBottom: 10 }}>
