@@ -19,6 +19,7 @@ const theme = createMuiTheme({
                 fontWeight: 700,
                 lineHeight: 1.75,
                 lineSpacing: '0.02857em',
+                letterSpacing: '0.04em',
                 textTransform: 'uppercase'
             },
             button: {
@@ -65,8 +66,7 @@ const theme = createMuiTheme({
         MuiDrawer: {
             paper: {
                 backgroundColor: '#373A48',
-                paddingTop: 20,
-                paddingLeft: 20
+                padding: 20
             }
         },
         MuiAppBar: {
