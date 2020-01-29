@@ -13,38 +13,18 @@ import { Grid } from '@material-ui/core';
 
 const barColors = ['#009688', '#960094'];
 
-const Chart = ({ data, async }) => {
-    if (async.error) {
-        return (
-            <div>
-                <p>Es ist ein Fehler aufgetreten.</p>
-            </div>
-        );
-    }
-
+const Chart = ({ data }) => {
     if (!data.length) {
-        return (
-            <div>
-                <p>
-                    Bitte wähle eine Datumsspanne und ein bis zwei Suchbegriffe
-                    aus.
-                </p>
-            </div>
-        );
+        return null;
     }
 
-    function renderLegend() {
-        if (!data.length) {
-            return null;
-        }
-        return data.map((entry, index) => (
-            <DiscreteColorLegend
-                height={40}
-                width={200}
-                items={[{ title: entry.query, color: barColors[index] }]}
-            />
-        ));
-    }
+    const legend = data.map((entry, index) => (
+        <DiscreteColorLegend
+            height={40}
+            width={200}
+            items={[{ title: entry.query, color: barColors[index] }]}
+        />
+    ));
 
     const plotData = data.map(r => {
         return r.occurrences.map(item => {
@@ -63,7 +43,7 @@ const Chart = ({ data, async }) => {
     return (
         <Grid container justify="center">
             <Grid item>
-                {renderLegend()}
+                {legend}
                 <XYPlot width={1000} height={400} xType="time">
                     <VerticalGridLines />
                     <HorizontalGridLines />

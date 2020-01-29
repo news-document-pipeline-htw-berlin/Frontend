@@ -11,7 +11,7 @@ const DatePicker = ({ dates, handleDateChange }) => {
 
     return (
         <DateRangePicker
-            keepOpenOnDateSelect
+            noBorder
             startDate={dates.startDate}
             startDatePlaceholderText="Startdatum"
             endDatePlaceholderText="Enddatum"

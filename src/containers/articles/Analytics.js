@@ -28,17 +28,26 @@ const Analytics = () => {
                 })
             });
             setResponse([...response, res]);
+            setKeywords([...keywords, query]);
+            setAsync({ isLoading: false, error: null });
         } catch (err) {
             setAsync({ isLoading: false, error: err });
         }
     }
 
     function handleKeyPress(e) {
+        const { value } = e.target;
         if (e.key === 'Enter') {
-            setKeywords([...keywords, e.target.value]);
-            loadAnalytics(e.target.value);
+            loadAnalytics(value);
             setSearchQuery('');
         }
+    }
+
+    function handleChange(e) {
+        if (async.error) {
+            setAsync({ ...async, error: null });
+        }
+        setSearchQuery(e.target.value);
     }
 
     function handleDelete(index) {
@@ -67,6 +76,19 @@ const Analytics = () => {
         ));
     }
 
+    function renderHelperText() {
+        if (async.error) {
+            return 'Suchbegriff nicht gefunden';
+        }
+        if (keywords.length === 0 && (!dates.startDate || !dates.endDate)) {
+            return 'Bitte wähle zuerst eine Datumsspanne aus.';
+        }
+        if (keywords.length === 2) {
+            return 'Maximale Anzahl der Suchebegriffe erreicht.';
+        }
+        return '';
+    }
+
     return (
         <Grid container justify="center" style={{ marginTop: 20 }}>
             <Grid item xs={10} md={4} xl={2}>
@@ -78,25 +100,26 @@ const Analytics = () => {
                         <TextField
                             label="Suchbegriff"
                             type="search"
+                            error={async.error}
+                            helperText={renderHelperText()}
                             onKeyPress={handleKeyPress}
-                            margin="normal"
                             variant="outlined"
                             value={searchQuery}
                             fullWidth
-                            onChange={e => setSearchQuery(e.target.value)}
+                            onChange={handleChange}
                             disabled={
                                 keywords.length === 2 ||
                                 dates.startDate === null ||
                                 dates.endDate === null
                             }
-                            InputLabelProps={{ zIndex: 0 }}
+                            InputLabelProps={{ style: { zIndex: 0 } }}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         {renderKeyWords()}
                     </Grid>
-                    <Grid item xs={12}>
-                        <Chart data={response} async={async} />
+                    <Grid item xs={12} justify="center">
+                        <Chart data={response} />
                     </Grid>
                 </Grid>
             </Grid>
