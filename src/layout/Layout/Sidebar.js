@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
     SwipeableDrawer,
@@ -10,14 +10,17 @@ import {
 import { stringify } from 'query-string';
 import { NavLink } from 'react-router-dom';
 import { useDepartment } from '../../hooks/useDepartment';
+import useQueryParams from '../../hooks/useQueryParams';
 import { ARTICLES_PER_PAGE } from '../../constants/CommonConstants';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
     const { departments } = useDepartment();
 
+    const { department: departmentParam } = useQueryParams();
+
     const sideList = () => (
         <div
-            style={{ width: 250 }}
+            style={{ width: 250, marginBottom: 30 }}
             role="presentation"
             onClick={() => toggleSidebar(false)}
             onKeyDown={() => toggleSidebar(false)}
@@ -36,17 +39,31 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                             }}
                             className="NavLink"
                             style={{ width: '100%' }}
+                            isActive={() => departmentParam === department}
+                            activeStyle={{
+                                textDecoration: 'underline',
+                                textDecorationColor: 'yellow',
+                                textUnderlinePosition: 'under'
+                            }}
                         >
                             <Typography
                                 variant="subtitle2"
-                                style={{ color: '#fff' }}
+                                component="div"
+                                style={{ color: '#b8b7ad', marginBottom: 4 }}
                             >
                                 {department}
                             </Typography>
                         </NavLink>
                     </ListItem>
                 ))}
-                <Divider style={{ backgroundColor: '#fff' }} variant="middle" />
+                <Divider
+                    style={{
+                        backgroundColor: '#b8b7ad',
+                        marginBottom: 4,
+                        marginTop: 4
+                    }}
+                    variant="middle"
+                />
                 <ListItem button key="analytics">
                     <NavLink
                         to={{
@@ -57,7 +74,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     >
                         <Typography
                             variant="subtitle2"
-                            style={{ color: '#fff' }}
+                            style={{ color: '#b8b7ad' }}
                         >
                             Statistiken
                         </Typography>

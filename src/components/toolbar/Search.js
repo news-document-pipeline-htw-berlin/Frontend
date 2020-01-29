@@ -9,7 +9,7 @@ const Search = ({ reloadArticles }) => {
     const [searchQuery, setSearchQuery] = useState(query || '');
 
     useEffect(() => {
-        setSearchQuery(query);
+        setSearchQuery(query || '');
     }, [query]);
 
     function handleKeyPress(e) {
@@ -19,10 +19,9 @@ const Search = ({ reloadArticles }) => {
     }
     return (
         <TextField
-            label="Search articles"
+            label="Stichwortsuche"
             type="search"
             onKeyPress={handleKeyPress}
-            margin="normal"
             variant="outlined"
             value={searchQuery}
             fullWidth

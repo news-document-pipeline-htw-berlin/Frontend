@@ -7,7 +7,7 @@ import { ArticlePropTypes } from '../../constants/NewsPropTypes';
 const ArticleOverview = ({ articles, async, handleArticleClick }) => {
     const { error, isLoading } = async;
     return error ? (
-        <p> An error occurred</p>
+        <p> Es ist ein Fehler aufgetreten</p>
     ) : (
         <Grid container>
             {articles.map(article => {

@@ -19,7 +19,12 @@ const theme = createMuiTheme({
                 fontWeight: 700,
                 lineHeight: 1.75,
                 lineSpacing: '0.02857em',
+                letterSpacing: '0.04em',
                 textTransform: 'uppercase'
+            },
+            button: {
+                fontWeight: 700,
+                letterSpacing: '0.08em'
             }
         },
         MuiCard: {
@@ -36,6 +41,15 @@ const theme = createMuiTheme({
         MuiChip: {
             root: {
                 margin: 5
+            },
+            colorDefault: {
+                backgroundColor: '#373A48'
+            },
+            colorPrimary: {
+                backgroundColor: '#009688'
+            },
+            colorSecondary: {
+                backgroundColor: '#960094'
             }
         },
         MuiGridList: {
@@ -52,14 +66,21 @@ const theme = createMuiTheme({
         MuiDrawer: {
             paper: {
                 backgroundColor: '#373A48',
-                paddingTop: 20,
-                paddingLeft: 20
+                padding: 20
             }
         },
         MuiAppBar: {
             colorDefault: {
                 backgroundColor: '#fff',
                 color: '#000'
+            }
+        },
+        MuiButton: {
+            outlined: {
+                '&:hover': {
+                    backgroundColor: '#373A48',
+                    color: '#fff'
+                }
             }
         }
     }

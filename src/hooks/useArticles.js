@@ -13,7 +13,7 @@ export function useArticles(queryParams, articlesPerPage) {
     useEffect(() => {
         async function fetchArticles() {
             const options = {
-                offset: currentPage - 1,
+                offset: (currentPage - 1) * articlesPerPage,
                 count: articlesPerPage,
                 department,
                 newspaper,

@@ -20,5 +20,9 @@ export default {
     DEPARTMENT_LIST: {
         method: 'GET',
         path: '/articles/newspapers'
+    },
+    ANALYTICS_GET_TERMS: {
+        method: 'GET',
+        path: options => `/analytics/terms?${stringify(options)}`
     }
 };

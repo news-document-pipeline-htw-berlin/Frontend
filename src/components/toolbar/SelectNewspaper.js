@@ -72,7 +72,7 @@ const SelectNewspaper = ({ reloadArticles }) => {
 
     return (
         <FormControl fullWidth>
-            <InputLabel style={{ marginLeft: 10 }}>Newspapers</InputLabel>
+            <InputLabel style={{ marginLeft: 10 }}>Quellen</InputLabel>
             <Select
                 multiple
                 value={newspaperParam}

@@ -94,7 +94,7 @@ const Article = props => {
                     <DialogContent>
                         {async.isLoading && <LoadingAnimation />}
                         {async.error && (
-                            <ErrorInfo message="An error occurred when loading the article. Please try to refresh the page" />
+                            <ErrorInfo message="Beim Laden der Artikel ist ein Fehler aufgetreten. Bitte versuche, die Seite neu zu laden." />
                         )}
                         {article.imageLinks.length && (
                             <CardMedia

@@ -63,8 +63,7 @@ const Search = ({ reloadArticles }) => {
             renderInput={params => (
                 <TextField
                     {...params}
-                    margin="normal"
-                    label="Search authors"
+                    label="Suche nach AutorInnen"
                     variant="outlined"
                     fullWidth
                 />

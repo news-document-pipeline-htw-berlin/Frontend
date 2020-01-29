@@ -10,3 +10,8 @@ export const ArticlePropTypes = PropTypes.shape({
     newsSite: PropTypes.string.isRequired,
     imageLinks: PropTypes.arrayOf.isRequired
 });
+
+export const AsyncPropTypes = PropTypes.shape({
+    isLoading: PropTypes.bool.isRequired,
+    error: PropTypes.object.isRequired
+});
