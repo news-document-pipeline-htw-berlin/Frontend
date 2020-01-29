@@ -6,6 +6,7 @@ import { unauthorized } from '../../state/httpClient';
 import EndpointConstants from '../../constants/EndpointConstants';
 import DatePicker from '../../components/analytics/DatePicker';
 import Chart from './Chart';
+import { wording } from '../../components/common/common';
 
 const MAX_WORDS = 5;
 
@@ -80,13 +81,13 @@ const Analytics = () => {
 
     function renderHelperText() {
         if (async.error) {
-            return 'Suchbegriff nicht gefunden';
+            return wording.analytics.keywordNotFound;
         }
         if (keywords.length === 0 && (!dates.startDate || !dates.endDate)) {
-            return 'Bitte wähle zuerst eine Datumsspanne aus.';
+            return wording.analytics.noDateSelected;
         }
         if (keywords.length === MAX_WORDS) {
-            return 'Maximale Anzahl der Suchebegriffe erreicht.';
+            return wording.analytics.maxKeywords;
         }
         return '';
     }

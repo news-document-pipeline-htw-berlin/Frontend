@@ -3,11 +3,12 @@ import { Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import ArticlePreview from './ArticlePreview';
 import { ArticlePropTypes } from '../../constants/NewsPropTypes';
+import { wording } from '../common/common';
 
 const ArticleOverview = ({ articles, async, handleArticleClick }) => {
     const { error, isLoading } = async;
     return error ? (
-        <p> Es ist ein Fehler aufgetreten</p>
+        <p>{wording.error}</p>
     ) : (
         <Grid container>
             {articles.map(article => {

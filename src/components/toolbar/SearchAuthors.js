@@ -7,6 +7,7 @@ import EndpointConstants from '../../constants/EndpointConstants';
 import { unauthorized } from '../../state/httpClient';
 import useDebounce from '../../hooks/useDebounce';
 import useQueryParams from '../../hooks/useQueryParams';
+import { wording } from '../common/common';
 
 const Search = ({ reloadArticles }) => {
     const { author: authorParam } = useQueryParams();
@@ -63,7 +64,7 @@ const Search = ({ reloadArticles }) => {
             renderInput={params => (
                 <TextField
                     {...params}
-                    label="Suche nach AutorInnen"
+                    label={wording.toolbar.authors.label}
                     variant="outlined"
                     fullWidth
                 />
