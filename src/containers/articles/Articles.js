@@ -95,7 +95,7 @@ const Articles = () => {
             />
             {!!articles.length && (
                 <Grid container justify="center">
-                    <Grid item xs={4}>
+                    <Grid item xs={10} md={8} lg={6} xl={4}>
                         <Pagination
                             currentPage={currentPage}
                             handlePageChange={handlePageChange}

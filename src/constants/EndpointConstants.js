@@ -24,5 +24,9 @@ export default {
     ANALYTICS_GET_TERMS: {
         method: 'GET',
         path: options => `/analytics/terms?${stringify(options)}`
+    },
+    ANALYTICS_GET_KEYWORDS: {
+        method: 'GET',
+        path: '/analytics/lemmas'
     }
 };
