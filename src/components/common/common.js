@@ -24,5 +24,10 @@ export const wording = {
         newspaper: {
             label: 'Quellen'
         }
+    },
+    navBar: {
+        keywords: {
+            error: 'Fehler beim Laden der relevantesten Themen.'
+        }
     }
 };

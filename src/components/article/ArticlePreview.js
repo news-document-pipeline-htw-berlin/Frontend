@@ -28,7 +28,7 @@ const ArticlePreview = ({ onClick, isLoading, article }) => {
             search: `?${stringify({
                 department,
                 page: 1,
-                max: ARTICLES_PER_PAGE
+                count: ARTICLES_PER_PAGE
             })}`
         });
     }
