@@ -7,6 +7,8 @@ import EndpointConstants from '../../constants/EndpointConstants';
 import DatePicker from '../../components/analytics/DatePicker';
 import Chart from './Chart';
 
+const MAX_WORDS = 5;
+
 const Analytics = () => {
     const [keywords, setKeywords] = useState([]);
     const [response, setResponse] = useState([]);
@@ -16,7 +18,7 @@ const Analytics = () => {
     const [searchQuery, setSearchQuery] = useState('');
 
     async function loadAnalytics(query) {
-        const { method, path } = EndpointConstants.ANALYTICS_GET;
+        const { method, path } = EndpointConstants.ANALYTICS_GET_TERMS;
         try {
             setAsync({ isLoading: true, error: null });
             const res = await unauthorized({
@@ -69,7 +71,7 @@ const Analytics = () => {
         return keywords.map((keyword, index) => (
             <Chip
                 variant="outlined"
-                color={index === 0 ? 'primary' : 'secondary'}
+                color="default"
                 label={keyword}
                 onDelete={() => handleDelete(index)}
             />
@@ -83,7 +85,7 @@ const Analytics = () => {
         if (keywords.length === 0 && (!dates.startDate || !dates.endDate)) {
             return 'Bitte wähle zuerst eine Datumsspanne aus.';
         }
-        if (keywords.length === 2) {
+        if (keywords.length === MAX_WORDS) {
             return 'Maximale Anzahl der Suchebegriffe erreicht.';
         }
         return '';
@@ -91,7 +93,7 @@ const Analytics = () => {
 
     return (
         <Grid container justify="center" style={{ marginTop: 20 }}>
-            <Grid item xs={10} md={4} xl={2}>
+            <Grid item xs={10} md={4} xl={6}>
                 <Grid container>
                     <Grid item xs={12}>
                         <DatePicker dates={dates} handleDateChange={setDates} />
@@ -108,7 +110,7 @@ const Analytics = () => {
                             fullWidth
                             onChange={handleChange}
                             disabled={
-                                keywords.length === 2 ||
+                                keywords.length === MAX_WORDS ||
                                 dates.startDate === null ||
                                 dates.endDate === null
                             }
@@ -118,10 +120,10 @@ const Analytics = () => {
                     <Grid item xs={12}>
                         {renderKeyWords()}
                     </Grid>
-                    <Grid item xs={12} justify="center">
-                        <Chart data={response} />
-                    </Grid>
                 </Grid>
+            </Grid>
+            <Grid item xs={12} justify="center">
+                <Chart data={response} />
             </Grid>
         </Grid>
     );

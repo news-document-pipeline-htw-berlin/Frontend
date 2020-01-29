@@ -21,8 +21,8 @@ export default {
         method: 'GET',
         path: '/articles/newspapers'
     },
-    ANALYTICS_GET: {
+    ANALYTICS_GET_TERMS: {
         method: 'GET',
-        path: options => `/analytics?${stringify(options)}`
+        path: options => `/analytics/terms?${stringify(options)}`
     }
 };

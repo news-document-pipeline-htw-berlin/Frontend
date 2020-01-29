@@ -9,7 +9,7 @@ const Search = ({ reloadArticles }) => {
     const [searchQuery, setSearchQuery] = useState(query || '');
 
     useEffect(() => {
-        setSearchQuery(query);
+        setSearchQuery(query || '');
     }, [query]);
 
     function handleKeyPress(e) {

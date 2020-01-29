@@ -4,7 +4,7 @@ import {
     HorizontalGridLines,
     VerticalGridLines,
     XAxis,
-    XYPlot,
+    FlexibleWidthXYPlot,
     YAxis,
     VerticalBarSeries,
     DiscreteColorLegend
@@ -22,7 +22,7 @@ const Chart = ({ data }) => {
         <DiscreteColorLegend
             height={40}
             width={200}
-            items={[{ title: entry.query, color: barColors[index] }]}
+            items={[{ title: entry.query }]}
         />
     ));
 
@@ -35,22 +35,22 @@ const Chart = ({ data }) => {
     const plots = plotData.map((entry, index) => (
         <VerticalBarSeries
             data={entry}
-            color={barColors[index]}
+            // color={barColors[index]}
             barWidth={0.5}
         />
     ));
 
     return (
         <Grid container justify="center">
-            <Grid item>
+            <Grid item xs={10}>
                 {legend}
-                <XYPlot width={1000} height={400} xType="time">
+                <FlexibleWidthXYPlot xType="time" height={300}>
                     <VerticalGridLines />
                     <HorizontalGridLines />
-                    <XAxis title="X" tickLabelAngle={-45} />
-                    <YAxis title="Y" />
+                    <XAxis tickLabelAngle={-45} />
+                    <YAxis />
                     {plots}
-                </XYPlot>
+                </FlexibleWidthXYPlot>
             </Grid>
         </Grid>
     );
