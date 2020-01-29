@@ -1,31 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
-import { DialogContent, Grid, Chip, Link, CardMedia } from '@material-ui/core';
-import PropTypes from 'prop-types';
-import { useRouteMatch, useHistory } from 'react-router-dom';
 import { stringify } from 'query-string';
+import { useRouteMatch, useHistory, useLocation } from 'react-router-dom';
 import EndpointConstants from '../../constants/EndpointConstants';
 import { unauthorized } from '../../state/httpClient';
-import LoadingAnimation from '../common/LoadingAnimation';
-import ErrorInfo from '../common/ErrorInfo';
-import ReadingTime from './ReadingTime';
+import ArticleContent from './ArticleContent';
+import ArticleHeader from './ArticleHeader';
+import { ARTICLES_PER_PAGE } from '../../constants/CommonConstants';
 
-const Article = props => {
-    const { handleClose } = props;
-
+const Article = () => {
     const {
         params: { id }
     } = useRouteMatch();
 
     const history = useHistory();
+    const location = useLocation();
 
     const [article, setArticle] = useState(null);
     const [async, setAsync] = useState({ isLoading: false, error: null });
+
+    function handleClose() {
+        if (location.state && location.state.fromHome) {
+            history.goBack();
+        } else {
+            history.push({
+                pathname: '/articles',
+                search: `?${stringify({
+                    page: 1,
+                    count: ARTICLES_PER_PAGE
+                })}`
+            });
+        }
+    }
 
     useEffect(() => {
         async function fetchArticle() {
@@ -50,85 +56,12 @@ const Article = props => {
         return null;
     }
 
-    function handleClick(keyword) {
-        history.push({
-            pathname: '/articles',
-            search: `?${stringify({ query: keyword, page: 1 })}`
-        });
-    }
-
-    const chips = article.mostRelevantLemmas.map(keyword => (
-        <Chip
-            color="secondary"
-            onClick={() => handleClick(keyword)}
-            key={keyword}
-            label={keyword}
-            clickable
-            variant="outlined"
-        />
-    ));
-
     return (
-        <Dialog open fullScreen onClose={handleClose}>
-            <AppBar position="sticky">
-                <Toolbar>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        onClick={handleClose}
-                        aria-label="close"
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                    <Grid container justify="center">
-                        <Grid item xs={6}>
-                            <Typography variant="h6">
-                                {article.title}
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                </Toolbar>
-            </AppBar>
-            <Grid container justify="center">
-                <Grid item xs={6}>
-                    <DialogContent>
-                        {async.isLoading && <LoadingAnimation />}
-                        {async.error && (
-                            <ErrorInfo message="Beim Laden der Artikel ist ein Fehler aufgetreten. Bitte versuche, die Seite neu zu laden." />
-                        )}
-                        {article.imageLinks.length && (
-                            <CardMedia
-                                image={article.imageLinks}
-                                title="title image"
-                                style={{ marginBottom: 20 }}
-                            />
-                        )}
-                        <Typography paragraph variant="h6">
-                            {article.description}
-                        </Typography>
-                        <ReadingTime readingTime={article.readingTime} />
-                        <Typography>{article.text}</Typography>
-                        <div style={{ margin: 20 }}>{chips}</div>
-                        {article.longUrl && (
-                            <div style={{ marginBottom: 20 }}>
-                                <Link
-                                    href={article.longUrl}
-                                    color="secondary"
-                                    underline="hover"
-                                >
-                                    {article.longUrl}
-                                </Link>
-                            </div>
-                        )}
-                    </DialogContent>
-                </Grid>
-            </Grid>
+        <Dialog open={id} fullScreen onClose={handleClose}>
+            <ArticleHeader article={article} handleClose={handleClose} />
+            <ArticleContent article={article} async={async} />
         </Dialog>
     );
-};
-
-Article.propTypes = {
-    handleClose: PropTypes.func.isRequired
 };
 
 export default Article;

@@ -14,7 +14,7 @@ const ReadingTime = ({ readingTime }) => {
                 <FontAwesomeIcon
                     style={{ marginRight: 5 }}
                     icon={faClock}
-                    color="#d500f9"
+                    color="#009688"
                 />
                 {`Lesezeit: ${readingTime} Minuten`}
             </Typography>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { DateRangePicker, isInclusivelyAfterDay } from 'react-dates';
 import deLocale from 'moment/locale/de';
 import moment from 'moment';
+import { wording } from '../common/common';
 
 const DatePicker = ({ dates, handleDateChange }) => {
     const [focusedInput, setFocusedInput] = useState(null);
@@ -33,8 +34,8 @@ const DatePicker = ({ dates, handleDateChange }) => {
             minimumNights={7}
             startDate={dates.startDate}
             endDate={dates.endDate}
-            startDatePlaceholderText="Startdatum"
-            endDatePlaceholderText="Enddatum"
+            startDatePlaceholderText={wording.analytics.startDate}
+            endDatePlaceholderText={wording.analytics.endDate}
             onDatesChange={({ startDate, endDate }) =>
                 handleDateChange({ startDate, endDate })
             }

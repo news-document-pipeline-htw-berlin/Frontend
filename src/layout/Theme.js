@@ -73,6 +73,10 @@ const theme = createMuiTheme({
             colorDefault: {
                 backgroundColor: '#fff',
                 color: '#000'
+            },
+            colorPrimary: {
+                backgroundColor: '#373A48',
+                color: '#fff'
             }
         },
         MuiButton: {

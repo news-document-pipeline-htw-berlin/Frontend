@@ -3,6 +3,7 @@ import { TextField, InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import useQueryParams from '../../hooks/useQueryParams';
+import { wording } from '../common/common';
 
 const Search = ({ reloadArticles }) => {
     const { query } = useQueryParams();
@@ -19,7 +20,7 @@ const Search = ({ reloadArticles }) => {
     }
     return (
         <TextField
-            label="Stichwortsuche"
+            label={wording.toolbar.search.label}
             type="search"
             onKeyPress={handleKeyPress}
             variant="outlined"

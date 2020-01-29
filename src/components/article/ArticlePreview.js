@@ -1,4 +1,5 @@
 import React from 'react';
+import { stringify } from 'query-string';
 import Card from '@material-ui/core/Card';
 import {
     CardHeader,
@@ -7,15 +8,30 @@ import {
     Chip,
     Paper
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import LoadingAnimation from '../common/LoadingAnimation';
 import ReadingTime from './ReadingTime';
 import { ArticlePropTypes } from '../../constants/NewsPropTypes';
 import headerPhoto from '../../assets/images/stock.jpg';
+import { ARTICLES_PER_PAGE } from '../../constants/CommonConstants';
 
-const ArticlePreview = props => {
-    const { onClick, isLoading, article } = props;
+const ArticlePreview = ({ onClick, isLoading, article }) => {
     const { title, authors, readingTime, imageLinks, departments } = article;
+
+    const history = useHistory();
+
+    function handleClick(e, department) {
+        e.stopPropagation();
+        history.push({
+            pathname: '/articles',
+            search: `?${stringify({
+                department,
+                page: 1,
+                max: ARTICLES_PER_PAGE
+            })}`
+        });
+    }
 
     const chips = departments.map(department => (
         <Chip
@@ -25,6 +41,7 @@ const ArticlePreview = props => {
             component="a"
             clickable
             variant="outlined"
+            onClick={e => handleClick(e, department)}
         />
     ));
 
@@ -36,7 +53,7 @@ const ArticlePreview = props => {
                 <CardActionArea onClick={onClick}>
                     <CardMedia
                         image={imageLinks.length ? imageLinks[0] : headerPhoto}
-                        title="Stock photo"
+                        title="title photo"
                     />
                     <Paper elevation={0} style={{ margin: 10 }}>
                         {chips}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { wording } from './common';
 
 const ErrorInfo = ({ message, onActionClick }) => {
     const style = {
@@ -14,7 +15,7 @@ const ErrorInfo = ({ message, onActionClick }) => {
         <div style={style.container}>
             <p>{message}</p>
             {onActionClick && (
-                <Button onClick={onActionClick}>Neu laden</Button>
+                <Button onClick={onActionClick}>{wording.reload}</Button>
             )}
         </div>
     );

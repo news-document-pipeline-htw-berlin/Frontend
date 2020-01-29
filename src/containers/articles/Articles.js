@@ -28,11 +28,10 @@ const Articles = () => {
     );
 
     function handleArticleClick(article) {
-        history.push(`/articles/${article.id}`);
-    }
-
-    function handleArticleClose() {
-        history.goBack();
+        history.push({
+            pathname: `/articles/${article.id}`,
+            state: { fromHome: true }
+        });
     }
 
     function handlePageChange(newPage) {
@@ -62,10 +61,7 @@ const Articles = () => {
             search: `?${stringify({
                 department,
                 page: 1,
-                count: ARTICLES_PER_PAGE,
-                query: '',
-                author: ''
-                // newspaper: ''
+                count: ARTICLES_PER_PAGE
             })}`
         });
     }
@@ -111,7 +107,7 @@ const Articles = () => {
             )}
 
             <Route exact path={`${match.url}/:id`}>
-                <Article handleClose={handleArticleClose} />
+                <Article />
             </Route>
         </Grid>
     );

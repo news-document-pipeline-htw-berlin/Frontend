@@ -13,6 +13,7 @@ import { useHistory } from 'react-router-dom';
 import { stringify } from 'query-string';
 import useQueryParams from '../../hooks/useQueryParams';
 import { useNewspaper } from '../../hooks/useNewspaper';
+import { wording } from '../common/common';
 
 const SelectNewspaper = ({ reloadArticles }) => {
     const history = useHistory();
@@ -72,7 +73,9 @@ const SelectNewspaper = ({ reloadArticles }) => {
 
     return (
         <FormControl fullWidth>
-            <InputLabel style={{ marginLeft: 10 }}>Quellen</InputLabel>
+            <InputLabel style={{ marginLeft: 10 }}>
+                {wording.toolbar.newspaper.label}
+            </InputLabel>
             <Select
                 multiple
                 value={newspaperParam}
