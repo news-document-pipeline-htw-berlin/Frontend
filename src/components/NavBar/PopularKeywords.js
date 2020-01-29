@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { stringify } from 'query-string';
 import { ARTICLES_PER_PAGE } from '../../constants/CommonConstants';
+import { AsyncPropTypes } from '../../constants/NewsPropTypes';
+import { wording } from '../common/common';
 
-const PopularKeywords = ({ keywords }) => {
+const PopularKeywords = ({ keywords, async }) => {
     const history = useHistory();
     function handleClick(keyword) {
         history.push({
@@ -21,16 +23,20 @@ const PopularKeywords = ({ keywords }) => {
         <React.Fragment>
             <Toolbar>
                 <Grid container justify="center">
-                    {keywords.map(keyword => (
-                        <Chip
-                            color="default"
-                            onClick={() => handleClick(keyword.lemma)}
-                            key={keyword.lemma}
-                            label={keyword.lemma}
-                            clickable
-                            variant="outlined"
-                        />
-                    ))}
+                    {async.error ? (
+                        <p>{wording.navBar.keywords.error}</p>
+                    ) : (
+                        keywords.map(keyword => (
+                            <Chip
+                                color="default"
+                                onClick={() => handleClick(keyword.lemma)}
+                                key={keyword.lemma}
+                                label={keyword.lemma}
+                                clickable
+                                variant="outlined"
+                            />
+                        ))
+                    )}
                 </Grid>
             </Toolbar>
         </React.Fragment>
@@ -38,7 +44,8 @@ const PopularKeywords = ({ keywords }) => {
 };
 
 PopularKeywords.propTypes = {
-    keywords: PropTypes.array.isRequired
+    keywords: PropTypes.array.isRequired,
+    async: AsyncPropTypes.isRequired
 };
 
 export default PopularKeywords;

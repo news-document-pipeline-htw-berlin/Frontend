@@ -26,7 +26,7 @@ const Layout = () => {
             <AppBar position="sticky" color="default">
                 <NavBar handleButtonClick={setSidebarOpen} />
                 <Divider />
-                <PopularKeywords keywords={keywords} />
+                <PopularKeywords keywords={keywords} async={async} />
             </AppBar>
         </React.Fragment>
     );
