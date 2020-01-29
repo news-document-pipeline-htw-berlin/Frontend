@@ -31,6 +31,7 @@ const Analytics = () => {
             });
             setResponse([...response, res]);
             setKeywords([...keywords, query]);
+            setSearchQuery('');
             setAsync({ isLoading: false, error: null });
         } catch (err) {
             setAsync({ isLoading: false, error: err });
@@ -41,7 +42,6 @@ const Analytics = () => {
         const { value } = e.target;
         if (e.key === 'Enter') {
             loadAnalytics(value);
-            setSearchQuery('');
         }
     }
 
