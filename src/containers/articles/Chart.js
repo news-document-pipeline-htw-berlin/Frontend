@@ -11,7 +11,7 @@ import {
 } from 'react-vis';
 import { Grid } from '@material-ui/core';
 
-const barColors = ['#009688', '#960094'];
+const barColors = ['#0868ac', '#43a2ca', '#7bccc4', 'bae4bc', 'f0f9e8'];
 
 const Chart = ({ data }) => {
     if (!data.length) {
@@ -20,9 +20,8 @@ const Chart = ({ data }) => {
 
     const legend = data.map((entry, index) => (
         <DiscreteColorLegend
-            height={40}
-            width={200}
-            items={[{ title: entry.query }]}
+            orientation="horizontal"
+            items={[{ title: entry.query, color: barColors[index] }]}
         />
     ));
 
@@ -35,7 +34,7 @@ const Chart = ({ data }) => {
     const plots = plotData.map((entry, index) => (
         <VerticalBarSeries
             data={entry}
-            // color={barColors[index]}
+            color={barColors[index]}
             barWidth={0.5}
         />
     ));
