@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, InputAdornment } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import CloseIcon from '@material-ui/icons/Close';
 import PropTypes from 'prop-types';
 import useQueryParams from '../../hooks/useQueryParams';
 import { wording } from '../common/common';
@@ -18,22 +18,42 @@ const Search = ({ reloadArticles }) => {
             reloadArticles({ query: searchQuery });
         }
     }
+
+    function handleClear() {
+        setSearchQuery('');
+        reloadArticles({ query: '' });
+    }
+
+    function handleChange(e) {
+        setSearchQuery(e.target.value);
+    }
+
     return (
         <TextField
             label={wording.toolbar.search.label}
-            type="search"
             onKeyPress={handleKeyPress}
             variant="outlined"
             value={searchQuery}
             fullWidth
-            onChange={e => setSearchQuery(e.target.value)}
-            InputProps={{
-                startAdornment: (
-                    <InputAdornment position="start">
-                        <SearchIcon />
-                    </InputAdornment>
-                )
-            }}
+            onChange={handleChange}
+            InputProps={
+                searchQuery
+                    ? {
+                          endAdornment: (
+                              <InputAdornment
+                                  position="end"
+                                  onClick={handleClear}
+                                  style={{ cursor: 'pointer' }}
+                              >
+                                  <CloseIcon
+                                      color="disabled"
+                                      fontSize="small"
+                                  />
+                              </InputAdornment>
+                          )
+                      }
+                    : {}
+            }
         />
     );
 };

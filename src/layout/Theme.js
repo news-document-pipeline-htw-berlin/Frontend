@@ -23,8 +23,7 @@ const theme = createMuiTheme({
                 textTransform: 'uppercase'
             },
             button: {
-                fontWeight: 700,
-                letterSpacing: '0.08em'
+                letterSpacing: '0.06em'
             }
         },
         MuiCard: {

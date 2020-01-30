@@ -29,8 +29,11 @@ const Search = ({ reloadArticles }) => {
 
     const debouncedSearchTerm = useDebounce(authors, 400);
 
-    function handleChange(e, value) {
+    function handleChange(e, value, reason) {
         setAuthors(value);
+        if (!value && reason === 'reset') {
+            reloadArticles({ author: '' });
+        }
     }
 
     useEffect(() => {

@@ -43,7 +43,7 @@ const Articles = () => {
         });
     }
 
-    function handleToolbarChange(options) {
+    function handleToolbarChange(options = {}) {
         history.push({
             search: `?${stringify({
                 ...queryParams,
