@@ -97,7 +97,11 @@ const Analytics = () => {
             <Grid item xs={10} md={4} xl={6}>
                 <Grid container>
                     <Grid item xs={12}>
-                        <DatePicker dates={dates} handleDateChange={setDates} />
+                        <DatePicker
+                            dates={dates}
+                            handleDateChange={setDates}
+                            keywords={keywords}
+                        />
                     </Grid>
                     <Grid item xs={12}>
                         <TextField

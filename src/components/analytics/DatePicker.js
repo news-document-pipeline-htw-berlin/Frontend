@@ -5,7 +5,7 @@ import deLocale from 'moment/locale/de';
 import moment from 'moment';
 import { wording } from '../common/common';
 
-const DatePicker = ({ dates, handleDateChange }) => {
+const DatePicker = ({ dates, handleDateChange, keywords }) => {
     const [focusedInput, setFocusedInput] = useState(null);
 
     moment.locale('de', deLocale);
@@ -27,9 +27,19 @@ const DatePicker = ({ dates, handleDateChange }) => {
         return false;
     }
 
+    function isDisabled() {
+        if (keywords.length) {
+            return true;
+        }
+        if (!dates.startDate) {
+            return 'endDate';
+        }
+        return false;
+    }
+
     return (
         <DateRangePicker
-            disabled={!dates.startDate ? 'endDate' : ''}
+            disabled={isDisabled()}
             noBorder
             minimumNights={7}
             startDate={dates.startDate}
@@ -48,7 +58,8 @@ const DatePicker = ({ dates, handleDateChange }) => {
 
 DatePicker.propTypes = {
     handleDateChange: PropTypes.func.isRequired,
-    dates: PropTypes.instanceOf(moment).isRequired
+    dates: PropTypes.instanceOf(moment).isRequired,
+    keywords: PropTypes.array.isRequired
 };
 
 export default DatePicker;
