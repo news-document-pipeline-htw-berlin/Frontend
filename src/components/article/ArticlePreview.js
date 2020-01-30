@@ -1,54 +1,37 @@
 import React from 'react';
-import { stringify } from 'query-string';
+import PropTypes from 'prop-types';
+import ContentLoader from 'react-content-loader';
 import Card from '@material-ui/core/Card';
 import {
     CardHeader,
     CardMedia,
     CardActionArea,
-    Chip,
     Paper
 } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import LoadingAnimation from '../common/LoadingAnimation';
 import ReadingTime from './ReadingTime';
 import { ArticlePropTypes } from '../../constants/NewsPropTypes';
 import headerPhoto from '../../assets/images/stock.jpg';
-import { ARTICLES_PER_PAGE } from '../../constants/CommonConstants';
+import Departments from './Departments';
 
 const ArticlePreview = ({ onClick, isLoading, article }) => {
     const { title, authors, readingTime, imageLinks, departments } = article;
 
-    const history = useHistory();
-
-    function handleClick(e, department) {
-        e.stopPropagation();
-        history.push({
-            pathname: '/articles',
-            search: `?${stringify({
-                department,
-                page: 1,
-                count: ARTICLES_PER_PAGE
-            })}`
-        });
-    }
-
-    const chips = departments.map(department => (
-        <Chip
-            color="default"
-            key={department}
-            label={department}
-            component="a"
-            clickable
-            variant="outlined"
-            onClick={e => handleClick(e, department)}
-        />
-    ));
-
     return (
         <Card>
             {isLoading ? (
-                <LoadingAnimation />
+                <ContentLoader width="100%" height="417">
+                    <rect x="0" y="0" rx="0" ry="0" width="346" height="195" />
+                    <rect
+                        x="10"
+                        y="215"
+                        rx="10"
+                        ry="10"
+                        width="70"
+                        height="35"
+                    />
+                    <rect x="10" y="270" rx="4" ry="4" width="250" height="6" />
+                    <rect x="10" y="290" rx="4" ry="4" width="270" height="6" />
+                </ContentLoader>
             ) : (
                 <CardActionArea onClick={onClick}>
                     <CardMedia
@@ -56,7 +39,7 @@ const ArticlePreview = ({ onClick, isLoading, article }) => {
                         title="title photo"
                     />
                     <Paper elevation={0} style={{ margin: 10 }}>
-                        {chips}
+                        <Departments departments={departments} />
                         <div style={{ marginLeft: 5, marginTop: 10 }}>
                             <ReadingTime readingTime={readingTime} />
                         </div>
