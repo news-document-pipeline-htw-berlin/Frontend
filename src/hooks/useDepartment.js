@@ -10,25 +10,8 @@ export const useDepartment = () => {
             const { method, path } = EndpointConstants.DEPARTMENT_LIST;
             try {
                 setAsync({ isLoading: true, error: null });
-                // TODO: use endpoints once functional
-                // const res = await unauthorized({ path, method });
-                const res = [
-                    'Politik',
-                    'Geschichte',
-                    'Regional',
-                    'Wirtschaft',
-                    'Arbeit',
-                    'Digital',
-                    'Kultur',
-                    'Sport',
-                    'Umwelt',
-                    'Gesellschaft',
-                    'Wissen',
-                    'Meinung',
-                    'Satire',
-                    'Reise',
-                    'Panorama'
-                ];
+                const res = await unauthorized({ path, method });
+
                 setDepartments(res);
                 setAsync({ isLoading: false, error: null });
             } catch (err) {

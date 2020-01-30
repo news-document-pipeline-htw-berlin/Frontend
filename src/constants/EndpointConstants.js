@@ -19,7 +19,7 @@ export default {
     },
     DEPARTMENT_LIST: {
         method: 'GET',
-        path: '/articles/newspapers'
+        path: '/articles/departments'
     },
     ANALYTICS_GET_TERMS: {
         method: 'GET',
