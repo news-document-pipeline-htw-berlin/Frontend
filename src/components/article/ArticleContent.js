@@ -26,7 +26,11 @@ const ArticleContent = ({ article, async }) => {
         return (
             <div>
                 {article.text.split('\n').map((paragraph, key) => {
-                    return <p key={uuidv4()}>{paragraph}</p>;
+                    return (
+                        <Typography paragraph align="justify" key={uuidv4()}>
+                            {paragraph}
+                        </Typography>
+                    );
                 })}
             </div>
         );
@@ -75,7 +79,7 @@ const ArticleContent = ({ article, async }) => {
                                 style={{ marginBottom: 20 }}
                             />
                         )}
-                        <Typography paragraph variant="h6">
+                        <Typography paragraph variant="h6" align="justify">
                             {article.description}
                         </Typography>
                         <ReadingTime readingTime={article.readingTime} />
