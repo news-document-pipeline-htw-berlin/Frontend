@@ -66,7 +66,7 @@ const ArticleContent = ({ article, async }) => {
     return (
         <React.Fragment>
             <Grid container justify="center">
-                <Grid item xs={6}>
+                <Grid item xs={10} md={8} lg={6}>
                     <DialogContent>
                         {article.imageLinks.length && (
                             <CardMedia

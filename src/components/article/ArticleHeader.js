@@ -13,23 +13,28 @@ const ArticleHeader = ({ article, handleClose }) => {
         <React.Fragment>
             <AppBar position="sticky">
                 <Toolbar>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        onClick={handleClose}
-                        aria-label="close"
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                    {article && (
-                        <Grid container justify="center">
-                            <Grid item xs={6}>
-                                <Typography variant="h6">
-                                    {article.title}
-                                </Typography>
+                    <Grid container justify="center">
+                        <Grid item xs={2}>
+                            <IconButton
+                                edge="start"
+                                color="inherit"
+                                onClick={handleClose}
+                                aria-label="close"
+                            >
+                                <CloseIcon />
+                            </IconButton>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <Grid container justify="center">
+                                {article && (
+                                    <Typography variant="h6">
+                                        {article.title}
+                                    </Typography>
+                                )}
                             </Grid>
                         </Grid>
-                    )}
+                        <Grid item xs={2} />
+                    </Grid>
                 </Toolbar>
             </AppBar>
         </React.Fragment>
