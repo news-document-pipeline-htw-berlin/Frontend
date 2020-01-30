@@ -9,7 +9,7 @@ const Pagination = ({
     currentPage,
     totalRecords,
     pageNeighbours,
-    pageLimit = 12,
+    pageLimit,
     handlePageChange
 }) => {
     const totalPages = Math.ceil(totalRecords / pageLimit);
@@ -137,7 +137,7 @@ Pagination.propTypes = {
 
 Pagination.defaultProps = {
     currentPage: 1,
-    pageLimit: 12,
+    pageLimit: 24,
     pageNeighbours: 2
 };
 

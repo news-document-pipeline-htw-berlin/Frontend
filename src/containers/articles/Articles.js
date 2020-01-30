@@ -101,6 +101,7 @@ const Articles = () => {
                             handlePageChange={handlePageChange}
                             pageLimit={ARTICLES_PER_PAGE}
                             totalRecords={listMetaInformation.total}
+                            pageNeighbours={1}
                         />
                     </Grid>
                 </Grid>
