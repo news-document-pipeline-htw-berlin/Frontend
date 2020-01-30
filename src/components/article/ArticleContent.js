@@ -1,6 +1,7 @@
 import React from 'react';
 import { stringify } from 'query-string';
 import uuidv4 from 'uuid/v4';
+import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import {
     DialogContent,
@@ -21,6 +22,8 @@ import { wording } from '../common/common';
 
 const ArticleContent = ({ article, async }) => {
     const history = useHistory();
+
+    const { publishedTime } = article;
 
     function renderText() {
         return (
@@ -85,6 +88,11 @@ const ArticleContent = ({ article, async }) => {
                         <ReadingTime readingTime={article.readingTime} />
                         {renderText()}
                         {renderChips()}
+                        <Typography paragraph>
+                            {publishedTime
+                                ? moment(publishedTime).format('DD.MM.YYYY')
+                                : ''}
+                        </Typography>
                         {article.longUrl && (
                             <div style={{ marginBottom: 20 }}>
                                 <Link

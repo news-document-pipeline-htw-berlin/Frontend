@@ -8,7 +8,7 @@ import DatePicker from '../../components/analytics/DatePicker';
 import Chart from './Chart';
 import { wording } from '../../components/common/common';
 
-const MAX_WORDS = 5;
+const MAX_WORDS = 3;
 
 const Analytics = () => {
     const [keywords, setKeywords] = useState([]);

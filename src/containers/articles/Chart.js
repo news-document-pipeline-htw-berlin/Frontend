@@ -11,7 +11,7 @@ import {
 } from 'react-vis';
 import { Grid } from '@material-ui/core';
 
-const barColors = ['#0868ac', '#43a2ca', '#7bccc4', 'bae4bc', 'f0f9e8'];
+const barColors = ['#003f5c', '#bc5090', '#ffa600'];
 
 const Chart = ({ data }) => {
     if (!data.length) {
@@ -35,7 +35,7 @@ const Chart = ({ data }) => {
         <VerticalBarSeries
             data={entry}
             color={barColors[index]}
-            barWidth={0.5}
+            barWidth={0.8}
         />
     ));
 
