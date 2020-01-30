@@ -31,7 +31,7 @@ const Search = ({ reloadArticles }) => {
 
     function handleChange(e, value, reason) {
         setAuthors(value);
-        if (!value && reason === 'reset') {
+        if (reason === 'clear') {
             reloadArticles({ author: '' });
         }
     }
