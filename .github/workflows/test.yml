@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
@@ -22,7 +22,11 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
-      # - name: Run tests
-      #   run: yarn test
-      #   env:
-      #     CI: ${{ true }}
+
+      - name: Run tests
+        run: yarn test:ci
+        env:
+          CI: ${{ true }}
+
+      - name: ls
+        run: ls
