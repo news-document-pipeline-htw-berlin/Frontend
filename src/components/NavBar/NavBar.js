@@ -12,10 +12,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import { ARTICLES_PER_PAGE, TOKEN } from '../../constants/CommonConstants';
 import logo from '../../assets/images/logo.png';
+import LogoutService from '../../services/LogoutService';
 
 const NavBar = ({ handleButtonClick }) => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
     const history = useHistory();
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -25,9 +27,9 @@ const NavBar = ({ handleButtonClick }) => {
         setAnchorEl(null);
     };
 
-    const logout = () => {
-        cookies.removeItem(TOKEN);
+    const handleLogout = () => {
         handleClose();
+        LogoutService();
         history.push('/');
     };
 
@@ -117,7 +119,9 @@ const NavBar = ({ handleButtonClick }) => {
                                             {jwt(cookies.getItem(TOKEN)).user}
                                         </MenuItem>
                                     </NavLink>
-                                    <MenuItem onClick={logout}>Logout</MenuItem>
+                                    <MenuItem onClick={handleLogout}>
+                                        Logout
+                                    </MenuItem>
                                 </div>
                             )}
                         </Menu>

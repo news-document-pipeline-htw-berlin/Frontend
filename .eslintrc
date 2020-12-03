@@ -1,18 +1,47 @@
 {
-    "extends": ["airbnb", "prettier", "prettier/react", "airbnb/hooks"],
-    "plugins": ["react", "prettier"],
+    "extends": [
+        "airbnb",
+        "prettier",
+        "prettier/react",
+        "airbnb/hooks"
+    ],
+    "plugins": [
+        "react",
+        "prettier"
+    ],
     "rules": {
+        "no-param-reassign": 0,
         "react/jsx-filename-extension": [
             1,
             {
-                "extensions": [".js", "jsx"]
+                "extensions": [
+                    ".js",
+                    "jsx"
+                ]
             }
         ],
         "prettier/prettier": "error",
-        "no-unused-vars": ["off"],
-        "react/jsx-fragments": ["warn", "element"],
-        "react/forbid-prop-types": ["warn", { "forbid": ["any"] }],
-        "import/newline-after-import": ["warn", { "count": 1 }],
+        "no-unused-vars": [
+            "off"
+        ],
+        "react/jsx-fragments": [
+            "warn",
+            "element"
+        ],
+        "react/forbid-prop-types": [
+            "warn",
+            {
+                "forbid": [
+                    "any"
+                ]
+            }
+        ],
+        "import/newline-after-import": [
+            "warn",
+            {
+                "count": 1
+            }
+        ],
         "import/prefer-default-export": "off"
     },
     "env": {

@@ -1,7 +1,5 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import cookies from 'js-cookies';
 
@@ -11,72 +9,38 @@ import {
     CardContent,
     Typography,
     TextField,
-    Button
+    Button,
+    Checkbox
 } from '@material-ui/core';
 
 import Alert from '@material-ui/lab/Alert';
 
 import { TOKEN } from '../../constants/CommonConstants';
+import LoginService from '../../services/LoginService';
 
 function Login() {
     const [loginRequest, setLoginRequest] = useState({
         user: '',
-        password: ''
+        password: '',
+        rememberMe: false
     });
+
     const [alert, setAlert] = useState({
         alert: false,
         message: '',
         severity: ''
     });
-    const history = useHistory();
 
-    const login = async () => {
-        await axios
-            .post('http://localhost:3000/api/users/login', loginRequest, {
-                withCredentials: true
-            })
-            .then(response => {
-                setAlert({
-                    alert: true,
-                    message: 'Successfully logged in.',
-                    severity: 'success'
-                });
-            })
-            .catch(error => {
-                if (error.response) {
-                    // Request made and server responded
-                    const msg =
-                        error.response.status === 401
-                            ? 'Wrong username or password.'
-                            : 'Server error. Please try again later.';
-                    setAlert({ alert: true, message: msg, severity: 'error' });
-                } else if (error.request) {
-                    // The request was made but no response was received
-                    setAlert({
-                        alert: true,
-                        message:
-                            'Unable to reach server. Please try again later.',
-                        severity: 'warning'
-                    });
-                } else {
-                    // Something happened in setting up the request that triggered an Error
-                    setAlert({
-                        alert: true,
-                        message: 'Server error. Please try again later.',
-                        severity: 'warning'
-                    });
-                }
-            })
-            .then(response => {
-                if (cookies.getItem(TOKEN)) {
-                    history.push('/');
-                }
-            });
-    };
+    const history = useHistory();
 
     const onSubmit = e => {
         e.preventDefault();
-        login();
+        cookies.removeItem(TOKEN);
+
+        LoginService(loginRequest).then(res => {
+            setAlert(res);
+            if (cookies.getItem(TOKEN)) history.push('/');
+        });
     };
 
     return (
@@ -86,14 +50,13 @@ function Login() {
                 spacing={3}
                 direction="column"
                 alignItems="center"
-                justify="flex-start"
-                style={{ minHeight: '100vh' }}
+                justify="center"
             >
                 <Grid item xs={12}>
                     <Card
                         className="card"
                         variant="outlined"
-                        style={{ margin: '15px', padding: '5px' }}
+                        style={{ maxWidth: '20vw', padding: '10px' }}
                     >
                         <CardContent>
                             <form
@@ -107,7 +70,7 @@ function Login() {
                                     spacing={3}
                                     direction="column"
                                     alignItems="center"
-                                    justify="stretch"
+                                    justify="flex"
                                 >
                                     <Grid item align="left">
                                         <Typography
@@ -134,7 +97,9 @@ function Login() {
                                                 setLoginRequest({
                                                     user: e.target.value,
                                                     password:
-                                                        loginRequest.password
+                                                        loginRequest.password,
+                                                    rememberMe:
+                                                        loginRequest.rememberMe
                                                 })
                                             }
                                         />
@@ -150,10 +115,52 @@ function Login() {
                                             onChange={e =>
                                                 setLoginRequest({
                                                     user: loginRequest.user,
-                                                    password: e.target.value
+                                                    password: e.target.value,
+                                                    rememberMe:
+                                                        loginRequest.rememberMe
                                                 })
                                             }
                                         />
+                                    </Grid>
+                                    <Grid
+                                        container
+                                        direction="row"
+                                        alignItems="center"
+                                        justify="flex-start"
+                                    >
+                                        <Checkbox
+                                            checked={loginRequest.keepLoggedIn}
+                                            color="primary"
+                                            inputProps={{
+                                                'aria-label':
+                                                    'secondary checkbox'
+                                            }}
+                                            onChange={e =>
+                                                setLoginRequest({
+                                                    user: loginRequest.user,
+                                                    password:
+                                                        loginRequest.password,
+                                                    rememberMe: !loginRequest.rememberMe
+                                                })
+                                            }
+                                        />
+                                        <Typography
+                                            align="left"
+                                            variant="caption"
+                                            display="block"
+                                            gutterBottom
+                                        >
+                                            Keep me logged in
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            type="submit"
+                                        >
+                                            Login
+                                        </Button>
                                     </Grid>
                                     <Typography
                                         align="left"
@@ -161,12 +168,9 @@ function Login() {
                                         display="block"
                                         gutterBottom
                                     >
-                                        Don't have an account yet? Sign up{' '}
+                                        Don&apos;t have an account yet? Sign up{' '}
                                         <Link to="/signup">here</Link>.
                                     </Typography>
-                                    <Grid item>
-                                        <Button type="submit">Login</Button>
-                                    </Grid>
                                 </Grid>
                             </form>
                         </CardContent>
