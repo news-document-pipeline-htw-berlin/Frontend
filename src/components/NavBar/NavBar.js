@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
 
 import { ARTICLES_PER_PAGE, TOKEN } from '../../constants/CommonConstants';
 import logo from '../../assets/images/logo.png';
@@ -119,6 +120,7 @@ const NavBar = ({ handleButtonClick }) => {
                                             {jwt(cookies.getItem(TOKEN)).user}
                                         </MenuItem>
                                     </NavLink>
+                                    <Divider light />
                                     <MenuItem onClick={handleLogout}>
                                         Logout
                                     </MenuItem>

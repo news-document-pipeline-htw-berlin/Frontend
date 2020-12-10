@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { Link, useHistory } from 'react-router-dom';
-import axios from 'axios';
 import cookies from 'js-cookies';
 
 import { TextField, Typography, Checkbox } from '@material-ui/core';

@@ -5,6 +5,7 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import Articles from './containers/articles/Articles';
 import Layout from './layout/Layout/Layout';
 import Analytics from './containers/articles/Analytics';
+import Authors from './components/authors/Authors';
 import Login from './components/user/Login';
 import Signup from './components/user/Signup';
 import PrivateRoute from './components/routes/PrivateRoute';
@@ -21,6 +22,9 @@ function App() {
                 </Route>
                 <Route path="/analytics">
                     <Analytics />
+                </Route>
+                <Route path="/authors">
+                    <Authors />
                 </Route>
                 <PublicRoute exact path="/login" component={Login} />
                 <PublicRoute exact path="/signup" component={Signup} />

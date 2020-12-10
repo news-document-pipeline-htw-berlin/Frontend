@@ -1,249 +1,133 @@
-import React, { useState, useCallback } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+
+import React from 'react';
+import PropTypes from 'prop-types';
 import cookies from 'js-cookies';
 import jwt from 'jwt-decode';
+import { makeStyles } from '@material-ui/core/styles';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import { Grid } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 
-import {
-    Typography,
-    Card,
-    CardContent,
-    IconButton,
-    Button,
-    Checkbox
-} from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
-import Switch from '@material-ui/core/Switch';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-
-import { TOKEN } from '../../constants/CommonConstants';
+import EditProfile from './EditProfile';
+import Preferences from './Preferences';
+import Password from './Password';
+import Data from './Data';
 import useUserData from '../../hooks/useUserData';
-import ChangeEmail from './ChangeEmail';
-import ChangePassword from './ChangePassword';
-import DeleteData from './DeleteData';
-import DeleteAccount from './DeleteAccount';
+import { TOKEN } from '../../constants/CommonConstants';
 
-function UserProfile() {
-    const [userData, setUserData] = useUserData(jwt(cookies.getItem(TOKEN)).id);
-    const [openDialog, setOpenDialog] = useState({
-        email: false,
-        password: false,
-        data: false,
-        account: false
-    });
-
-    const wrapperOpenDialog = useCallback(
-        val => {
-            setOpenDialog(val);
-        },
-        [setOpenDialog]
-    );
-
-    const wrapperUserData = useCallback(
-        val => {
-            setUserData(val);
-        },
-        [setUserData]
-    );
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
 
     return (
-        <div>
-            <Grid
-                container
-                spacing={3}
-                direction="row"
-                alignItems="left"
-                justify="center"
-            >
-                <Card style={{ minWidth: '50vw', padding: '10px' }}>
-                    <CardContent>
-                        <Grid
-                            container
-                            spacing={3}
-                            direction="column"
-                            alignItems="left"
-                            justify="flex-start"
-                        >
-                            <Grid item align="left">
-                                <Typography
-                                    align="left"
-                                    variant="h4"
-                                    gutterBottom
-                                >
-                                    {userData.username}&apos;s Account
-                                </Typography>
-                                <Divider light />
-                            </Grid>
-
-                            <Grid item>
-                                <Typography variant="h5" gutterBottom>
-                                    Preferences
-                                </Typography>
-                                <Typography gutterBottom>
-                                    Suggested Articles
-                                </Typography>
-                                {(userData.suggestions ||
-                                    userData.suggestions === false) && (
-                                    <Switch
-                                        checked={userData.suggestions}
-                                        name="suggestions"
-                                        color="primary"
-                                        inputProps={{
-                                            'aria-label': 'secondary checkbox'
-                                        }}
-                                        onClick={e =>
-                                            setUserData({
-                                                ...userData,
-                                                suggestions: !userData.suggestions
-                                            })
-                                        }
-                                    />
-                                )}
-                                <Typography variant="caption">
-                                    New articles will{' '}
-                                    {!userData.suggestions && 'not '}be
-                                    suggested to you.
-                                </Typography>
-                                <Typography gutterBottom>Dark Mode</Typography>
-                                {(userData.darkMode ||
-                                    userData.darkMode === false) && (
-                                    <Switch
-                                        checked={userData.darkMode}
-                                        name="darkMode"
-                                        color="primary"
-                                        inputProps={{
-                                            'aria-label': 'secondary checkbox'
-                                        }}
-                                        onClick={e =>
-                                            setUserData({
-                                                ...userData,
-                                                darkMode: !userData.darkMode
-                                            })
-                                        }
-                                    />
-                                )}
-                                <Typography variant="caption">
-                                    Dark Mode is {!userData.darkMode && 'dis'}
-                                    {userData.darkMode && 'en'}abled.
-                                </Typography>
-                            </Grid>
-                            <Divider light />
-                            <Grid item align="left">
-                                <Typography
-                                    align="left"
-                                    variant="h5"
-                                    gutterBottom
-                                >
-                                    Personal Data
-                                </Typography>
-                                <Grid
-                                    container
-                                    direction="row"
-                                    justify="flex-start"
-                                >
-                                    <Typography align="left" gutterBottom>
-                                        <b>Email Address:</b> {userData.email}
-                                    </Typography>
-                                    <IconButton
-                                        edge="end"
-                                        color="inherit"
-                                        style={{
-                                            width: '20px',
-                                            height: '20px',
-                                            marginLeft: '7px'
-                                        }}
-                                        onClick={() =>
-                                            setOpenDialog({
-                                                ...openDialog,
-                                                email: true
-                                            })
-                                        }
-                                    >
-                                        <EditOutlinedIcon
-                                            style={{
-                                                width: '20px',
-                                                height: '20px'
-                                            }}
-                                        />
-                                    </IconButton>
-                                </Grid>
-                                <Grid item>
-                                    <Typography align="left" gutterBottom>
-                                        <b>Password:</b>{' '}
-                                        <Button
-                                            size="small"
-                                            color="primary"
-                                            onClick={() =>
-                                                setOpenDialog({
-                                                    ...openDialog,
-                                                    password: true
-                                                })
-                                            }
-                                        >
-                                            Change
-                                        </Button>
-                                    </Typography>
-                                </Grid>
-                                <Grid item>
-                                    <Typography align="left" gutterBottom>
-                                        <b>My Data:</b>{' '}
-                                        <Button
-                                            size="small"
-                                            color="secondary"
-                                            onClick={() =>
-                                                setOpenDialog({
-                                                    ...openDialog,
-                                                    data: true
-                                                })
-                                            }
-                                        >
-                                            Delete
-                                        </Button>
-                                    </Typography>
-                                </Grid>
-                                <Grid item>
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        size="small"
-                                        onClick={() =>
-                                            setOpenDialog({
-                                                ...openDialog,
-                                                account: true
-                                            })
-                                        }
-                                    >
-                                        Delete my Account
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </CardContent>
-                </Card>
-            </Grid>
-            {openDialog.email && (
-                <ChangeEmail
-                    userData={userData}
-                    setUserData={setUserData}
-                    open={openDialog}
-                    setOpen={wrapperOpenDialog}
-                />
-            )}
-            {openDialog.password && (
-                <ChangePassword
-                    userData={userData}
-                    setUserData={setUserData}
-                    open={openDialog}
-                    setOpen={wrapperOpenDialog}
-                />
-            )}
-            {openDialog.data && (
-                <DeleteData open={openDialog} setOpen={wrapperOpenDialog} />
-            )}
-            {openDialog.account && (
-                <DeleteAccount open={openDialog} setOpen={wrapperOpenDialog} />
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`vertical-tabpanel-${index}`}
+            aria-labelledby={`vertical-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box p={3}>
+                    <Typography>{children}</Typography>
+                </Box>
             )}
         </div>
     );
 }
 
-export default UserProfile;
+TabPanel.propTypes = {
+    children: PropTypes.node.isRequired,
+    index: PropTypes.object.isRequired,
+    value: PropTypes.object.isRequired
+};
+
+function a11yProps(index) {
+    return {
+        id: `vertical-tab-${index}`,
+        'aria-controls': `vertical-tabpanel-${index}`
+    };
+}
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+        display: 'flex',
+        height: '100%',
+        width: '60vw'
+    },
+    tabs: {
+        borderRight: `1px solid ${theme.palette.divider}`
+    }
+}));
+
+export default function UserProfile() {
+    const classes = useStyles();
+    const [value, setValue] = React.useState(0);
+    const [userData, setUserData] = useUserData(jwt(cookies.getItem(TOKEN)).id);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    return (
+        <div className={classes.root}>
+            <Grid
+                container
+                justify="flex-start"
+                style={{
+                    marginRight: '15vw',
+                    marginLeft: '15vw',
+                    marginTop: '2vw',
+                    minWidth: '70vw'
+                }}
+            >
+                <Paper variant="outlined">
+                    <Tabs
+                        orientation="vertical"
+                        variant="scrollable"
+                        value={value}
+                        onChange={handleChange}
+                        aria-label="Vertical tabs example"
+                        className={classes.tabs}
+                    >
+                        <Tab label="Edit Profile" {...a11yProps(0)} />
+                        <Tab label="Preferences" {...a11yProps(1)} />
+                        <Tab label="Password" {...a11yProps(2)} />
+                        <Tab label="Data" {...a11yProps(3)} />
+                    </Tabs>
+                </Paper>
+                <Paper
+                    variant="outlined"
+                    style={{ width: '50vw', height: '35vw' }}
+                >
+                    <TabPanel value={value} index={0}>
+                        <EditProfile
+                            userData={userData}
+                            setUserData={setUserData}
+                        />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        <Preferences
+                            userData={userData}
+                            setUserData={setUserData}
+                        />
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                        <Password
+                            userData={userData}
+                            setUserData={setUserData}
+                        />
+                    </TabPanel>
+                    <TabPanel value={value} index={3}>
+                        <Data userData={userData} setUserData={setUserData} />
+                    </TabPanel>
+                </Paper>
+            </Grid>
+        </div>
+    );
+}

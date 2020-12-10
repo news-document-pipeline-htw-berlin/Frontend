@@ -1,29 +1,108 @@
 import { httpInstance } from '../state/httpInstance';
 
-function UpdateUserData(userData) {
+export function UpdateUserData(userData, customAlert, setCustomAlert) {
     const updateUserData = async () => {
-        let al = true;
-        let msg = 'Something went wrong. Please try again later.';
-        let sev = 'warning';
         await httpInstance
             .put('/users', userData)
             .then(response => {
-                al = false;
-                msg = response.data;
-                sev = 'success';
+                setCustomAlert({ message: response.data, severity: 'success' });
             })
             .catch(error => {
                 if (error.response) {
-                    msg = error.response.data;
-                    sev = 'error';
+                    setCustomAlert({
+                        message: error.response.data,
+                        severity: 'error'
+                    });
                 } else if (error.request) {
-                    msg = 'Unable to reach server. Please try again later.';
-                    sev = 'warning';
+                    setCustomAlert({
+                        message:
+                            'Unable to reach server. Please try again later.',
+                        severity: 'warning'
+                    });
                 }
             });
-        return { alert: al, message: msg, severity: sev };
     };
     return updateUserData();
 }
 
-export { UpdateUserData };
+export function ChangePassword(
+    userData,
+    setUserData,
+    password,
+    customAlert,
+    setCustomAlert
+) {
+    const changePassword = async () => {
+        await httpInstance
+            .put('/users', password)
+            .then(response => {
+                setUserData({ ...userData, password: password.newPassword });
+                setCustomAlert({ message: response.data, severity: 'success' });
+            })
+            .catch(error => {
+                if (error.response) {
+                    setCustomAlert({
+                        message: error.response.data,
+                        severity: 'error'
+                    });
+                } else if (error.request) {
+                    setCustomAlert({
+                        message:
+                            'Unable to reach server. Please try again later.',
+                        severity: 'warning'
+                    });
+                }
+            });
+    };
+    return changePassword();
+}
+
+export function DeleteData(password, setCustomAlert) {
+    const deleteData = async () => {
+        await httpInstance
+            .delete('/users/data', password)
+            .then(response => {
+                setCustomAlert({ message: response.data, severity: 'success' });
+            })
+            .catch(error => {
+                if (error.response) {
+                    setCustomAlert({
+                        message: error.response.data,
+                        severity: 'error'
+                    });
+                } else if (error.request) {
+                    setCustomAlert({
+                        message:
+                            'Unable to reach server. Please try again later.',
+                        severity: 'warning'
+                    });
+                }
+            });
+    };
+    return deleteData();
+}
+
+export function DeleteAccount(password, setCustomAlert) {
+    const deleteAccount = async () => {
+        await httpInstance
+            .delete('/users/account', password)
+            .then(response => {
+                setCustomAlert({ message: response.data, severity: 'success' });
+            })
+            .catch(error => {
+                if (error.response) {
+                    setCustomAlert({
+                        message: error.response.data,
+                        severity: 'error'
+                    });
+                } else if (error.request) {
+                    setCustomAlert({
+                        message:
+                            'Unable to reach server. Please try again later.',
+                        severity: 'warning'
+                    });
+                }
+            });
+    };
+    return deleteAccount();
+}
