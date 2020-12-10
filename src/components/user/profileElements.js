@@ -51,13 +51,13 @@ const Row = props => {
 };
 
 Row.defaultProps = {
-    left: {},
-    right: {}
+    left: null,
+    right: null
 };
 
 Row.propTypes = {
-    left: PropTypes.object,
-    right: PropTypes.object
+    left: PropTypes.any,
+    right: PropTypes.any
 };
 
 export const TitleRow = props => {
@@ -128,14 +128,14 @@ export const FieldRow = props => {
 FieldRow.defaultProps = {
     text: '',
     required: 'false',
-    value: {},
+    value: null,
     type: 'submit'
 };
 
 FieldRow.propTypes = {
     text: PropTypes.string,
     required: PropTypes.string,
-    value: PropTypes.object,
+    value: PropTypes.any,
     type: PropTypes.string,
     handleChange: PropTypes.func.isRequired
 };
@@ -218,13 +218,13 @@ export const SubtitleRow = props => {
 };
 
 SubtitleRow.defaultProps = {
-    left: {},
-    right: {}
+    left: null,
+    right: null
 };
 
 SubtitleRow.propTypes = {
-    left: PropTypes.object,
-    right: PropTypes.object
+    left: PropTypes.any,
+    right: PropTypes.any
 };
 
 export const SwitchRow = props => {
