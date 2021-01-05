@@ -24,16 +24,18 @@ function App() {
                 <Route path="/analytics">
                     <Analytics />
                 </Route>
-                <Route path="/authors">{AuthorContainer}</Route>
+                <Route path="/authors">
+                    <AuthorContainer />
+                </Route>
                 <Route path="/authors/:id">{Authors}</Route>
                 <PublicRoute exact path="/login">
-                    {Login}
+                    <Login />
                 </PublicRoute>
                 <PublicRoute exact path="/signup">
-                    {Signup}
+                    <Signup />
                 </PublicRoute>
                 <PrivateRoute exact path="/profile">
-                    {UserProfile}
+                    <UserProfile />
                 </PrivateRoute>
                 <Redirect from="/" to="/articles" />
             </Switch>
