@@ -15,7 +15,7 @@ httpInstance.interceptors.request.use(
         const allowedOrigins = ['http://localhost:3000'];
         const token = cookies.getItem(TOKEN);
         if (allowedOrigins.includes(origin)) {
-            config.headers.authorization = `Bearer ${token}`;
+            config.headers.authorization = `${token}`;
         }
         return config;
     },

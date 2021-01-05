@@ -11,16 +11,15 @@ import {
 
 function Password({ userData, setUserData }) {
     const [customAlert, setCustomAlert] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [password, setPassword] = useState({
+        user: userData.username,
+        oldPW: '',
+        newPW: '',
+        repPW: ''
+    });
     const handleSubmit = e => {
         e.preventDefault();
-        ChangePassword(
-            userData,
-            setUserData,
-            password,
-            customAlert,
-            setCustomAlert
-        );
+        ChangePassword(password, customAlert, setCustomAlert);
     };
 
     return (
@@ -35,7 +34,7 @@ function Password({ userData, setUserData }) {
                     required="true"
                     type="password"
                     handleChange={e =>
-                        setPassword({ ...password, current: e.target.value })
+                        setPassword({ ...password, oldPW: e.target.value })
                     }
                 />
                 <FieldRow
@@ -45,7 +44,7 @@ function Password({ userData, setUserData }) {
                     handleChange={e =>
                         setPassword({
                             ...password,
-                            newPassword: e.target.value
+                            newPW: e.target.value
                         })
                     }
                 />
@@ -54,7 +53,7 @@ function Password({ userData, setUserData }) {
                     required="true"
                     type="password"
                     handleChange={e =>
-                        setPassword({ ...password, confirm: e.target.value })
+                        setPassword({ ...password, repPW: e.target.value })
                     }
                 />
                 <ButtonRow label="Save" variant="contained" color="primary" />

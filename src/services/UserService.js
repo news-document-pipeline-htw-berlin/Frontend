@@ -1,9 +1,11 @@
+import cookies from 'js-cookies';
 import { httpInstance } from '../state/httpInstance';
+import { TOKEN } from '../constants/CommonConstants';
 
 export function UpdateUserData(userData, customAlert, setCustomAlert) {
     const updateUserData = async () => {
         await httpInstance
-            .put('/users', userData)
+            .put('/users/account', userData)
             .then(response => {
                 setCustomAlert({ message: response.data, severity: 'success' });
             })
@@ -25,18 +27,11 @@ export function UpdateUserData(userData, customAlert, setCustomAlert) {
     return updateUserData();
 }
 
-export function ChangePassword(
-    userData,
-    setUserData,
-    password,
-    customAlert,
-    setCustomAlert
-) {
+export function ChangePassword(password, customAlert, setCustomAlert) {
     const changePassword = async () => {
         await httpInstance
-            .put('/users', password)
+            .put('/users/account', password)
             .then(response => {
-                setUserData({ ...userData, password: password.newPassword });
                 setCustomAlert({ message: response.data, severity: 'success' });
             })
             .catch(error => {
@@ -57,10 +52,10 @@ export function ChangePassword(
     return changePassword();
 }
 
-export function DeleteData(password, setCustomAlert) {
+export function DeleteData(authRequest, setCustomAlert) {
     const deleteData = async () => {
         await httpInstance
-            .delete('/users/data', password)
+            .delete('/users/account?data=true', { data: authRequest })
             .then(response => {
                 setCustomAlert({ message: response.data, severity: 'success' });
             })
@@ -82,14 +77,17 @@ export function DeleteData(password, setCustomAlert) {
     return deleteData();
 }
 
-export function DeleteAccount(password, setCustomAlert) {
+export function DeleteAccount(authRequest, setCustomAlert, history) {
     const deleteAccount = async () => {
         await httpInstance
-            .delete('/users/account', password)
+            .delete('/users/account?account=true', { data: authRequest })
             .then(response => {
                 setCustomAlert({ message: response.data, severity: 'success' });
+                cookies.removeItem(TOKEN);
+                history.push('/');
             })
             .catch(error => {
+                alert(JSON.stringify(authRequest));
                 if (error.response) {
                     setCustomAlert({
                         message: error.response.data,

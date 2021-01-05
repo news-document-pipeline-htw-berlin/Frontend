@@ -11,6 +11,7 @@ import Signup from './components/user/Signup';
 import PrivateRoute from './components/routes/PrivateRoute';
 import UserProfile from './components/user/UserProfile';
 import PublicRoute from './components/routes/PublicRoute';
+import AuthorContainer from './components/authors/AuthorContainer';
 
 function App() {
     return (
@@ -23,12 +24,17 @@ function App() {
                 <Route path="/analytics">
                     <Analytics />
                 </Route>
-                <Route path="/authors">
-                    <Authors />
-                </Route>
-                <PublicRoute exact path="/login" component={Login} />
-                <PublicRoute exact path="/signup" component={Signup} />
-                <PrivateRoute exact path="/profile" component={UserProfile} />
+                <Route path="/authors">{AuthorContainer}</Route>
+                <Route path="/authors/:id">{Authors}</Route>
+                <PublicRoute exact path="/login">
+                    {Login}
+                </PublicRoute>
+                <PublicRoute exact path="/signup">
+                    {Signup}
+                </PublicRoute>
+                <PrivateRoute exact path="/profile">
+                    {UserProfile}
+                </PrivateRoute>
                 <Redirect from="/" to="/articles" />
             </Switch>
         </div>

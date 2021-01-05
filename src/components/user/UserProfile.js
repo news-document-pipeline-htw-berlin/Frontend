@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
+import Alert from '@material-ui/lab/Alert';
 
 import EditProfile from './EditProfile';
 import Preferences from './Preferences';

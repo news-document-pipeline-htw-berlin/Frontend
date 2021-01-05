@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { httpInstance } from '../state/httpInstance';
+import stringToJSON from '../components/common/stringToJSON';
 
 function useUserData(userId) {
     const [userData, setUserData] = useState({});
 
     useEffect(() => {
         httpInstance
-            .get('/users', {
-                params: {
-                    id: userId
-                }
-            })
+            .get('/users/account')
             .then(response => {
-                setUserData(response.data);
+                setUserData(stringToJSON(response.data));
+            })
+            .catch(error => {
+                setUserData(null);
             });
     }, [userId]);
 

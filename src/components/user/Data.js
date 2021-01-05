@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 import SaveIcon from '@material-ui/icons/Save';
-import cookies from 'js-cookies';
+import { useHistory } from 'react-router-dom';
 import { DeleteData, DeleteAccount } from '../../services/UserService';
 import {
     TitleRow,
@@ -12,23 +11,23 @@ import {
     ButtonRow,
     SubtitleRow
 } from './profileElements';
-import { TOKEN } from '../../constants/CommonConstants';
 
 function Data({ userData, setUserData }) {
     const [customAlert, setCustomAlert] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [authRequest, setAuthRequest] = useState({
+        user: userData.username,
+        password: ''
+    });
     const [confirm, setConfirm] = useState(false);
     const history = useHistory();
 
     const deleteAccount = e => {
         e.preventDefault();
-        DeleteAccount(password, setCustomAlert);
-        cookies.removeItem(TOKEN);
-        history.push('/');
+        DeleteAccount(authRequest, setCustomAlert, history);
     };
     const deleteData = e => {
         e.preventDefault();
-        DeleteData(password, setCustomAlert);
+        DeleteData(authRequest, setCustomAlert);
     };
 
     return (
@@ -43,7 +42,12 @@ function Data({ userData, setUserData }) {
                         required="true"
                         type="password"
                         text="Enter Password"
-                        onChange={e => setPassword(e.target.value)}
+                        handleChange={e =>
+                            setAuthRequest({
+                                ...authRequest,
+                                password: e.target.value
+                            })
+                        }
                     />
                     <ButtonRow
                         label="Delete My Data"
@@ -57,7 +61,12 @@ function Data({ userData, setUserData }) {
                         required="true"
                         type="password"
                         text="Enter Password"
-                        onChange={e => setPassword(e.target.value)}
+                        handleChange={e =>
+                            setAuthRequest({
+                                ...authRequest,
+                                password: e.target.value
+                            })
+                        }
                     />
                     <CheckboxRow
                         required="true"

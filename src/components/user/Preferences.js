@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { UpdateUserData } from '../../services/UserService';
@@ -11,10 +11,15 @@ import {
 
 function Preferences({ userData, setUserData }) {
     const [customAlert, setCustomAlert] = useState(null);
-    const handleSwitch = e => {
-        e.preventDefault();
-        UpdateUserData(userData, customAlert, setCustomAlert);
-    };
+    const isInitialMount = useRef(true);
+
+    useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+        } else {
+            UpdateUserData(userData, customAlert, setCustomAlert);
+        }
+    }, [customAlert, userData]);
 
     return (
         <ElementContainer customAlert={customAlert}>
@@ -31,7 +36,6 @@ function Preferences({ userData, setUserData }) {
                             ...userData,
                             suggestions: !userData.suggestions
                         });
-                        handleSwitch(e);
                     }}
                 />
                 <SubtitleRow
@@ -49,7 +53,6 @@ function Preferences({ userData, setUserData }) {
                             ...userData,
                             darkMode: !userData.darkMode
                         });
-                        handleSwitch(e);
                     }}
                 />
                 <SubtitleRow
