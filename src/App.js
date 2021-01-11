@@ -5,13 +5,11 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import Articles from './containers/articles/Articles';
 import Layout from './layout/Layout/Layout';
 import Analytics from './containers/articles/Analytics';
-import Authors from './components/authors/Authors';
 import Login from './components/user/Login';
 import Signup from './components/user/Signup';
 import PrivateRoute from './components/routes/PrivateRoute';
 import UserProfile from './components/user/UserProfile';
 import PublicRoute from './components/routes/PublicRoute';
-import AuthorContainer from './components/authors/AuthorContainer';
 
 function App() {
     return (
@@ -24,10 +22,6 @@ function App() {
                 <Route path="/analytics">
                     <Analytics />
                 </Route>
-                <Route path="/authors">
-                    <AuthorContainer />
-                </Route>
-                <Route path="/authors/:id">{Authors}</Route>
                 <PublicRoute exact path="/login">
                     <Login />
                 </PublicRoute>
