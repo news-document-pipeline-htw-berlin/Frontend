@@ -1,12 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Toolbar, Grid, IconButton } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
+import cookies from 'js-cookies';
+import jwt from 'jwt-decode';
+
+import { Toolbar, Grid, IconButton, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { ARTICLES_PER_PAGE } from '../../constants/CommonConstants';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
+
+import { ARTICLES_PER_PAGE, TOKEN } from '../../constants/CommonConstants';
 import logo from '../../assets/images/logo.png';
+import LogoutService from '../../services/LogoutService';
 
 const NavBar = ({ handleButtonClick }) => {
+    const history = useHistory();
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = event => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleLogout = () => {
+        handleClose();
+        LogoutService();
+        history.push('/');
+    };
+
     return (
         <Toolbar>
             <Grid container>
@@ -37,8 +64,71 @@ const NavBar = ({ handleButtonClick }) => {
                         </NavLink>
                     </Grid>
                 </Grid>
-
-                <Grid item xs={2} />
+                <Grid
+                    xs={2}
+                    container
+                    direction="row"
+                    justify="flex-end"
+                    alignItems="center"
+                    spacing="2"
+                >
+                    {cookies.getItem(TOKEN) != null && (
+                        <div>
+                            <Grid item>
+                                <Typography variant="caption" display="block">
+                                    Logged in as{' '}
+                                    {jwt(cookies.getItem(TOKEN)).user}
+                                </Typography>
+                            </Grid>
+                        </div>
+                    )}
+                    <Grid item>
+                        <IconButton
+                            aria-controls="simple-menu"
+                            aria-haspopup="true"
+                            onClick={handleClick}
+                            edge="start"
+                            color="inherit"
+                        >
+                            <AccountCircleIcon />
+                        </IconButton>
+                        <Menu
+                            id="simple-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                        >
+                            {cookies.getItem(TOKEN) == null && (
+                                <div>
+                                    <NavLink className="NavLink" to="/login">
+                                        <MenuItem onClick={handleClose}>
+                                            Login
+                                        </MenuItem>
+                                    </NavLink>
+                                    <NavLink className="NavLink" to="/signup">
+                                        <MenuItem onClick={handleClose}>
+                                            Sign up
+                                        </MenuItem>
+                                    </NavLink>
+                                </div>
+                            )}
+                            {cookies.getItem(TOKEN) != null && (
+                                <div>
+                                    <NavLink className="NavLink" to="/profile">
+                                        <MenuItem onClick={handleClose}>
+                                            {jwt(cookies.getItem(TOKEN)).user}
+                                        </MenuItem>
+                                    </NavLink>
+                                    <Divider light />
+                                    <MenuItem onClick={handleLogout}>
+                                        Logout
+                                    </MenuItem>
+                                </div>
+                            )}
+                        </Menu>
+                    </Grid>
+                </Grid>
             </Grid>
         </Toolbar>
     );
