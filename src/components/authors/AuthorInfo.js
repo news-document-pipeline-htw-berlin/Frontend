@@ -1,13 +1,18 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable prefer-spread */
 /* eslint-disable no-plusplus */
+
 import React, { useEffect, useState } from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
+
+import { Card, CardContent, Typography } from '@material-ui/core';
+
 import Score from './Score';
 
+/**
+ * A card containing general information about given author.
+ * @param {*} props author
+ */
 export default function AuthorInfo(props) {
     const { author } = props;
     const [favDep, setFavDep] = useState('');
@@ -21,7 +26,7 @@ export default function AuthorInfo(props) {
                 return o._2;
             })
         );
-        author.perDepartment.forEach((dep, index) => {
+        author.perDepartment.forEach(dep => {
             if (dep._2 === max) {
                 const comma = count > 0 ? ',' : '';
                 res = `${res + comma} ${dep._1}`;

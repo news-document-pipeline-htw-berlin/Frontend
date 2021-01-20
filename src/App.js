@@ -7,19 +7,21 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import cookies from 'js-cookies';
 import jwt from 'jwt-decode';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import Articles from './containers/articles/Articles';
 import Layout from './layout/Layout/Layout';
 import Analytics from './containers/articles/Analytics';
-import Authors from './components/authors/Authors';
+import Author from './components/authors/Author';
 import Login from './components/user/Login';
 import Signup from './components/user/Signup';
 import PrivateRoute from './components/routes/PrivateRoute';
 import UserProfile from './components/user/UserProfile';
 import PublicRoute from './components/routes/PublicRoute';
-import AuthorContainer from './components/authors/AuthorContainer';
+import AuthorSearchContainer from './components/authors/AuthorSearchContainer';
 
 import { DARKMODE } from './constants/CommonConstants';
 import theme from './layout/Theme';
+import AuthorLinkContainer from './components/authors/AuthorLinkContainer';
 
 function App() {
     /* const prefersDarkMode = false//useState((cookies.hasItem(DARKMODE) && cookies.getItem(DARKMODE) == "true"))
@@ -46,7 +48,10 @@ function App() {
                         <Analytics />
                     </Route>
                     <Route path="/authors">
-                        <AuthorContainer />
+                        <AuthorSearchContainer />
+                    </Route>
+                    <Route path="/authors&id=:id">
+                        <AuthorLinkContainer />
                     </Route>
                     <PublicRoute exact path="/login">
                         <Login />

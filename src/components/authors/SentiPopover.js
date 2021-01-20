@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Rating from '@material-ui/lab/Rating';
-import Paper from '@material-ui/core/Paper';
+
+import { Typography, Paper } from '@material-ui/core';
+
 import SentiScore from '../article/SentiScore';
 
+/**
+ * A popover element containing the weekday, amount of articles and correspinding SentScore.
+ * @param {*} param0 value
+ */
 export default function SentiPopover({ value }) {
     return (
         <Paper elevation={3} style={{ padding: '10px' }}>

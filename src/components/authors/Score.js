@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 import { XYPlot, ArcSeries, LabelSeries } from 'react-vis';
 
+/**
+ * Displays an author's score in an ArcSeries.
+ * @param {*} param0 score
+ */
 export default function Score({ score }) {
     const [value, setValue] = useState(0);
     const data = [
@@ -22,7 +26,15 @@ export default function Score({ score }) {
         }
     ];
 
-    const label = [{ x: 0, y: 0, label: score, xOffset: 10, yOffset: 10 }];
+    const label = [
+        {
+            x: 0,
+            y: 0,
+            label: score,
+            xOffset: 10,
+            yOffset: 10
+        }
+    ];
 
     useEffect(() => {
         setValue(score);
@@ -30,7 +42,7 @@ export default function Score({ score }) {
 
     return (
         <XYPlot xDomain={[-3, 3]} yDomain={[-3, 3]} width={300} height={300}>
-            <LabelSeries animation allowOffsetToBeReversed data={label} />
+            <LabelSeries allowOffsetToBeReversed data={label} />
             <ArcSeries
                 animation={{
                     damping: 9,
