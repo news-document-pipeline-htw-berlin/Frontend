@@ -80,6 +80,22 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                         </Typography>
                     </NavLink>
                 </ListItem>
+                <ListItem button key="authors">
+                    <NavLink
+                        to={{
+                            pathname: '/authors'
+                        }}
+                        className="NavLink"
+                        style={{ width: '100%' }}
+                    >
+                        <Typography
+                            variant="subtitle2"
+                            style={{ color: '#b8b7ad' }}
+                        >
+                            Autoren
+                        </Typography>
+                    </NavLink>
+                </ListItem>
             </List>
         </div>
     );
