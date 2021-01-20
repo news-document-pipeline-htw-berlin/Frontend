@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import SettingsIcon from '@material-ui/icons/Settings';
+import cookies from 'js-cookies';
 import { UpdateUserData } from '../../services/UserService';
 import {
     TitleRow,
@@ -8,6 +9,7 @@ import {
     SubtitleRow,
     SwitchRow
 } from './profileElements';
+import { DARKMODE } from '../../constants/CommonConstants';
 
 function Preferences({ userData, setUserData }) {
     const [customAlert, setCustomAlert] = useState(null);
@@ -18,6 +20,7 @@ function Preferences({ userData, setUserData }) {
             isInitialMount.current = false;
         } else {
             UpdateUserData(userData, customAlert, setCustomAlert);
+            cookies.setItem(DARKMODE, userData.darkMode);
         }
     }, [customAlert, userData]);
 

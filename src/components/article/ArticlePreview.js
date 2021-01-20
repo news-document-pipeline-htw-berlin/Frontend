@@ -6,18 +6,20 @@ import {
     CardHeader,
     CardMedia,
     CardActionArea,
-    Paper
+    Paper,
+    Grid
 } from '@material-ui/core';
 import ReadingTime from './ReadingTime';
 import { ArticlePropTypes } from '../../constants/NewsPropTypes';
 import headerPhoto from '../../assets/images/stock.jpg';
 import Departments from './Departments';
+import SentiScore from './SentiScore';
 
 const ArticlePreview = ({ onClick, isLoading, article }) => {
     const { title, authors, readingTime, imageLinks, departments } = article;
 
     return (
-        <Card style={{ minHeight: 450 }}>
+        <Card style={{ minHeight: 450, margin: 20 }}>
             {isLoading ? (
                 <ContentLoader width="100%" height="417">
                     <rect x="0" y="0" rx="0" ry="0" width="346" height="195" />
@@ -35,13 +37,27 @@ const ArticlePreview = ({ onClick, isLoading, article }) => {
             ) : (
                 <CardActionArea onClick={onClick}>
                     <CardMedia
+                        style={{ height: 0, paddingTop: '56.25%' }}
                         image={imageLinks.length ? imageLinks[0] : headerPhoto}
                         title="title photo"
                     />
                     <Paper elevation={0} style={{ margin: 10 }}>
                         <Departments departments={departments} />
                         <div style={{ marginLeft: 5, marginTop: 10 }}>
-                            <ReadingTime readingTime={readingTime} />
+                            <Grid container alignItems="center" direction="row">
+                                <Grid item>
+                                    <ReadingTime
+                                        readingTime={article.readingTime}
+                                    />
+                                </Grid>
+                                <Grid
+                                    item
+                                    xs={6}
+                                    style={{ paddingBottom: '20px' }}
+                                >
+                                    <SentiScore senti={article.sentiments} />
+                                </Grid>
+                            </Grid>
                         </div>
                     </Paper>
 

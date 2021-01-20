@@ -15,7 +15,7 @@ import {
 
 import Alert from '@material-ui/lab/Alert';
 
-import { TOKEN } from '../../constants/CommonConstants';
+import { DARKMODE, TOKEN } from '../../constants/CommonConstants';
 import LoginService from '../../services/LoginService';
 
 function Login() {
@@ -39,7 +39,10 @@ function Login() {
 
         LoginService(loginRequest).then(res => {
             setAlert(res);
-            if (cookies.getItem(TOKEN)) history.push('/');
+            if (cookies.getItem(TOKEN)) {
+                cookies.setItem(DARKMODE);
+                history.push('/');
+            }
         });
     };
 

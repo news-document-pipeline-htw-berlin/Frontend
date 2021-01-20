@@ -1,9 +1,10 @@
 import cookies from 'js-cookies';
-import { TOKEN } from '../constants/CommonConstants';
+import { TOKEN, DARKMODE } from '../constants/CommonConstants';
 
 function LogoutService() {
     const logout = () => {
-        cookies.removeItem(TOKEN);
+        if (cookies.hasItem(TOKEN)) cookies.removeItem(TOKEN);
+        if (cookies.hasItem(DARKMODE)) cookies.removeItem(DARKMODE);
     };
 
     return logout();

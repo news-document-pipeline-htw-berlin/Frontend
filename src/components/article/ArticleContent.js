@@ -19,11 +19,12 @@ import {
     AsyncPropTypes
 } from '../../constants/NewsPropTypes';
 import { wording } from '../common/common';
+import SentiScore from './SentiScore';
 
 const ArticleContent = ({ article, async }) => {
     const history = useHistory();
 
-    const { publishedTime } = article;
+    const { publishedTime, authors } = article;
 
     function renderText() {
         return (
@@ -46,10 +47,11 @@ const ArticleContent = ({ article, async }) => {
         });
     }
 
-    function renderChips() {
+    function renderChips(keywords) {
+        const uniq = [...new Set(keywords)];
         return (
             <div style={{ marginTop: 20, marginBottom: 20 }}>
-                {article.mostRelevantLemmas.map(keyword => (
+                {uniq.map(keyword => (
                     <Chip
                         color="default"
                         onClick={() => handleClick(keyword)}
@@ -77,22 +79,55 @@ const ArticleContent = ({ article, async }) => {
                     <DialogContent>
                         {article.imageLinks.length && (
                             <CardMedia
-                                image={article.imageLinks}
+                                image={article.imageLinks[0]}
                                 title="title image"
-                                style={{ marginBottom: 20 }}
+                                style={{
+                                    height: 0,
+                                    paddingTop: '56.25%',
+                                    marginBottom: 20
+                                }}
                             />
                         )}
                         <Typography paragraph variant="h6" align="justify">
                             {article.description}
                         </Typography>
-                        <ReadingTime readingTime={article.readingTime} />
+
+                        <Grid container alignItems="center" direction="row">
+                            <Grid item>
+                                <ReadingTime
+                                    readingTime={article.readingTime}
+                                />
+                            </Grid>
+                            <Grid item xs={6} style={{ paddingBottom: '20px' }}>
+                                <SentiScore senti={article.sentiments} />
+                            </Grid>
+                        </Grid>
+
                         {renderText()}
-                        {renderChips()}
+                        {renderChips(article.keywords)}
+                        {renderChips(article.entities)}
+                        {renderChips(article.keywordsExtracted)}
                         <Typography paragraph>
                             {publishedTime
                                 ? moment(publishedTime).format('DD.MM.YYYY')
                                 : ''}
                         </Typography>
+                        {authors.map(author => (
+                            <Link
+                                href={`/authors&id=${author}`}
+                                onClick={e => {
+                                    e.preventDefault();
+                                    history.push({
+                                        pathname: `/authors&id=${author}`,
+                                        state: { title: article.title }
+                                    });
+                                }}
+                                color="primary"
+                                underline="hover"
+                            >
+                                {author}
+                            </Link>
+                        ))}
                         {article.longUrl && (
                             <div style={{ marginBottom: 20 }}>
                                 <Link

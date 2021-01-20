@@ -8,6 +8,7 @@ const ReadingTime = ({ readingTime }) => {
     if (!readingTime) {
         return null;
     }
+    const t = Math.round(readingTime / 60);
     return (
         <React.Fragment>
             <Typography paragraph>
@@ -16,7 +17,9 @@ const ReadingTime = ({ readingTime }) => {
                     icon={faClock}
                     color="#009688"
                 />
-                {`Lesezeit: ${readingTime} Minuten`}
+                {`Lesezeit: ${Math.round(readingTime / 60)} Minute${
+                    t > 1 ? 'n' : ''
+                }`}
             </Typography>
         </React.Fragment>
     );
