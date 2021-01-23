@@ -1,6 +1,6 @@
 import { httpInstance } from '../state/httpInstance';
 
-function LoginService(loginRequest) {
+function LoginService(loginRequest, setDarkState) {
     const login = async () => {
         let msg = 'Something went wrong. Please try again later.';
         let sev = 'warning';

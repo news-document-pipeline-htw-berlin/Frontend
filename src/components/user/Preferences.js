@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import SettingsIcon from '@material-ui/icons/Settings';
 import cookies from 'js-cookies';
+import jwt from 'jwt-decode';
 import { UpdateUserData } from '../../services/UserService';
 import {
     TitleRow,
@@ -9,9 +10,9 @@ import {
     SubtitleRow,
     SwitchRow
 } from './profileElements';
-import { DARKMODE } from '../../constants/CommonConstants';
+import { setDarkModeToken } from '../../services/JWT';
 
-function Preferences({ userData, setUserData }) {
+function Preferences({ userData, setUserData, setDarkState }) {
     const [customAlert, setCustomAlert] = useState(null);
     const isInitialMount = useRef(true);
 
@@ -19,8 +20,8 @@ function Preferences({ userData, setUserData }) {
         if (isInitialMount.current) {
             isInitialMount.current = false;
         } else {
+            setDarkModeToken();
             UpdateUserData(userData, customAlert, setCustomAlert);
-            cookies.setItem(DARKMODE, userData.darkMode);
         }
     }, [customAlert, userData]);
 
@@ -52,6 +53,7 @@ function Preferences({ userData, setUserData }) {
                     title="Dark Mode"
                     switchState={userData.darkMode}
                     handleClick={e => {
+                        setDarkState(!userData.darkMode);
                         setUserData({
                             ...userData,
                             darkMode: !userData.darkMode
@@ -72,7 +74,8 @@ function Preferences({ userData, setUserData }) {
 
 Preferences.propTypes = {
     userData: PropTypes.object.isRequired,
-    setUserData: PropTypes.func.isRequired
+    setUserData: PropTypes.func.isRequired,
+    setDarkState: PropTypes.func.isRequired
 };
 
 export default Preferences;

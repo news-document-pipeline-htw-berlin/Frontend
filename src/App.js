@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-dates/lib/css/_datepicker.css';
 import 'react-dates/initialize';
 import { Route, Redirect, Switch } from 'react-router-dom';
@@ -19,27 +19,24 @@ import UserProfile from './components/user/UserProfile';
 import PublicRoute from './components/routes/PublicRoute';
 import AuthorSearchContainer from './components/authors/AuthorSearchContainer';
 
-import { DARKMODE } from './constants/CommonConstants';
-import theme from './layout/Theme';
 import AuthorLinkContainer from './components/authors/AuthorLinkContainer';
+import getTheme from './layout/Theme';
+import { TOKEN } from './constants/CommonConstants';
+import { getDarkMode } from './services/JWT';
 
 function App() {
-    /* const prefersDarkMode = false//useState((cookies.hasItem(DARKMODE) && cookies.getItem(DARKMODE) == "true"))
-      
-        const theme = React.useMemo(
-          () =>
-            createMuiTheme({
-              palette: {
-                type: prefersDarkMode ? 'dark' : 'light',
-              },
-            }),
-          [prefersDarkMode],
-        ); */
+    const [darkState, setDarkState] = useState(getDarkMode());
+    const [theme, setTheme] = useState(getTheme(darkState));
+
+    useEffect(() => {
+        setTheme(createMuiTheme(getTheme(darkState)));
+    }, [darkState]);
+
     return (
         <div>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <Layout />
+                <Layout setDarkState={setDarkState} />
                 <Switch>
                     <Route path="/articles">
                         <Articles />
@@ -54,13 +51,13 @@ function App() {
                         <AuthorLinkContainer />
                     </Route>
                     <PublicRoute exact path="/login">
-                        <Login />
+                        <Login setDarkState={setDarkState} />
                     </PublicRoute>
                     <PublicRoute exact path="/signup">
                         <Signup />
                     </PublicRoute>
-                    <PrivateRoute exact path="/profile">
-                        <UserProfile />
+                    <PrivateRoute path="/profile">
+                        <UserProfile setDarkState={setDarkState} />
                     </PrivateRoute>
                     <Redirect from="/" to="/articles" />
                 </Switch>

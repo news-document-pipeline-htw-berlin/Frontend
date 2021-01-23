@@ -4,14 +4,12 @@ import jwt from 'jwt-decode';
 import { createMuiTheme } from '@material-ui/core/styles';
 import teal from '@material-ui/core/colors/teal';
 
-import { TOKEN } from '../constants/CommonConstants';
-
-const type = 'dark'; // jwt(cookies.getItem(TOKEN)).darkMode ? 'dark' : 'light'
-const theme = createMuiTheme({
-    palette: {
-        type,
-        primary: teal
-    } /* ,
+export default function getTheme(dark) {
+    return createMuiTheme({
+        palette: {
+            type: dark ? 'dark' : 'light',
+            primary: teal
+        } /* ,
     status: {
         danger: 'orange'
     },
@@ -92,6 +90,5 @@ const theme = createMuiTheme({
             }
         }
     } */
-});
-
-export default theme;
+    });
+}

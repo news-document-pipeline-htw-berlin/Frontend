@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import { Grid } from '@material-ui/core';
+import { Grid, Container } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Alert from '@material-ui/lab/Alert';
@@ -53,21 +53,7 @@ function a11yProps(index) {
     };
 }
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.paper,
-        display: 'flex',
-        height: '100%',
-        width: '60vw'
-    },
-    tabs: {
-        borderRight: `1px solid ${theme.palette.divider}`
-    }
-}));
-
-export default function UserProfile() {
-    const classes = useStyles();
+export default function UserProfile({ setDarkState }) {
     const [value, setValue] = React.useState(0);
     const [userData, setUserData] = useUserData(jwt(cookies.getItem(TOKEN)).id);
 
@@ -76,59 +62,66 @@ export default function UserProfile() {
     };
 
     return (
-        <div className={classes.root}>
-            <Grid
-                container
-                justify="flex-start"
-                style={{
-                    marginRight: '15vw',
-                    marginLeft: '15vw',
-                    marginTop: '2vw',
-                    minWidth: '70vw'
-                }}
-            >
-                <Paper variant="outlined">
-                    <Tabs
-                        orientation="vertical"
-                        variant="scrollable"
-                        value={value}
-                        onChange={handleChange}
-                        aria-label="Vertical tabs example"
-                        className={classes.tabs}
-                    >
-                        <Tab label="Edit Profile" {...a11yProps(0)} />
-                        <Tab label="Preferences" {...a11yProps(1)} />
-                        <Tab label="Password" {...a11yProps(2)} />
-                        <Tab label="Data" {...a11yProps(3)} />
-                    </Tabs>
-                </Paper>
-                <Paper
-                    variant="outlined"
-                    style={{ width: '50vw', height: '35vw' }}
+        <div>
+            <Container>
+                <Grid
+                    container
+                    justify="flex-start"
+                    style={{
+                        marginTop: '2vw',
+                        minWidth: '70vw'
+                    }}
                 >
-                    <TabPanel value={value} index={0}>
-                        <EditProfile
-                            userData={userData}
-                            setUserData={setUserData}
-                        />
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        <Preferences
-                            userData={userData}
-                            setUserData={setUserData}
-                        />
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        <Password
-                            userData={userData}
-                            setUserData={setUserData}
-                        />
-                    </TabPanel>
-                    <TabPanel value={value} index={3}>
-                        <Data userData={userData} setUserData={setUserData} />
-                    </TabPanel>
-                </Paper>
-            </Grid>
+                    <Paper variant="outlined">
+                        <Tabs
+                            orientation="vertical"
+                            variant="scrollable"
+                            value={value}
+                            onChange={handleChange}
+                            aria-label="Vertical tabs example"
+                        >
+                            <Tab label="Edit Profile" {...a11yProps(0)} />
+                            <Tab label="Preferences" {...a11yProps(1)} />
+                            <Tab label="Password" {...a11yProps(2)} />
+                            <Tab label="Data" {...a11yProps(3)} />
+                        </Tabs>
+                    </Paper>
+                    <Paper
+                        variant="outlined"
+                        style={{ width: '50vw', height: '35vw' }}
+                    >
+                        <TabPanel value={value} index={0}>
+                            <EditProfile
+                                userData={userData}
+                                setUserData={setUserData}
+                            />
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            <Preferences
+                                userData={userData}
+                                setUserData={setUserData}
+                                setDarkState={setDarkState}
+                            />
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            <Password
+                                userData={userData}
+                                setUserData={setUserData}
+                            />
+                        </TabPanel>
+                        <TabPanel value={value} index={3}>
+                            <Data
+                                userData={userData}
+                                setUserData={setUserData}
+                            />
+                        </TabPanel>
+                    </Paper>
+                </Grid>
+            </Container>
         </div>
     );
 }
+
+UserProfile.propTypes = {
+    setDarkState: PropTypes.func.isRequired
+};

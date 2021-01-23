@@ -50,6 +50,7 @@ function Signup() {
     return (
         <div>
             <Grid
+                style={{ marginTop: '20px' }}
                 container
                 spacing={3}
                 direction="column"

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { Link, useHistory } from 'react-router-dom';
 import cookies from 'js-cookies';
@@ -15,10 +16,11 @@ import {
 
 import Alert from '@material-ui/lab/Alert';
 
-import { DARKMODE, TOKEN } from '../../constants/CommonConstants';
+import { TOKEN } from '../../constants/CommonConstants';
 import LoginService from '../../services/LoginService';
+import { getDarkMode } from '../../services/JWT';
 
-function Login() {
+function Login({ setDarkState }) {
     const [loginRequest, setLoginRequest] = useState({
         user: '',
         password: '',
@@ -40,7 +42,7 @@ function Login() {
         LoginService(loginRequest).then(res => {
             setAlert(res);
             if (cookies.getItem(TOKEN)) {
-                cookies.setItem(DARKMODE);
+                setDarkState(getDarkMode());
                 history.push('/');
             }
         });
@@ -49,6 +51,7 @@ function Login() {
     return (
         <div>
             <Grid
+                style={{ marginTop: '20px' }}
                 container
                 spacing={3}
                 direction="column"
@@ -184,4 +187,7 @@ function Login() {
     );
 }
 
+Login.propTypes = {
+    setDarkState: PropTypes.func.isRequired
+};
 export default Login;

@@ -15,7 +15,7 @@ import { ARTICLES_PER_PAGE, TOKEN } from '../../constants/CommonConstants';
 import logo from '../../assets/images/logo.png';
 import LogoutService from '../../services/LogoutService';
 
-const NavBar = ({ handleButtonClick }) => {
+const NavBar = ({ handleButtonClick, setDarkState }) => {
     const history = useHistory();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -31,6 +31,7 @@ const NavBar = ({ handleButtonClick }) => {
     const handleLogout = () => {
         handleClose();
         LogoutService();
+        setDarkState(false);
         history.push('/');
     };
 
@@ -135,7 +136,8 @@ const NavBar = ({ handleButtonClick }) => {
 };
 
 NavBar.propTypes = {
-    handleButtonClick: PropTypes.func.isRequired
+    handleButtonClick: PropTypes.func.isRequired,
+    setDarkState: PropTypes.func.isRequired
 };
 
 export default NavBar;
