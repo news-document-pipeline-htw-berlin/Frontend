@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import LockIcon from '@material-ui/icons/Lock';
-import { ChangePassword } from '../../services/UserService';
+import { ChangePassword } from './UserService';
 import {
     TitleRow,
     ElementContainer,

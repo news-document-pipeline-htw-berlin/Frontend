@@ -1,20 +1,35 @@
 import cookies from 'js-cookies';
 import jwt from 'jwt-decode';
 import sign from 'jwt-encode';
-import { TOKEN } from '../constants/CommonConstants';
 
+import { TOKEN } from '../../constants/CommonConstants';
+
+/**
+ * Retrieves the decoded access token.
+ */
 export function getAccessToken() {
-    if (cookies.getItem(TOKEN)) return jwt(cookies.getItem(TOKEN));
+    if (cookies.hasItem(TOKEN)) return jwt(cookies.getItem(TOKEN));
     return null;
 }
 
+/**
+ * Removes the access token.
+ */
 export function removeAccessToken() {
-    if (cookies.getItem(TOKEN)) cookies.removeItem(TOKEN);
+    if (cookies.hasItem(TOKEN)) {
+        cookies.removeItem(TOKEN);
+        return true;
+    }
+    return false;
 }
 
+/**
+ * Resets the current token with a switched dark mode.
+ */
 export function setDarkModeToken() {
     const token = getAccessToken();
     if (token === null) return;
+    // TODO: inject secret
     const secret = 'secret';
     const data = token.expiresAt
         ? {
@@ -26,12 +41,14 @@ export function setDarkModeToken() {
         : {
               user: token.user,
               id: token.id,
-              darkMode: token.darkMode
+              darkMode: !token.darkMode
           };
-
     cookies.setItem(TOKEN, sign(data, secret));
 }
 
+/**
+ * Retrieves the dark mode claim from token.
+ */
 export function getDarkMode() {
-    return getAccessToken() && getAccessToken().darkMode;
+    return getAccessToken() && getAccessToken().darkMode === true;
 }

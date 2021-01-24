@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import SettingsIcon from '@material-ui/icons/Settings';
 import cookies from 'js-cookies';
 import jwt from 'jwt-decode';
-import { UpdateUserData } from '../../services/UserService';
+import { UpdateUserData } from './UserService';
 import {
     TitleRow,
     ElementContainer,
     SubtitleRow,
     SwitchRow
 } from './profileElements';
-import { setDarkModeToken } from '../../services/JWT';
+import { setDarkModeToken } from '../auth/JWT';
 
 function Preferences({ userData, setUserData, setDarkState }) {
     const [customAlert, setCustomAlert] = useState(null);

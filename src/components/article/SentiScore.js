@@ -1,3 +1,5 @@
+/* eslint-disable no-plusplus */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -15,14 +17,21 @@ function Icon(active) {
  */
 export default function SentiScore({ senti }) {
     const values = [];
-    for (let i = -5; i <= 5; i += 2.5) {
+
+    // for (let i = -5; i <= 5; i += 2.5) {
+    for (let i = 1; i <= 5; i++) {
         values.push(i);
     }
 
     return (
         <Stepper alternativeLabel style={{ backgroundColor: 'transparent' }}>
             {values.map(v => {
-                if (senti >= v - 1.25 && senti <= v + 1.25) {
+                if (
+                    (senti <= 1 && v === 1) ||
+                    (senti >= 5 && v === 5) ||
+                    (Math.round(senti) >= v - 0.5 &&
+                        Math.round(senti) <= v + 0.5)
+                ) {
                     return (
                         <Tooltip
                             title={`SentScore: ${senti}`}

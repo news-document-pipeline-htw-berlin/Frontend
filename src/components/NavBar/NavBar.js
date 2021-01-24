@@ -13,7 +13,7 @@ import Divider from '@material-ui/core/Divider';
 
 import { ARTICLES_PER_PAGE, TOKEN } from '../../constants/CommonConstants';
 import logo from '../../assets/images/logo.png';
-import LogoutService from '../../services/LogoutService';
+import { logout } from '../auth/Auth';
 
 const NavBar = ({ handleButtonClick, setDarkState }) => {
     const history = useHistory();
@@ -30,9 +30,7 @@ const NavBar = ({ handleButtonClick, setDarkState }) => {
 
     const handleLogout = () => {
         handleClose();
-        LogoutService();
-        setDarkState(false);
-        history.push('/');
+        logout({ setDarkState, history });
     };
 
     return (

@@ -1,6 +1,6 @@
 import cookies from 'js-cookies';
-import { httpInstance } from '../state/httpInstance';
-import { TOKEN } from '../constants/CommonConstants';
+import { httpInstance } from '../../state/httpInstance';
+import { TOKEN } from '../../constants/CommonConstants';
 
 export function UpdateUserData(userData, customAlert, setCustomAlert) {
     const updateUserData = async () => {
@@ -87,7 +87,6 @@ export function DeleteAccount(authRequest, setCustomAlert, history) {
                 history.push('/');
             })
             .catch(error => {
-                alert(JSON.stringify(authRequest));
                 if (error.response) {
                     setCustomAlert({
                         message: error.response.data,

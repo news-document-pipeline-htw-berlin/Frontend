@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { UpdateUserData } from '../../services/UserService';
+import { UpdateUserData } from './UserService';
 import {
     TitleRow,
     ElementContainer,

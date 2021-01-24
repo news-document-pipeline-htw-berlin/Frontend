@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import SaveIcon from '@material-ui/icons/Save';
 import { useHistory } from 'react-router-dom';
-import { DeleteData, DeleteAccount } from '../../services/UserService';
+import { DeleteData, DeleteAccount } from './UserService';
 import {
     TitleRow,
     ElementContainer,

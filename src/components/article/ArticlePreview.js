@@ -16,7 +16,7 @@ import Departments from './Departments';
 import SentiScore from './SentiScore';
 
 const ArticlePreview = ({ onClick, isLoading, article }) => {
-    const { title, authors, readingTime, imageLinks, departments } = article;
+    const { title, authors, readingTime, imageLinks, department } = article;
 
     return (
         <Card style={{ minHeight: 450, margin: 20 }}>
@@ -42,13 +42,11 @@ const ArticlePreview = ({ onClick, isLoading, article }) => {
                         title="title photo"
                     />
                     <Paper elevation={0} style={{ margin: 10 }}>
-                        <Departments departments={departments} />
+                        <Departments departments={department} />
                         <div style={{ marginLeft: 5, marginTop: 10 }}>
                             <Grid container alignItems="center" direction="row">
                                 <Grid item>
-                                    <ReadingTime
-                                        readingTime={article.readingTime}
-                                    />
+                                    <ReadingTime readingTime={readingTime} />
                                 </Grid>
                                 <Grid
                                     item

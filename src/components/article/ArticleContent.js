@@ -9,8 +9,12 @@ import {
     Chip,
     Link,
     CardMedia,
-    Typography
+    Typography,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails
 } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LoadingAnimation from '../common/LoadingAnimation';
 import ErrorInfo from '../common/ErrorInfo';
 import ReadingTime from './ReadingTime';
@@ -36,6 +40,40 @@ const ArticleContent = ({ article, async }) => {
                         </Typography>
                     );
                 })}
+            </div>
+        );
+    }
+
+    function renderTextSum() {
+        return (
+            <div style={{ marginBottom: 30 }}>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        <Grid
+                            container
+                            alignItems="center"
+                            justify="flex-start"
+                        >
+                            <Typography
+                                style={{ paddingRight: 10 }}
+                                variant="button"
+                            >
+                                Zusammenfassung
+                            </Typography>
+                            <Chip
+                                variant="outlined"
+                                label="BETA"
+                                size="small"
+                                color="primary"
+                            />
+                        </Grid>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography paragraph align="justify" key={uuidv4()}>
+                            {article.textSum}
+                        </Typography>
+                    </AccordionDetails>
+                </Accordion>
             </div>
         );
     }
@@ -102,7 +140,7 @@ const ArticleContent = ({ article, async }) => {
                                 <SentiScore senti={article.sentiments} />
                             </Grid>
                         </Grid>
-
+                        {renderTextSum()}
                         {renderText()}
                         {renderChips(article.keywords)}
                         {renderChips(article.entities)}
