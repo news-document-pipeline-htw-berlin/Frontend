@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { UpdateUserData } from './UserService';
+
+import { updateUserData } from './UserService';
 import {
     TitleRow,
     ElementContainer,
@@ -9,16 +11,20 @@ import {
     FieldRow,
     ButtonRow
 } from './profileElements';
+import Feedback from '../common/Feedback';
 
-function EditProfile({ userData, setUserData }) {
-    const [customAlert, setCustomAlert] = useState(null);
+/**
+ * A panel containing username and a functionality to change the email.
+ * @param {*} param0
+ */
+export default function EditProfile({ userData, setUserData, setFeedback }) {
     const handleSubmit = e => {
         e.preventDefault();
-        UpdateUserData(userData, customAlert, setCustomAlert);
+        updateUserData(userData, setFeedback);
     };
 
     return (
-        <ElementContainer customAlert={customAlert}>
+        <ElementContainer>
             <form validate onSubmit={handleSubmit} autoComplete="off">
                 <TitleRow
                     icon={<AccountCircleIcon fontSize="large" />}
@@ -42,7 +48,6 @@ function EditProfile({ userData, setUserData }) {
 
 EditProfile.propTypes = {
     userData: PropTypes.object.isRequired,
-    setUserData: PropTypes.func.isRequired
+    setUserData: PropTypes.func.isRequired,
+    setFeedback: PropTypes.func.isRequired
 };
-
-export default EditProfile;

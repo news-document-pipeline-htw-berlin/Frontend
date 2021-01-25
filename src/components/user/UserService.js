@@ -1,105 +1,173 @@
+import React from 'react';
 import cookies from 'js-cookies';
 import { httpInstance } from '../../state/httpInstance';
 import { TOKEN } from '../../constants/CommonConstants';
+import Feedback from '../common/Feedback';
+import { removeAccessToken } from '../auth/JWT';
 
-export function UpdateUserData(userData, customAlert, setCustomAlert) {
-    const updateUserData = async () => {
+/**
+ * Sends a request to update user data.
+ * @param {*} userData
+ * @param {*} setFeedback
+ */
+export function updateUserData(userData, setFeedback) {
+    const update = async () => {
         await httpInstance
             .put('/users/account', userData)
             .then(response => {
-                setCustomAlert({ message: response.data, severity: 'success' });
+                setFeedback(
+                    <Feedback
+                        severity="success"
+                        message="Profile has been updated."
+                        setFeedback={setFeedback}
+                    />
+                );
             })
             .catch(error => {
                 if (error.response) {
-                    setCustomAlert({
-                        message: error.response.data,
-                        severity: 'error'
-                    });
+                    setFeedback(
+                        <Feedback
+                            severity="error"
+                            message={error.response.data}
+                            setFeedback={setFeedback}
+                        />
+                    );
                 } else if (error.request) {
-                    setCustomAlert({
-                        message:
-                            'Unable to reach server. Please try again later.',
-                        severity: 'warning'
-                    });
+                    setFeedback(
+                        <Feedback
+                            severity="error"
+                            message="There was an internal server error."
+                            setFeedback={setFeedback}
+                        />
+                    );
                 }
             });
     };
-    return updateUserData();
+    update();
 }
 
-export function ChangePassword(password, customAlert, setCustomAlert) {
-    const changePassword = async () => {
+/**
+ * Sends a request to change the password.
+ * @param {*} password
+ * @param {*} setFeedback
+ */
+export function changePassword(password, setFeedback) {
+    const change = async () => {
         await httpInstance
             .put('/users/account', password)
             .then(response => {
-                setCustomAlert({ message: response.data, severity: 'success' });
+                setFeedback(
+                    <Feedback
+                        severity="success"
+                        message="Password has been changed."
+                        setFeedback={setFeedback}
+                    />
+                );
             })
             .catch(error => {
                 if (error.response) {
-                    setCustomAlert({
-                        message: error.response.data,
-                        severity: 'error'
-                    });
+                    setFeedback(
+                        <Feedback
+                            severity="error"
+                            message={error.response.data}
+                            setFeedback={setFeedback}
+                        />
+                    );
                 } else if (error.request) {
-                    setCustomAlert({
-                        message:
-                            'Unable to reach server. Please try again later.',
-                        severity: 'warning'
-                    });
+                    setFeedback(
+                        <Feedback
+                            severity="success"
+                            message="There was an internal server error."
+                            setFeedback={setFeedback}
+                        />
+                    );
                 }
             });
     };
-    return changePassword();
+    change();
 }
 
-export function DeleteData(authRequest, setCustomAlert) {
-    const deleteData = async () => {
+/**
+ * Sends a request to delete user data.
+ * @param {*} authRequest
+ * @param {*} setFeedback
+ */
+export function deleteData(authRequest, setFeedback) {
+    const del = async () => {
         await httpInstance
             .delete('/users/account?data=true', { data: authRequest })
             .then(response => {
-                setCustomAlert({ message: response.data, severity: 'success' });
+                setFeedback(
+                    <Feedback
+                        severity="success"
+                        message="Data has been deleted."
+                        setFeedback={setFeedback}
+                    />
+                );
             })
             .catch(error => {
                 if (error.response) {
-                    setCustomAlert({
-                        message: error.response.data,
-                        severity: 'error'
-                    });
+                    setFeedback(
+                        <Feedback
+                            severity="error"
+                            message={error.response.data}
+                            setFeedback={setFeedback}
+                        />
+                    );
                 } else if (error.request) {
-                    setCustomAlert({
-                        message:
-                            'Unable to reach server. Please try again later.',
-                        severity: 'warning'
-                    });
+                    setFeedback(
+                        <Feedback
+                            severity="error"
+                            message="There was an internal server error."
+                            setFeedback={setFeedback}
+                        />
+                    );
                 }
             });
     };
-    return deleteData();
+    return del();
 }
 
-export function DeleteAccount(authRequest, setCustomAlert, history) {
-    const deleteAccount = async () => {
+/**
+ * Sends a request to delete user's account.
+ * @param {*} authRequest
+ * @param {*} setFeedback
+ * @param {*} history
+ */
+export function deleteAccount(authRequest, setFeedback, history) {
+    const del = async () => {
         await httpInstance
             .delete('/users/account?account=true', { data: authRequest })
             .then(response => {
-                setCustomAlert({ message: response.data, severity: 'success' });
-                cookies.removeItem(TOKEN);
+                setFeedback(
+                    <Feedback
+                        severity="success"
+                        message="Account has been deleted."
+                        setFeedback={setFeedback}
+                    />
+                );
+                removeAccessToken();
                 history.push('/');
             })
             .catch(error => {
                 if (error.response) {
-                    setCustomAlert({
-                        message: error.response.data,
-                        severity: 'error'
-                    });
+                    setFeedback(
+                        <Feedback
+                            severity="error"
+                            message={error.response.data}
+                            setFeedback={setFeedback}
+                        />
+                    );
                 } else if (error.request) {
-                    setCustomAlert({
-                        message:
-                            'Unable to reach server. Please try again later.',
-                        severity: 'warning'
-                    });
+                    setFeedback(
+                        <Feedback
+                            severity="error"
+                            message="There was an internal server error."
+                            setFeedback={setFeedback}
+                        />
+                    );
                 }
             });
     };
-    return deleteAccount();
+    del();
 }

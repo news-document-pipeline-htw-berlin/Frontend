@@ -71,7 +71,7 @@ const NavBar = ({ handleButtonClick, setDarkState }) => {
                     alignItems="center"
                     spacing="2"
                 >
-                    {cookies.getItem(TOKEN) != null && (
+                    {/* cookies.getItem(TOKEN) != null && (
                         <div>
                             <Grid item>
                                 <Typography variant="caption" display="block">
@@ -80,7 +80,7 @@ const NavBar = ({ handleButtonClick, setDarkState }) => {
                                 </Typography>
                             </Grid>
                         </div>
-                    )}
+                    ) */}
                     <Grid item>
                         <IconButton
                             aria-controls="simple-menu"

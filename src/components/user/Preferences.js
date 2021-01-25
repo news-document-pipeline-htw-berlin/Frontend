@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+
 import SettingsIcon from '@material-ui/icons/Settings';
-import cookies from 'js-cookies';
-import jwt from 'jwt-decode';
-import { UpdateUserData } from './UserService';
+
+import { updateUserData } from './UserService';
 import {
     TitleRow,
     ElementContainer,
@@ -12,8 +12,11 @@ import {
 } from './profileElements';
 import { setDarkModeToken } from '../auth/JWT';
 
-function Preferences({ userData, setUserData, setDarkState }) {
-    const [customAlert, setCustomAlert] = useState(null);
+/**
+ * A panel containing switches to update user's preferences.
+ * @param {*} param0
+ */
+function Preferences({ userData, setUserData, setDarkState, setFeedback }) {
     const isInitialMount = useRef(true);
 
     useEffect(() => {
@@ -21,12 +24,12 @@ function Preferences({ userData, setUserData, setDarkState }) {
             isInitialMount.current = false;
         } else {
             setDarkModeToken();
-            UpdateUserData(userData, customAlert, setCustomAlert);
+            updateUserData(userData, setFeedback);
         }
-    }, [customAlert, userData]);
+    }, [setFeedback, userData]);
 
     return (
-        <ElementContainer customAlert={customAlert}>
+        <ElementContainer>
             <div>
                 <TitleRow
                     icon={<SettingsIcon fontSize="large" />}
@@ -75,7 +78,8 @@ function Preferences({ userData, setUserData, setDarkState }) {
 Preferences.propTypes = {
     userData: PropTypes.object.isRequired,
     setUserData: PropTypes.func.isRequired,
-    setDarkState: PropTypes.func.isRequired
+    setDarkState: PropTypes.func.isRequired,
+    setFeedback: PropTypes.func.isRequired
 };
 
 export default Preferences;

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import SaveIcon from '@material-ui/icons/Save';
 import { useHistory } from 'react-router-dom';
-import { DeleteData, DeleteAccount } from './UserService';
+
+import SaveIcon from '@material-ui/icons/Save';
+
+import { deleteData, deleteAccount } from './UserService';
 import {
     TitleRow,
     ElementContainer,
@@ -12,8 +14,11 @@ import {
     SubtitleRow
 } from './profileElements';
 
-function Data({ userData, setUserData }) {
-    const [customAlert, setCustomAlert] = useState(null);
+/**
+ * A panel which includes functionalities to delete user data / the user account.
+ * @param {*} param0
+ */
+export default function Data({ userData, setFeedback }) {
     const [authRequest, setAuthRequest] = useState({
         user: userData.username,
         password: ''
@@ -21,23 +26,24 @@ function Data({ userData, setUserData }) {
     const [confirm, setConfirm] = useState(false);
     const history = useHistory();
 
-    const deleteAccount = e => {
+    const account = e => {
         e.preventDefault();
-        DeleteAccount(authRequest, setCustomAlert, history);
+        deleteAccount(authRequest, setFeedback, history);
     };
-    const deleteData = e => {
+
+    const data = e => {
         e.preventDefault();
-        DeleteData(authRequest, setCustomAlert);
+        deleteData(authRequest, setFeedback);
     };
 
     return (
-        <ElementContainer customAlert={customAlert}>
+        <ElementContainer>
             <div>
                 <TitleRow
                     icon={<SaveIcon fontSize="large" />}
                     title="Manage Data"
                 />
-                <form validate onSubmit={deleteData} autoComplete="off">
+                <form validate onSubmit={data} autoComplete="off">
                     <FieldRow
                         required="true"
                         type="password"
@@ -56,7 +62,7 @@ function Data({ userData, setUserData }) {
                     />
                     <SubtitleRow right="All of your collected data will be deleted. This will impact your suggested articles." />
                 </form>
-                <form validate onSubmit={deleteAccount} autoComplete="off">
+                <form validate onSubmit={account} autoComplete="off">
                     <FieldRow
                         required="true"
                         type="password"
@@ -88,7 +94,5 @@ function Data({ userData, setUserData }) {
 
 Data.propTypes = {
     userData: PropTypes.object.isRequired,
-    setUserData: PropTypes.func.isRequired
+    setFeedback: PropTypes.func.isRequired
 };
-
-export default Data;

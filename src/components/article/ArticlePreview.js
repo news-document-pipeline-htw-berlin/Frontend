@@ -39,27 +39,39 @@ const ArticlePreview = ({ onClick, isLoading, article }) => {
                     <CardMedia
                         style={{ height: 0, paddingTop: '56.25%' }}
                         image={imageLinks.length ? imageLinks[0] : headerPhoto}
-                        title="title photo"
+                        title={article.title}
                     />
-                    <Paper elevation={0} style={{ margin: 10 }}>
-                        <Departments departments={department} />
-                        <div style={{ marginLeft: 5, marginTop: 10 }}>
-                            <Grid container alignItems="center" direction="row">
-                                <Grid item>
-                                    <ReadingTime readingTime={readingTime} />
-                                </Grid>
+                    <div style={{ minHeight: 250 }}>
+                        <Paper
+                            elevation={0}
+                            style={{ margin: 10, marginBottom: 0 }}
+                        >
+                            <Departments departments={department} />
+                            <div style={{ marginLeft: 10, marginTop: 10 }}>
                                 <Grid
-                                    item
-                                    xs={6}
-                                    style={{ paddingBottom: '20px' }}
+                                    container
+                                    direction="row"
+                                    justify="space-between"
                                 >
-                                    <SentiScore senti={article.sentiments} />
+                                    <Grid item>
+                                        <ReadingTime
+                                            readingTime={readingTime}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <SentiScore
+                                            senti={article.sentiments}
+                                        />
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </div>
-                    </Paper>
+                            </div>
+                        </Paper>
 
-                    <CardHeader title={title} subheader={authors.join(', ')} />
+                        <CardHeader
+                            title={title}
+                            subheader={authors.join(', ')}
+                        />
+                    </div>
                 </CardActionArea>
             )}
         </Card>

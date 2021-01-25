@@ -18,13 +18,12 @@ function Icon(active) {
 export default function SentiScore({ senti }) {
     const values = [];
 
-    // for (let i = -5; i <= 5; i += 2.5) {
     for (let i = 1; i <= 5; i++) {
         values.push(i);
     }
 
     return (
-        <Stepper alternativeLabel style={{ backgroundColor: 'transparent' }}>
+        <Stepper alternativeLabel style={{ padding: 0 }}>
             {values.map(v => {
                 if (
                     (senti <= 1 && v === 1) ||
@@ -34,7 +33,7 @@ export default function SentiScore({ senti }) {
                 ) {
                     return (
                         <Tooltip
-                            title={`SentScore: ${senti}`}
+                            title={`SentScore: ${Number(senti).toFixed(2)}`}
                             placement="top-start"
                         >
                             <Step>

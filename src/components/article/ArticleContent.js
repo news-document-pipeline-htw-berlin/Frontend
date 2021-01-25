@@ -2,6 +2,7 @@ import React from 'react';
 import { stringify } from 'query-string';
 import uuidv4 from 'uuid/v4';
 import moment from 'moment';
+import parse from 'html-react-parser';
 import { useHistory } from 'react-router-dom';
 import {
     DialogContent,
@@ -30,16 +31,32 @@ const ArticleContent = ({ article, async }) => {
 
     const { publishedTime, authors } = article;
 
+    function highlight(text, entities) {
+        let res = text;
+        new Set(entities).forEach(e => {
+            res = res.replace(e, `<strong>${e}</strong>`);
+            // '<strong style=\"background-color: rgba(29, 233, 182, 0.3); padding: 4px; border-radius: 5px\">' + e + '</strong>')
+            // '<span style=\"background-color: rgba(29, 233, 182, 0.3); padding-top: 2px; padding-bottom: 2px; border-radius: 5px\">' + e + '</span>')
+        });
+        return res;
+    }
+
     function renderText() {
         return (
             <div>
-                {article.text.split('\n').map((paragraph, key) => {
-                    return (
-                        <Typography paragraph align="justify" key={uuidv4()}>
-                            {paragraph}
-                        </Typography>
-                    );
-                })}
+                {highlight(article.text, article.entities)
+                    .split('\n')
+                    .map((paragraph, key) => {
+                        return (
+                            <Typography
+                                paragraph
+                                align="justify"
+                                key={uuidv4()}
+                            >
+                                {parse(paragraph)}
+                            </Typography>
+                        );
+                    })}
             </div>
         );
     }
@@ -88,7 +105,7 @@ const ArticleContent = ({ article, async }) => {
     function renderChips(keywords) {
         const uniq = [...new Set(keywords)];
         return (
-            <div style={{ marginTop: 20, marginBottom: 20 }}>
+            <div>
                 {uniq.map(keyword => (
                     <Chip
                         color="default"
@@ -130,21 +147,22 @@ const ArticleContent = ({ article, async }) => {
                             {article.description}
                         </Typography>
 
-                        <Grid container alignItems="center" direction="row">
+                        <Grid container justify="space-between" direction="row">
                             <Grid item>
                                 <ReadingTime
                                     readingTime={article.readingTime}
                                 />
                             </Grid>
-                            <Grid item xs={6} style={{ paddingBottom: '20px' }}>
+                            <Grid item xs={6}>
                                 <SentiScore senti={article.sentiments} />
                             </Grid>
                         </Grid>
                         {renderTextSum()}
                         {renderText()}
-                        {renderChips(article.keywords)}
-                        {renderChips(article.entities)}
-                        {renderChips(article.keywordsExtracted)}
+                        <div style={{ marginTop: 20, marginBottom: 20 }}>
+                            {renderChips(article.keywords)}
+                            {renderChips(article.keywordsExtracted)}
+                        </div>
                         <Typography paragraph>
                             {publishedTime
                                 ? moment(publishedTime).format('DD.MM.YYYY')

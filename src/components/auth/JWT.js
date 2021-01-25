@@ -29,6 +29,7 @@ export function removeAccessToken() {
 export function setDarkModeToken() {
     const token = getAccessToken();
     if (token === null) return;
+    removeAccessToken();
     // TODO: inject secret
     const secret = 'secret';
     const data = token.expiresAt

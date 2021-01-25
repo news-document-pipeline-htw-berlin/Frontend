@@ -1,17 +1,20 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cookies from 'js-cookies';
 import jwt from 'jwt-decode';
+
 import { makeStyles } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import { Grid, Container } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
-import Alert from '@material-ui/lab/Alert';
+import {
+    Grid,
+    Container,
+    Tabs,
+    Tab,
+    Box,
+    Paper,
+    Typography
+} from '@material-ui/core';
 
 import EditProfile from './EditProfile';
 import Preferences from './Preferences';
@@ -19,6 +22,62 @@ import Password from './Password';
 import Data from './Data';
 import useUserData from '../../hooks/useUserData';
 import { TOKEN } from '../../constants/CommonConstants';
+import Feedback from '../common/Feedback';
+
+/**
+ * Styles for responsiveness
+ */
+const useStyles = makeStyles(theme => ({
+    vertical: {
+        [theme.breakpoints.down('md')]: {
+            display: 'none'
+        },
+        [theme.breakpoints.down('sm')]: {
+            display: 'none'
+        },
+        [theme.breakpoints.down('xs')]: {
+            display: 'none'
+        }
+    },
+    horizontal: {
+        [theme.breakpoints.up('xl')]: {
+            display: 'none'
+        },
+        [theme.breakpoints.up('lg')]: {
+            display: 'none'
+        }
+    },
+    content: {
+        [theme.breakpoints.down('md')]: {
+            minHeight: '92vw',
+            minWidth: '92vw'
+        },
+        [theme.breakpoints.down('sm')]: {
+            minHeight: '92vw',
+            minWidth: '92vw'
+        },
+        [theme.breakpoints.down('xs')]: {
+            minHeight: '92vw',
+            minWidth: '92vw'
+        },
+        [theme.breakpoints.up('xl')]: {
+            minWidth: '55vw',
+            minHeight: '55vh'
+        },
+        [theme.breakpoints.up('lg')]: {
+            minWidth: '55vw',
+            minHeight: '55vh'
+        }
+    },
+    container: {
+        [theme.breakpoints.up('xl')]: {
+            minHeight: '60vh'
+        },
+        [theme.breakpoints.up('lg')]: {
+            minHeight: '60vh'
+        }
+    }
+}));
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -53,9 +112,15 @@ function a11yProps(index) {
     };
 }
 
+/**
+ * Displays a tabpanel with user information and functionalities to update user data.
+ * @param {*} param0
+ */
 export default function UserProfile({ setDarkState }) {
     const [value, setValue] = React.useState(0);
     const [userData, setUserData] = useUserData(jwt(cookies.getItem(TOKEN)).id);
+    const classes = useStyles();
+    const [feedback, setFeedback] = useState(true);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -66,58 +131,72 @@ export default function UserProfile({ setDarkState }) {
             <Container>
                 <Grid
                     container
-                    justify="flex-start"
-                    style={{
-                        marginTop: '2vw',
-                        minWidth: '70vw'
-                    }}
+                    direction="column"
+                    justify="space-around"
+                    className={classes.container}
                 >
-                    <Paper variant="outlined">
-                        <Tabs
-                            orientation="vertical"
-                            variant="scrollable"
-                            value={value}
-                            onChange={handleChange}
-                            aria-label="Vertical tabs example"
-                        >
-                            <Tab label="Edit Profile" {...a11yProps(0)} />
-                            <Tab label="Preferences" {...a11yProps(1)} />
-                            <Tab label="Password" {...a11yProps(2)} />
-                            <Tab label="Data" {...a11yProps(3)} />
-                        </Tabs>
-                    </Paper>
-                    <Paper
-                        variant="outlined"
-                        style={{ width: '50vw', height: '35vw' }}
-                    >
-                        <TabPanel value={value} index={0}>
-                            <EditProfile
-                                userData={userData}
-                                setUserData={setUserData}
-                            />
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            <Preferences
-                                userData={userData}
-                                setUserData={setUserData}
-                                setDarkState={setDarkState}
-                            />
-                        </TabPanel>
-                        <TabPanel value={value} index={2}>
-                            <Password
-                                userData={userData}
-                                setUserData={setUserData}
-                            />
-                        </TabPanel>
-                        <TabPanel value={value} index={3}>
-                            <Data
-                                userData={userData}
-                                setUserData={setUserData}
-                            />
-                        </TabPanel>
-                    </Paper>
+                    <Grid container>
+                        <Paper variant="outlined" className={classes.vertical}>
+                            <Tabs
+                                orientation="vertical"
+                                variant="scrollable"
+                                value={value}
+                                onChange={handleChange}
+                            >
+                                <Tab label="Edit Profile" {...a11yProps(0)} />
+                                <Tab label="Preferences" {...a11yProps(1)} />
+                                <Tab label="Password" {...a11yProps(2)} />
+                                <Tab label="Data" {...a11yProps(3)} />
+                            </Tabs>
+                        </Paper>
+                        <div variant="outlined" className={classes.horizontal}>
+                            <Tabs
+                                orientation="horizontal"
+                                variant="scrollable"
+                                value={value}
+                                onChange={handleChange}
+                            >
+                                <Tab label="Edit Profile" {...a11yProps(0)} />
+                                <Tab label="Preferences" {...a11yProps(1)} />
+                                <Tab label="Password" {...a11yProps(2)} />
+                                <Tab label="Data" {...a11yProps(3)} />
+                            </Tabs>
+                        </div>
+                        <Paper variant="outlined" className={classes.content}>
+                            <TabPanel value={value} index={0}>
+                                <EditProfile
+                                    userData={userData}
+                                    setUserData={setUserData}
+                                    setFeedback={setFeedback}
+                                />
+                            </TabPanel>
+                            <TabPanel value={value} index={1}>
+                                <Preferences
+                                    userData={userData}
+                                    setUserData={setUserData}
+                                    setDarkState={setDarkState}
+                                    setFeedback={setFeedback}
+                                />
+                            </TabPanel>
+                            <TabPanel value={value} index={2}>
+                                <Password
+                                    userData={userData}
+                                    setUserData={setUserData}
+                                    setFeedback={setFeedback}
+                                />
+                            </TabPanel>
+                            <TabPanel value={value} index={3}>
+                                <Data
+                                    userData={userData}
+                                    setUserData={setUserData}
+                                    setFeedback={setFeedback}
+                                />
+                            </TabPanel>
+                        </Paper>
+                    </Grid>
                 </Grid>
             </Container>
+            {feedback}
         </div>
     );
 }

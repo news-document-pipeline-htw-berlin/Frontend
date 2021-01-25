@@ -1,23 +1,29 @@
+/* eslint-disable react/forbid-prop-types */
+
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Typography, TextField, Button } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import Switch from '@material-ui/core/Switch';
-import Checkbox from '@material-ui/core/Checkbox';
+
+import {
+    Grid,
+    Typography,
+    TextField,
+    Button,
+    Switch,
+    Checkbox
+} from '@material-ui/core';
 
 const leftStyle = { textAlign: 'right', paddingRight: '10px' };
 const rightStyle = { textAlign: 'left', paddingLeft: '10px' };
 
+/**
+ * Container for a row.
+ * @param {*} props
+ */
 export const ElementContainer = props => {
-    const { children, customAlert } = props;
+    const { children } = props;
     return (
-        <div style={{ width: '40vw' }}>
+        <div>
             <Grid container direction="column">
-                {customAlert && (
-                    <Alert severity={customAlert.severity}>
-                        {customAlert.message}
-                    </Alert>
-                )}
                 {children}
             </Grid>
         </div>
@@ -25,10 +31,13 @@ export const ElementContainer = props => {
 };
 
 ElementContainer.propTypes = {
-    children: PropTypes.node.isRequired,
-    customAlert: PropTypes.object.isRequired
+    children: PropTypes.node.isRequired
 };
 
+/**
+ * A row with a left and right element.
+ * @param {*} props
+ */
 const Row = props => {
     const { left, right } = props;
     return (
@@ -40,10 +49,10 @@ const Row = props => {
             spacing={24}
             style={{ margin: '15px' }}
         >
-            <Grid item xs={4} style={leftStyle}>
+            <Grid item xs={3} sm={3} md={3} lg={3} xl={3} style={leftStyle}>
                 {left}
             </Grid>
-            <Grid item xs={6} style={rightStyle}>
+            <Grid item xs={6} sm={6} md={6} lg={8} xl={8} style={rightStyle}>
                 {right}
             </Grid>
         </Grid>
@@ -60,6 +69,10 @@ Row.propTypes = {
     right: PropTypes.any
 };
 
+/**
+ * A row with an icon on the left and title on the right.
+ * @param {*} props
+ */
 export const TitleRow = props => {
     const { icon, title } = props;
     return (
@@ -75,6 +88,10 @@ TitleRow.propTypes = {
     title: PropTypes.string.isRequired
 };
 
+/**
+ * A row with text on the left and on the right.
+ * @param {*} props
+ */
 export const TextRow = props => {
     const { leftText, rightText } = props;
     return (
@@ -103,6 +120,10 @@ TextRow.propTypes = {
     rightText: PropTypes.string
 };
 
+/**
+ * A row with text on the left and a textfield on the right.
+ * @param {*} props
+ */
 export const FieldRow = props => {
     const { text, required, value, type, handleChange } = props;
     return (
@@ -117,7 +138,6 @@ export const FieldRow = props => {
                     required={required}
                     value={value}
                     type={type}
-                    fullWidth
                     onChange={handleChange}
                 />
             }
@@ -140,6 +160,10 @@ FieldRow.propTypes = {
     handleChange: PropTypes.func.isRequired
 };
 
+/**
+ * A row with a checkbox on the left and text on the right.
+ * @param {*} props
+ */
 export const CheckboxRow = props => {
     const { text, required, color, handleClick } = props;
     return (
@@ -174,6 +198,10 @@ CheckboxRow.propTypes = {
     handleClick: PropTypes.func.isRequired
 };
 
+/**
+ * A row with text on the left and a submit button on the right.
+ * @param {*} props
+ */
 export const ButtonRow = props => {
     const { text, color, label, variant, handleSubmit } = props;
     return (
@@ -207,6 +235,10 @@ ButtonRow.propTypes = {
     handleSubmit: PropTypes.func.isRequired
 };
 
+/**
+ * A row with subtitles on both sides.
+ * @param {*} props
+ */
 export const SubtitleRow = props => {
     const { left, right } = props;
     return (
@@ -227,6 +259,10 @@ SubtitleRow.propTypes = {
     right: PropTypes.any
 };
 
+/**
+ * Row with a switch on the left and text on the right.
+ * @param {*} props
+ */
 export const SwitchRow = props => {
     const { title, switchState, handleClick } = props;
     return (

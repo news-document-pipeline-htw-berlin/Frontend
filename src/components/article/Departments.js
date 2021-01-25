@@ -22,17 +22,18 @@ const Departments = ({ departments }) => {
 
     return (
         <React.Fragment>
-            {departments.map(department => (
-                <Chip
-                    color="default"
-                    key={department}
-                    label={department}
-                    component="a"
-                    clickable
-                    variant="outlined"
-                    onClick={e => handleClick(e, department)}
-                />
-            ))}
+            {(departments.length === 0 && <div style={{ height: 41 }} />) ||
+                departments.map(department => (
+                    <Chip
+                        color="default"
+                        key={department}
+                        label={department}
+                        component="a"
+                        clickable
+                        variant="outlined"
+                        onClick={e => handleClick(e, department)}
+                    />
+                ))}
         </React.Fragment>
     );
 };

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import LockIcon from '@material-ui/icons/Lock';
-import { ChangePassword } from './UserService';
+
+import { changePassword } from './UserService';
 import {
     TitleRow,
     ElementContainer,
@@ -9,21 +11,25 @@ import {
     ButtonRow
 } from './profileElements';
 
-function Password({ userData, setUserData }) {
-    const [customAlert, setCustomAlert] = useState(null);
+/**
+ * Displays a panel with the functionality to change the user's password.
+ * @param {*} param0
+ */
+function Password({ userData, setFeedback }) {
     const [password, setPassword] = useState({
         user: userData.username,
         oldPW: '',
         newPW: '',
         repPW: ''
     });
+
     const handleSubmit = e => {
         e.preventDefault();
-        ChangePassword(password, customAlert, setCustomAlert);
+        changePassword(password, setFeedback);
     };
 
     return (
-        <ElementContainer customAlert={customAlert}>
+        <ElementContainer>
             <form validate onSubmit={handleSubmit} autoComplete="off">
                 <TitleRow
                     icon={<LockIcon fontSize="large" />}
@@ -34,7 +40,10 @@ function Password({ userData, setUserData }) {
                     required="true"
                     type="password"
                     handleChange={e =>
-                        setPassword({ ...password, oldPW: e.target.value })
+                        setPassword({
+                            ...password,
+                            oldPW: e.target.value
+                        })
                     }
                 />
                 <FieldRow
@@ -53,7 +62,10 @@ function Password({ userData, setUserData }) {
                     required="true"
                     type="password"
                     handleChange={e =>
-                        setPassword({ ...password, repPW: e.target.value })
+                        setPassword({
+                            ...password,
+                            repPW: e.target.value
+                        })
                     }
                 />
                 <ButtonRow label="Save" variant="contained" color="primary" />
@@ -64,7 +76,7 @@ function Password({ userData, setUserData }) {
 
 Password.propTypes = {
     userData: PropTypes.object.isRequired,
-    setUserData: PropTypes.func.isRequired
+    setFeedback: PropTypes.func.isRequired
 };
 
 export default Password;
