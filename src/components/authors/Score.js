@@ -41,7 +41,13 @@ export default function Score({ score }) {
     }, [score]);
 
     return (
-        <XYPlot xDomain={[-3, 3]} yDomain={[-3, 3]} width={300} height={300}>
+        <XYPlot
+            margin={0}
+            xDomain={[-3, 3]}
+            yDomain={[-3, 3]}
+            width={300}
+            height={300}
+        >
             <LabelSeries allowOffsetToBeReversed data={label} />
             <ArcSeries
                 animation={{

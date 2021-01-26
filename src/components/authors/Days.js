@@ -87,6 +87,7 @@ export default function Days(props) {
     return (
         <div>
             <XYPlot
+                margin={0}
                 xDomain={[-3, 3]}
                 yDomain={[-3, 3]}
                 width={700}

@@ -8,7 +8,7 @@ import SearchBar from 'material-ui-search-bar';
  * @param {*} param0 setId
  */
 export default function SearchAuthors({ setId }) {
-    const [search, setSearch] = useState();
+    const [search, setSearch] = useState('');
 
     return (
         <SearchBar
@@ -16,7 +16,10 @@ export default function SearchAuthors({ setId }) {
             value={search}
             onChange={newValue => setSearch(newValue)}
             onRequestSearch={() => setId(search)}
-            onCancelSearch={() => setId(null)}
+            onCancelSearch={() => {
+                setSearch('');
+                setId('');
+            }}
         />
     );
 }

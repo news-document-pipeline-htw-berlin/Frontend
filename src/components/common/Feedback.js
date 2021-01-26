@@ -20,7 +20,7 @@ export default function Feedback({ severity, message, setFeedback }) {
         <div>
             <Snackbar
                 anchorOrigin={{
-                    vertical: 'top',
+                    vertical: 'bottom',
                     horizontal: 'center'
                 }}
                 open={open}

@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { Card, CardContent, Typography, Paper } from '@material-ui/core';
 
 import Score from './Score';
 
@@ -37,29 +37,22 @@ export default function AuthorInfo(props) {
     }, [author]);
 
     return (
-        <Card
-            variant="outlined"
-            style={{ width: '20vw', minHeight: '70%', margin: '0' }}
-        >
-            <CardContent>
-                <Typography color="textSecondary">Name</Typography>
-                <Typography variant="h5" gutterBottom>
-                    {author._id}
-                </Typography>
-                <Typography color="textSecondary">Occupation</Typography>
-                <Typography variant="h5" gutterBottom>
-                    -
-                </Typography>
-                <Typography color="textSecondary">
-                    Favourite Department
-                </Typography>
-                <Typography variant="h5" gutterBottom>
-                    {(favDep !== '' && favDep) || 'None'}
-                </Typography>
-                <Typography color="textSecondary">Score</Typography>
-                <Score score={author.score} />
-            </CardContent>
-        </Card>
+        <div variant="outlined" style={{ padding: 20 }}>
+            <Typography color="textSecondary">Name</Typography>
+            <Typography variant="h5" gutterBottom>
+                {author._id}
+            </Typography>
+            <Typography color="textSecondary">Occupation</Typography>
+            <Typography variant="h5" gutterBottom>
+                -
+            </Typography>
+            <Typography color="textSecondary">Favourite Department</Typography>
+            <Typography variant="h5" gutterBottom>
+                {(favDep !== '' && favDep) || 'None'}
+            </Typography>
+            <Typography color="textSecondary">Score</Typography>
+            <Score score={author.score} />
+        </div>
     );
 }
 

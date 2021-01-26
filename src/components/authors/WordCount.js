@@ -47,7 +47,13 @@ export default function WordCount(props) {
                 </Grid>
             </Grid>
 
-            <XYPlot xType="ordinal" width={700} height={600} xDistance={50}>
+            <XYPlot
+                margin={{ bottom: 40 }}
+                xType="ordinal"
+                width={700}
+                height={600}
+                xDistance={50}
+            >
                 <VerticalGridLines />
                 <HorizontalGridLines />
                 <XAxis />

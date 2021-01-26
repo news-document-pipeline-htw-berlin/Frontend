@@ -13,7 +13,8 @@ import {
     AppBar,
     Tab,
     Tabs,
-    Typography
+    Typography,
+    Paper
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 
@@ -80,84 +81,101 @@ export default function Author(props) {
     };
 
     return (
-        <Container style={{ paddingTop: '15px' }}>
-            <div style={{ paddingBottom: '15px' }}>{children}</div>
-            {(author !== null && JSON.stringify(author) !== '{}' && (
-                <Grid
-                    container
-                    justify="space-around"
-                    direction="row"
-                    spacing={12}
-                >
-                    <Grid item xs={4} style={{ border: '5px' }}>
-                        <AuthorInfo author={author} />
-                    </Grid>
-                    <Grid item xs={8} style={{ paddingLeft: '15px' }}>
-                        <AppBar position="sticky" color="default">
-                            <Tabs
-                                value={value}
-                                onChange={handleChange}
-                                indicatorColor="primary"
-                                textColor="primary"
-                                variant="fullWidth"
-                                aria-label="full width tabs example"
-                            >
-                                <Tab label="Departments" {...a11yProps(0)} />
-                                <Tab label="Wordcount" {...a11yProps(1)} />
-                                <Tab label="Days" {...a11yProps(2)} />
-                            </Tabs>
-                        </AppBar>
+        <Container>
+            <Grid
+                container
+                direction="column"
+                justify="center"
+                style={{ minHeight: '80vh' }}
+            >
+                <div style={{ paddingBottom: '15px' }}>{children}</div>
+                {(author !== null && JSON.stringify(author) !== '{}' && (
+                    <Grid container justify="space-around" direction="row">
+                        <Grid item xl={4} lg={4}>
+                            <AuthorInfo author={author} />
+                        </Grid>
                         <Grid
-                            container
-                            justify="center"
-                            alignItems="center"
-                            direction="row"
-                            style={{ marginTop: '10px' }}
+                            item
+                            xl={8}
+                            lg={8}
+                            sm={8}
+                            xs={12}
+                            style={{ paddingLeft: '15px', minHeight: '80vh' }}
                         >
-                            <SwipeableViews
-                                axis={
-                                    theme.direction === 'rtl'
-                                        ? 'x-reverse'
-                                        : 'x'
-                                }
-                                index={value}
-                                onChangeIndex={handleChangeIndex}
-                            >
-                                <TabPanel
-                                    value={value}
-                                    index={0}
-                                    dir={theme.direction}
+                            <Paper>
+                                <AppBar position="static" color="default">
+                                    <Tabs
+                                        value={value}
+                                        onChange={handleChange}
+                                        indicatorColor="primary"
+                                        textColor="primary"
+                                        variant="fullWidth"
+                                        aria-label="full width tabs example"
+                                    >
+                                        <Tab
+                                            label="Departments"
+                                            {...a11yProps(0)}
+                                        />
+                                        <Tab
+                                            label="Wordcount"
+                                            {...a11yProps(1)}
+                                        />
+                                        <Tab label="Days" {...a11yProps(2)} />
+                                    </Tabs>
+                                </AppBar>
+                                <Grid
+                                    container
+                                    justify="center"
+                                    alignItems="center"
+                                    direction="row"
+                                    style={{ marginTop: '10px' }}
                                 >
-                                    <Departments author={author} />
-                                </TabPanel>
-                                <TabPanel
-                                    value={value}
-                                    index={1}
-                                    dir={theme.direction}
-                                >
-                                    <WordCount author={author} />
-                                </TabPanel>
-                                <TabPanel
-                                    value={value}
-                                    index={2}
-                                    dir={theme.direction}
-                                >
-                                    <Days author={author} />
-                                </TabPanel>
-                            </SwipeableViews>
+                                    <SwipeableViews
+                                        axis={
+                                            theme.direction === 'rtl'
+                                                ? 'x-reverse'
+                                                : 'x'
+                                        }
+                                        index={value}
+                                        onChangeIndex={handleChangeIndex}
+                                    >
+                                        <TabPanel
+                                            value={value}
+                                            index={0}
+                                            dir={theme.direction}
+                                        >
+                                            <Departments author={author} />
+                                        </TabPanel>
+                                        <TabPanel
+                                            value={value}
+                                            index={1}
+                                            dir={theme.direction}
+                                        >
+                                            <WordCount author={author} />
+                                        </TabPanel>
+                                        <TabPanel
+                                            value={value}
+                                            index={2}
+                                            dir={theme.direction}
+                                        >
+                                            <Days author={author} />
+                                        </TabPanel>
+                                    </SwipeableViews>
+                                </Grid>
+                            </Paper>
                         </Grid>
                     </Grid>
-                </Grid>
-            )) || (
-                <Grid
-                    container
-                    justify="center"
-                    alignItems="center"
-                    direction="row"
-                >
-                    <Alert severity="info">No results for {id}.</Alert>
-                </Grid>
-            )}
+                )) || (
+                    <Grid
+                        container
+                        justify="center"
+                        alignItems="center"
+                        direction="row"
+                    >
+                        <Alert severity="info">No results for {id}.</Alert>
+                    </Grid>
+                )}
+            </Grid>
         </Container>
     );
 }
