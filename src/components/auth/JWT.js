@@ -26,7 +26,7 @@ export function removeAccessToken() {
 /**
  * Resets the current token with a switched dark mode.
  */
-export function setDarkModeToken() {
+export function setDarkModeToken(value) {
     const token = getAccessToken();
     if (token === null) return;
     removeAccessToken();
@@ -36,13 +36,15 @@ export function setDarkModeToken() {
         ? {
               user: token.user,
               id: token.id,
-              darkMode: !token.darkMode,
+              darkMode: value,
+              suggestions: token.suggestions,
               expiresAt: token.expiresAt
           }
         : {
               user: token.user,
               id: token.id,
-              darkMode: !token.darkMode
+              darkMode: value,
+              suggestions: token.suggestions
           };
     cookies.setItem(TOKEN, sign(data, secret));
 }
@@ -52,4 +54,37 @@ export function setDarkModeToken() {
  */
 export function getDarkMode() {
     return getAccessToken() && getAccessToken().darkMode === true;
+}
+
+/**
+ * Resets the current token with a switched suggestion claim.
+ */
+export function setSuggestToken(value) {
+    const token = getAccessToken();
+    if (token === null) return;
+    removeAccessToken();
+    // TODO: inject secret
+    const secret = 'secret';
+    const data = token.expiresAt
+        ? {
+              user: token.user,
+              id: token.id,
+              darkMode: token.darkMode,
+              expiresAt: token.expiresAt,
+              suggestions: value
+          }
+        : {
+              user: token.user,
+              id: token.id,
+              darkMode: token.darkMode,
+              suggestions: value
+          };
+    cookies.setItem(TOKEN, sign(data, secret));
+}
+
+/**
+ * Retrieves the suggestions claim from token.
+ */
+export function getSuggest() {
+    return getAccessToken() && getAccessToken().suggestions === true;
 }

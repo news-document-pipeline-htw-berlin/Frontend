@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getSuggestions } from '../components/user/UserService';
 import EndpointConstants from '../constants/EndpointConstants';
 import { unauthorized } from '../state/httpClient';
 
@@ -38,7 +39,17 @@ export function useArticles(queryParams, articlesPerPage) {
                 setAsync({ isLoading: false, error: err });
             }
         }
-        fetchArticles();
+
+        if (
+            department ||
+            newspaper ||
+            query ||
+            author ||
+            getSuggestions({ setArticles, setAsync, setListMetaInformation }) <=
+                0
+        ) {
+            fetchArticles();
+        }
     }, [currentPage, department, newspaper, query, author, articlesPerPage]);
 
     return {

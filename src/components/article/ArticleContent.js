@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { stringify } from 'query-string';
 import uuidv4 from 'uuid/v4';
 import moment from 'moment';
@@ -25,11 +25,17 @@ import {
 } from '../../constants/NewsPropTypes';
 import { wording } from '../common/common';
 import SentiScore from './SentiScore';
+import { updateKeywords } from '../user/UserService';
 
 const ArticleContent = ({ article, async }) => {
     const history = useHistory();
 
     const { publishedTime, authors } = article;
+
+    useEffect(() => {
+        updateKeywords(article.keywords);
+        updateKeywords(article.keywordsExtracted);
+    }, [article]);
 
     function highlight(text, entities) {
         let res = text;

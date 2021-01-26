@@ -1,9 +1,54 @@
 import React from 'react';
-import cookies from 'js-cookies';
 import { httpInstance } from '../../state/httpInstance';
-import { TOKEN } from '../../constants/CommonConstants';
 import Feedback from '../common/Feedback';
-import { removeAccessToken } from '../auth/JWT';
+import { getAccessToken, removeAccessToken, getSuggest } from '../auth/JWT';
+
+/**
+ * Updates keywords for current user.
+ * @param {*} keywords
+ */
+export function updateKeywords(keywords) {
+    const update = async () => {
+        await httpInstance.put('/users/suggestions', { list: keywords });
+    };
+    if (getAccessToken()) {
+        update();
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Retrieves article suggestions for use if functionality is enabled.
+ * @param {*} param0
+ */
+export function getSuggestions({
+    setArticles,
+    setAsync,
+    setListMetaInformation
+}) {
+    const get = async () => {
+        let count = -1;
+        await httpInstance
+            .get('/users/suggestions')
+            .then(res => {
+                count = res.data.resultCount;
+                if (count > 0) {
+                    setArticles(res.data.articles);
+                    setListMetaInformation({
+                        total: res.data.resultCount
+                    });
+                    setAsync({ isLoading: false, error: null });
+                }
+            })
+            .catch(err => setAsync({ isLoading: false, error: err }));
+        return count;
+    };
+    if (getAccessToken() && getSuggest()) {
+        return get();
+    }
+    return 0;
+}
 
 /**
  * Sends a request to update user data.

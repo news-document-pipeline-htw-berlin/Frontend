@@ -10,7 +10,7 @@ import {
     SubtitleRow,
     SwitchRow
 } from './profileElements';
-import { setDarkModeToken } from '../auth/JWT';
+import { setDarkModeToken, setSuggestToken } from '../auth/JWT';
 
 /**
  * A panel containing switches to update user's preferences.
@@ -23,7 +23,8 @@ function Preferences({ userData, setUserData, setDarkState, setFeedback }) {
         if (isInitialMount.current) {
             isInitialMount.current = false;
         } else {
-            setDarkModeToken();
+            setDarkModeToken(userData.darkMode);
+            setSuggestToken(userData.suggestions);
             updateUserData(userData, setFeedback);
         }
     }, [setFeedback, userData]);
