@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 
 import { login } from './Auth';
+import { wording } from '../common/common';
 
 /**
  * Displays a login form.
@@ -32,9 +33,17 @@ export default function LoginForm({ setDarkState }) {
         user: false,
         password: false
     });
+    const [feedback, setFeedback] = useState(false);
     const submit = e => {
         e.preventDefault();
-        login({ loginRequest, setDarkState, error, setError, history });
+        login({
+            loginRequest,
+            setDarkState,
+            error,
+            setError,
+            history,
+            setFeedback
+        });
     };
 
     return (
@@ -54,7 +63,7 @@ export default function LoginForm({ setDarkState }) {
             >
                 <DialogTitle>
                     <Typography variant="h5" align="center">
-                        Login
+                        {wording.auth.login}
                     </Typography>
                 </DialogTitle>
                 <form noValidate={false} autoComplete={false} onSubmit={submit}>
@@ -66,7 +75,7 @@ export default function LoginForm({ setDarkState }) {
                             style={{ minHeight: '25vh' }}
                         >
                             <TextField
-                                label="Username"
+                                label={wording.auth.username}
                                 act={error.user}
                                 color={error.user ? 'secondary' : 'primary'}
                                 fullWidth
@@ -80,7 +89,7 @@ export default function LoginForm({ setDarkState }) {
                                             align="left"
                                             color="secondary"
                                         >
-                                            Username does not exist.
+                                            {wording.auth.error.usernameExist}
                                         </Typography>
                                     ) : (
                                         ''
@@ -95,7 +104,7 @@ export default function LoginForm({ setDarkState }) {
                             />
                             <TextField
                                 color={error.password ? 'secondary' : 'primary'}
-                                label="Password"
+                                label={wording.auth.password}
                                 variant="outlined"
                                 type="password"
                                 fullWidth
@@ -107,7 +116,7 @@ export default function LoginForm({ setDarkState }) {
                                             align="left"
                                             color="secondary"
                                         >
-                                            Invalid Password.
+                                            {wording.auth.error.passwordInvalid}
                                         </Typography>
                                     ) : (
                                         ''
@@ -137,7 +146,7 @@ export default function LoginForm({ setDarkState }) {
                                     variant="caption"
                                     display="block"
                                 >
-                                    Keep me logged in
+                                    {wording.auth.keepLoggedIn}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -151,20 +160,23 @@ export default function LoginForm({ setDarkState }) {
                                 color="primary"
                                 type="submit"
                             >
-                                Login
+                                {wording.auth.login}
                             </Button>
                             <Typography
                                 align="left"
                                 variant="caption"
                                 style={{ paddingTop: 10 }}
                             >
-                                Don&apos;t have an account yet? Sign up{' '}
-                                <Link to="/signup">here</Link>.
+                                {wording.auth.noAccount}{' '}
+                                <Link to="/signup">
+                                    {wording.auth.noAccountLink}
+                                </Link>
                             </Typography>
                         </Grid>
                     </DialogActions>
                 </form>
             </Dialog>
+            {feedback}
         </div>
     );
 }

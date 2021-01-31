@@ -14,6 +14,7 @@ import {
     HorizontalGridLines,
     LineMarkSeries
 } from 'react-vis';
+import { wording } from '../common/common';
 
 /**
  * Represents the word count for an author as a LineMarkSeries.
@@ -35,7 +36,7 @@ export default function WordCount(props) {
         <div>
             <Grid container>
                 <Grid item>
-                    <Typography>Average:&nbsp;</Typography>
+                    <Typography>{wording.author.avg}:&nbsp;</Typography>
                 </Grid>
                 <Grid item>
                     <Typography style={{ fontWeight: 'bold' }}>
@@ -43,7 +44,7 @@ export default function WordCount(props) {
                     </Typography>
                 </Grid>
                 <Grid item>
-                    <Typography>Words per Article</Typography>
+                    <Typography>{wording.author.words}</Typography>
                 </Grid>
             </Grid>
 

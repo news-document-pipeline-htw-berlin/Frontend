@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getSuggestions } from '../components/user/UserService';
+import { getSuggestions, useKeywords } from '../components/user/UserService';
 import EndpointConstants from '../constants/EndpointConstants';
 import { unauthorized } from '../state/httpClient';
 
@@ -10,6 +10,7 @@ export function useArticles(queryParams, articlesPerPage) {
     const [async, setAsync] = useState({ isLoading: false, error: null });
     const [articles, setArticles] = useState([]);
     const [listMetaInformation, setListMetaInformation] = useState({});
+    const [fetch] = useKeywords();
 
     useEffect(() => {
         async function fetchArticles() {
@@ -39,18 +40,20 @@ export function useArticles(queryParams, articlesPerPage) {
                 setAsync({ isLoading: false, error: err });
             }
         }
-
-        if (
-            department ||
-            newspaper ||
-            query ||
-            author ||
-            getSuggestions({ setArticles, setAsync, setListMetaInformation }) <=
-                0
-        ) {
+        if (department || newspaper || query || author || fetch) {
             fetchArticles();
+        } else {
+            getSuggestions({ setArticles, setAsync, setListMetaInformation });
         }
-    }, [currentPage, department, newspaper, query, author, articlesPerPage]);
+    }, [
+        currentPage,
+        department,
+        newspaper,
+        query,
+        author,
+        articlesPerPage,
+        fetch
+    ]);
 
     return {
         articles,

@@ -14,6 +14,7 @@ import Divider from '@material-ui/core/Divider';
 import { ARTICLES_PER_PAGE, TOKEN } from '../../constants/CommonConstants';
 import logo from '../../assets/images/logo.png';
 import { logout } from '../auth/Auth';
+import { wording } from '../common/common';
 
 const NavBar = ({ handleButtonClick, setDarkState }) => {
     const history = useHistory();
@@ -71,16 +72,6 @@ const NavBar = ({ handleButtonClick, setDarkState }) => {
                     alignItems="center"
                     spacing="2"
                 >
-                    {/* cookies.getItem(TOKEN) != null && (
-                        <div>
-                            <Grid item>
-                                <Typography variant="caption" display="block">
-                                    Logged in as{' '}
-                                    {jwt(cookies.getItem(TOKEN)).user}
-                                </Typography>
-                            </Grid>
-                        </div>
-                    ) */}
                     <Grid item>
                         <IconButton
                             aria-controls="simple-menu"
@@ -102,12 +93,12 @@ const NavBar = ({ handleButtonClick, setDarkState }) => {
                                 <div>
                                     <NavLink className="NavLink" to="/login">
                                         <MenuItem onClick={handleClose}>
-                                            Login
+                                            {wording.auth.login}
                                         </MenuItem>
                                     </NavLink>
                                     <NavLink className="NavLink" to="/signup">
                                         <MenuItem onClick={handleClose}>
-                                            Sign up
+                                            {wording.auth.signup}
                                         </MenuItem>
                                     </NavLink>
                                 </div>
@@ -121,7 +112,7 @@ const NavBar = ({ handleButtonClick, setDarkState }) => {
                                     </NavLink>
                                     <Divider light />
                                     <MenuItem onClick={handleLogout}>
-                                        Logout
+                                        {wording.auth.logout}
                                     </MenuItem>
                                 </div>
                             )}

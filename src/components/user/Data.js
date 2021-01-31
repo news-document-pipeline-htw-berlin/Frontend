@@ -13,6 +13,7 @@ import {
     ButtonRow,
     SubtitleRow
 } from './profileElements';
+import { wording } from '../common/common';
 
 /**
  * A panel which includes functionalities to delete user data / the user account.
@@ -41,13 +42,13 @@ export default function Data({ userData, setFeedback }) {
             <div>
                 <TitleRow
                     icon={<SaveIcon fontSize="large" />}
-                    title="Manage Data"
+                    title={wording.user.manageData}
                 />
                 <form validate onSubmit={data} autoComplete="off">
                     <FieldRow
                         required="true"
                         type="password"
-                        text="Enter Password"
+                        text={wording.auth.password}
                         handleChange={e =>
                             setAuthRequest({
                                 ...authRequest,
@@ -56,17 +57,17 @@ export default function Data({ userData, setFeedback }) {
                         }
                     />
                     <ButtonRow
-                        label="Delete My Data"
+                        label={wording.user.deleteData}
                         variant="outlined"
                         color="secondary"
                     />
-                    <SubtitleRow right="All of your collected data will be deleted. This will impact your suggested articles." />
+                    <SubtitleRow right={wording.user.deleteDataCaption} />
                 </form>
                 <form validate onSubmit={account} autoComplete="off">
                     <FieldRow
                         required="true"
                         type="password"
-                        text="Enter Password"
+                        text={wording.auth.password}
                         handleChange={e =>
                             setAuthRequest({
                                 ...authRequest,
@@ -77,15 +78,15 @@ export default function Data({ userData, setFeedback }) {
                     <CheckboxRow
                         required="true"
                         color="secondary"
-                        text="Yes, delete my account forever"
+                        text={wording.user.confirm}
                         onClick={() => setConfirm(true)}
                     />
                     <ButtonRow
-                        label="Delete My Account"
+                        label={wording.user.deleteAccount}
                         variant="contained"
                         color="secondary"
                     />
-                    <SubtitleRow right="Warning! This cannot be undone." />
+                    <SubtitleRow right={wording.user.deleteAccountWarn} />
                 </form>
             </div>
         </ElementContainer>

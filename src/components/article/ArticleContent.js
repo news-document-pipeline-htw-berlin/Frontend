@@ -70,7 +70,7 @@ const ArticleContent = ({ article, async }) => {
     function renderTextSum() {
         return (
             <div style={{ marginBottom: 30 }}>
-                <Accordion>
+                <Accordion style={{ background: 'rgba(158, 158, 158, 0.2 )' }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                         <Grid
                             container
@@ -175,20 +175,23 @@ const ArticleContent = ({ article, async }) => {
                                 : ''}
                         </Typography>
                         {authors.map(author => (
-                            <Link
-                                href={`/authors&id=${author}`}
-                                onClick={e => {
-                                    e.preventDefault();
-                                    history.push({
-                                        pathname: `/authors&id=${author}`,
-                                        state: { title: article.title }
-                                    });
-                                }}
-                                color="primary"
-                                underline="hover"
-                            >
-                                {author}
-                            </Link>
+                            <div>
+                                <Link
+                                    href={`/authors&id=${author}`}
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        history.push({
+                                            pathname: `/authors&id=${author}`,
+                                            state: { title: article.title }
+                                        });
+                                    }}
+                                    color="primary"
+                                    underline="hover"
+                                >
+                                    {author}
+                                </Link>
+                                <br />
+                            </div>
                         ))}
                         {article.longUrl && (
                             <div style={{ marginBottom: 20 }}>

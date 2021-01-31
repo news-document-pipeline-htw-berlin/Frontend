@@ -22,7 +22,7 @@ import Password from './Password';
 import Data from './Data';
 import useUserData from '../../hooks/useUserData';
 import { TOKEN } from '../../constants/CommonConstants';
-import Feedback from '../common/Feedback';
+import { wording } from '../common/common';
 
 /**
  * Styles for responsiveness
@@ -143,10 +143,22 @@ export default function UserProfile({ setDarkState }) {
                                 value={value}
                                 onChange={handleChange}
                             >
-                                <Tab label="Edit Profile" {...a11yProps(0)} />
-                                <Tab label="Preferences" {...a11yProps(1)} />
-                                <Tab label="Password" {...a11yProps(2)} />
-                                <Tab label="Data" {...a11yProps(3)} />
+                                <Tab
+                                    label={wording.user.edit}
+                                    {...a11yProps(0)}
+                                />
+                                <Tab
+                                    label={wording.user.preferences}
+                                    {...a11yProps(1)}
+                                />
+                                <Tab
+                                    label={wording.auth.password}
+                                    {...a11yProps(2)}
+                                />
+                                <Tab
+                                    label={wording.user.data}
+                                    {...a11yProps(3)}
+                                />
                             </Tabs>
                         </Paper>
                         <div variant="outlined" className={classes.horizontal}>

@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 
 import { signup } from './Auth';
+import { wording } from '../common/common';
 
 /**
  * Displays a signup form.
@@ -35,11 +36,19 @@ export default function SignupForm({ setDarkState }) {
         password: false,
         passwordRep: false
     });
+    const [feedback, setFeedback] = useState(false);
     const history = useHistory();
 
     const submit = e => {
         e.preventDefault();
-        signup({ userData, setDarkState, error, setError, history });
+        signup({
+            userData,
+            setDarkState,
+            error,
+            setError,
+            history,
+            setFeedback
+        });
     };
 
     return (
@@ -59,7 +68,7 @@ export default function SignupForm({ setDarkState }) {
             >
                 <DialogTitle>
                     <Typography variant="h5" align="center">
-                        Create an Account
+                        {wording.auth.signup}
                     </Typography>
                 </DialogTitle>
                 <form noValidate={false} autoComplete={false} onSubmit={submit}>
@@ -71,7 +80,7 @@ export default function SignupForm({ setDarkState }) {
                             style={{ minHeight: '35vh' }}
                         >
                             <TextField
-                                label="Username"
+                                label={wording.auth.username}
                                 color={error.user ? 'secondary' : 'primary'}
                                 fullWidth
                                 variant="outlined"
@@ -84,7 +93,7 @@ export default function SignupForm({ setDarkState }) {
                                             align="left"
                                             color="secondary"
                                         >
-                                            Username already taken.
+                                            {wording.auth.error.usernameTaken}
                                         </Typography>
                                     ) : (
                                         ''
@@ -98,7 +107,7 @@ export default function SignupForm({ setDarkState }) {
                                 }
                             />
                             <TextField
-                                label="Email"
+                                label={wording.auth.email}
                                 color={error.email ? 'secondary' : 'primary'}
                                 fullWidth
                                 variant="outlined"
@@ -111,7 +120,7 @@ export default function SignupForm({ setDarkState }) {
                                             align="left"
                                             color="secondary"
                                         >
-                                            Email already in use.
+                                            {wording.auth.error.emailTaken}
                                         </Typography>
                                     ) : (
                                         ''
@@ -126,7 +135,7 @@ export default function SignupForm({ setDarkState }) {
                             />
                             <TextField
                                 color={error.password ? 'secondary' : 'primary'}
-                                label="Password"
+                                label={wording.auth.password}
                                 variant="outlined"
                                 type="password"
                                 fullWidth
@@ -138,7 +147,7 @@ export default function SignupForm({ setDarkState }) {
                                             align="left"
                                             color="secondary"
                                         >
-                                            Invalid Password.
+                                            {wording.auth.error.passwordInvalid}
                                         </Typography>
                                     ) : (
                                         ''
@@ -155,7 +164,7 @@ export default function SignupForm({ setDarkState }) {
                                 color={
                                     error.passwordRep ? 'secondary' : 'primary'
                                 }
-                                label="Repeat Password"
+                                label={wording.auth.passwordRep}
                                 variant="outlined"
                                 type="password"
                                 fullWidth
@@ -167,7 +176,10 @@ export default function SignupForm({ setDarkState }) {
                                             align="left"
                                             color="secondary"
                                         >
-                                            Password mismatch.
+                                            {
+                                                wording.auth.error
+                                                    .passwordMismatch
+                                            }
                                         </Typography>
                                     ) : (
                                         ''
@@ -197,7 +209,7 @@ export default function SignupForm({ setDarkState }) {
                                     variant="caption"
                                     display="block"
                                 >
-                                    Keep me logged in
+                                    {wording.auth.keepLoggedIn}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -211,20 +223,23 @@ export default function SignupForm({ setDarkState }) {
                                 color="primary"
                                 type="submit"
                             >
-                                Sign Up
+                                {wording.auth.signup}
                             </Button>
                             <Typography
                                 align="left"
                                 variant="caption"
                                 style={{ paddingTop: 10 }}
                             >
-                                Already have an account? Login{' '}
-                                <Link to="/login">here</Link>.
+                                {wording.auth.hasAccount}{' '}
+                                <Link to="/login">
+                                    {wording.auth.hasAccountLink}
+                                </Link>
                             </Typography>
                         </Grid>
                     </DialogActions>
                 </form>
             </Dialog>
+            {feedback}
         </div>
     );
 }

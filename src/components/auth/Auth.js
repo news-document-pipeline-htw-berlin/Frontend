@@ -1,5 +1,8 @@
+import React from 'react';
 import { getDarkMode, getAccessToken, removeAccessToken } from './JWT';
 import { httpInstance } from '../../state/httpInstance';
+import Feedback from '../common/Feedback';
+import { wording } from '../common/common';
 
 /**
  * Attempts a login with given login request.
@@ -11,13 +14,25 @@ export function login({
     setDarkState,
     error,
     setError,
-    history
+    history,
+    setFeedback
 }) {
     const sendLoginRequest = async () => {
+        setError({
+            ...error,
+            user: false,
+            password: false
+        });
         await httpInstance
             .post('/users/login', loginRequest)
             .then(() => {
-                // TODO: set snackbar to successful login
+                setFeedback(
+                    <Feedback
+                        severity="success"
+                        message={wording.auth.success.login}
+                        setFeedback={setFeedback}
+                    />
+                );
             })
             .catch(err => {
                 if (err.response) {
@@ -26,8 +41,21 @@ export function login({
                         user: err.response.status === 404,
                         password: err.response.status === 401
                     });
+                    setFeedback(
+                        <Feedback
+                            severity="error"
+                            message={err.response.data}
+                            setFeedback={setFeedback}
+                        />
+                    );
                 } else if (err.request) {
-                    // TODO: set snackbar to server error
+                    setFeedback(
+                        <Feedback
+                            severity="error"
+                            message={wording.error}
+                            setFeedback={setFeedback}
+                        />
+                    );
                 }
             })
             .then(() => {
@@ -45,7 +73,14 @@ export function login({
  * If successful, the new user is logged in automatically.
  * @param {*} param0
  */
-export function signup({ userData, setDarkState, error, setError, history }) {
+export function signup({
+    userData,
+    setDarkState,
+    error,
+    setError,
+    history,
+    setFeedback
+}) {
     const sendSignupRequest = async () => {
         let ok = false;
         setError({
@@ -58,7 +93,13 @@ export function signup({ userData, setDarkState, error, setError, history }) {
             .post('/users/signup', userData)
             .then(() => {
                 ok = true;
-                // TODO: set snackbar to successful signup
+                setFeedback(
+                    <Feedback
+                        severity="success"
+                        message={wording.auth.success.signup}
+                        setFeedback={setFeedback}
+                    />
+                );
             })
             .catch(err => {
                 if (err.response) {
@@ -68,8 +109,21 @@ export function signup({ userData, setDarkState, error, setError, history }) {
                         email: err.response.data.includes('Email'),
                         passwordRep: err.response.data.includes('Password')
                     });
+                    setFeedback(
+                        <Feedback
+                            severity="error"
+                            message={err.response.data}
+                            setFeedback={setFeedback}
+                        />
+                    );
                 } else if (err.request) {
-                    // TODO: set snackbar to server error
+                    setFeedback(
+                        <Feedback
+                            severity="error"
+                            message={wording.error}
+                            setFeedback={setFeedback}
+                        />
+                    );
                 }
             })
             .then(() => {
@@ -99,6 +153,5 @@ export function logout({ setDarkState, history }) {
     if (removeAccessToken()) {
         setDarkState(false);
         history.push('/');
-        // TODO: set snackbar for successful logout
     }
 }

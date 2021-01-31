@@ -5,6 +5,7 @@ import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined';
 import { Button } from '@material-ui/core';
 
 import Author from './Author';
+import { wording } from '../common/common';
 
 /**
  * A container for author stats.
@@ -26,7 +27,7 @@ export default function AuthorLinkContainer() {
                         onClick={() => history.goBack()}
                     >
                         <ArrowBackIosOutlinedIcon />
-                        Back to {`"${location.state.title}"`}
+                        {wording.author.back} {`"${location.state.title}"`}
                     </Button>
                 )}
             </Author>

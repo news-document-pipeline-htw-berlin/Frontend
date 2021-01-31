@@ -11,7 +11,7 @@ import {
     FieldRow,
     ButtonRow
 } from './profileElements';
-import Feedback from '../common/Feedback';
+import { wording } from '../common/common';
 
 /**
  * A panel containing username and a functionality to change the email.
@@ -28,11 +28,14 @@ export default function EditProfile({ userData, setUserData, setFeedback }) {
             <form validate onSubmit={handleSubmit} autoComplete="off">
                 <TitleRow
                     icon={<AccountCircleIcon fontSize="large" />}
-                    title={`${userData.username}'s Account`}
+                    title={`${userData.username}'s ${wording.user.account}`}
                 />
-                <TextRow leftText="Username" rightText={userData.username} />
+                <TextRow
+                    leftText={wording.auth.username}
+                    rightText={userData.username}
+                />
                 <FieldRow
-                    text="Email"
+                    text={wording.auth.email}
                     value={userData.email}
                     required="true"
                     type="email"
@@ -40,7 +43,11 @@ export default function EditProfile({ userData, setUserData, setFeedback }) {
                         setUserData({ ...userData, email: e.target.value })
                     }
                 />
-                <ButtonRow label="Save" variant="contained" color="primary" />
+                <ButtonRow
+                    label={wording.user.save}
+                    variant="contained"
+                    color="primary"
+                />
             </form>
         </ElementContainer>
     );

@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable prefer-spread */
 /* eslint-disable no-plusplus */
+/* eslint-disable no-restricted-syntax */
 
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
@@ -8,6 +9,8 @@ import PropTypes from 'prop-types';
 import { Card, CardContent, Typography, Paper } from '@material-ui/core';
 
 import Score from './Score';
+import { wording } from '../common/common';
+import { WEBSITES } from '../../constants/Websites';
 
 /**
  * A card containing general information about given author.
@@ -15,42 +18,67 @@ import Score from './Score';
  */
 export default function AuthorInfo(props) {
     const { author } = props;
-    const [favDep, setFavDep] = useState('');
+    const [favDep, setFavDep] = useState('-');
+    const [occ, setOcc] = useState('-');
 
-    useEffect(() => {
-        let res = '';
-        let count = 0;
+    function getOccupation(obj) {
+        let max = 0;
+        const arr = [];
+        for (const [key, value] of Object.entries(obj)) {
+            max = value > max ? value : max;
+        }
+        for (const [key, value] of Object.entries(obj)) {
+            if (value === max) arr.push(WEBSITES()[key]);
+        }
+        if (arr.length > 0) return arr.join(', ');
+        return '-';
+    }
+
+    function getFavDep(obj) {
+        const arr = [];
         const max = Math.max.apply(
             Math,
-            author.perDepartment.map(function(o) {
+            obj.map(function(o) {
                 return o._2;
             })
         );
-        author.perDepartment.forEach(dep => {
+        obj.forEach(dep => {
             if (dep._2 === max) {
-                const comma = count > 0 ? ',' : '';
-                res = `${res + comma} ${dep._1}`;
-                count++;
+                arr.push(dep._1);
             }
         });
-        setFavDep(res);
+        if (arr.length > 0) return arr.join(', ');
+        return '-';
+    }
+
+    useEffect(() => {
+        setOcc(getOccupation(author.perWebsite));
+        setFavDep(getFavDep(author.perDepartment));
     }, [author]);
 
     return (
         <div variant="outlined" style={{ padding: 20 }}>
-            <Typography color="textSecondary">Name</Typography>
+            <Typography color="textSecondary">
+                {wording.author.author}
+            </Typography>
             <Typography variant="h5" gutterBottom>
                 {author._id}
             </Typography>
-            <Typography color="textSecondary">Occupation</Typography>
-            <Typography variant="h5" gutterBottom>
-                -
+            <Typography color="textSecondary">
+                {wording.author.occupation}
             </Typography>
-            <Typography color="textSecondary">Favourite Department</Typography>
             <Typography variant="h5" gutterBottom>
-                {(favDep !== '' && favDep) || 'None'}
+                {occ}
             </Typography>
-            <Typography color="textSecondary">Score</Typography>
+            <Typography color="textSecondary">
+                {wording.author.favDep}
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+                {favDep}
+            </Typography>
+            <Typography color="textSecondary">
+                {wording.author.score}
+            </Typography>
             <Score score={author.score} />
         </div>
     );

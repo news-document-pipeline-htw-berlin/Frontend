@@ -23,6 +23,7 @@ import WordCount from './WordCount';
 import Departments from './Departments';
 import Days from './Days';
 import { useAuthor } from '../../hooks/useAuthors';
+import { wording } from '../common/common';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -82,13 +83,13 @@ export default function Author(props) {
 
     return (
         <Container>
+            <div style={{ padding: '15px' }}>{children}</div>
             <Grid
                 container
                 direction="column"
                 justify="center"
                 style={{ minHeight: '80vh' }}
             >
-                <div style={{ paddingBottom: '15px' }}>{children}</div>
                 {(author !== null && JSON.stringify(author) !== '{}' && (
                     <Grid container justify="space-around" direction="row">
                         <Grid item xl={4} lg={4}>
@@ -113,14 +114,17 @@ export default function Author(props) {
                                         aria-label="full width tabs example"
                                     >
                                         <Tab
-                                            label="Departments"
+                                            label={wording.author.departments}
                                             {...a11yProps(0)}
                                         />
                                         <Tab
-                                            label="Wordcount"
+                                            label={wording.author.wordCount}
                                             {...a11yProps(1)}
                                         />
-                                        <Tab label="Days" {...a11yProps(2)} />
+                                        <Tab
+                                            label={wording.author.days}
+                                            {...a11yProps(2)}
+                                        />
                                     </Tabs>
                                 </AppBar>
                                 <Grid
@@ -165,16 +169,19 @@ export default function Author(props) {
                             </Paper>
                         </Grid>
                     </Grid>
-                )) || (
-                    <Grid
-                        container
-                        justify="center"
-                        alignItems="center"
-                        direction="row"
-                    >
-                        <Alert severity="info">No results for {id}.</Alert>
-                    </Grid>
-                )}
+                )) ||
+                    (id !== '' && (
+                        <Grid
+                            container
+                            justify="center"
+                            alignItems="center"
+                            direction="row"
+                        >
+                            <Alert severity="info">
+                                {wording.author.noResult} {id}.
+                            </Alert>
+                        </Grid>
+                    ))}
             </Grid>
         </Container>
     );

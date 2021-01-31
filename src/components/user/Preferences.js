@@ -11,6 +11,7 @@ import {
     SwitchRow
 } from './profileElements';
 import { setDarkModeToken, setSuggestToken } from '../auth/JWT';
+import { wording } from '../common/common';
 
 /**
  * A panel containing switches to update user's preferences.
@@ -34,10 +35,10 @@ function Preferences({ userData, setUserData, setDarkState, setFeedback }) {
             <div>
                 <TitleRow
                     icon={<SettingsIcon fontSize="large" />}
-                    title="Preferences"
+                    title={wording.user.preferences}
                 />
                 <SwitchRow
-                    title="Article Suggestions"
+                    title={wording.user.suggestions}
                     switchState={userData.suggestions}
                     handleClick={e => {
                         setUserData({
@@ -49,12 +50,12 @@ function Preferences({ userData, setUserData, setDarkState, setFeedback }) {
                 <SubtitleRow
                     right={
                         userData.suggestions
-                            ? 'New articles will be suggested to you.'
-                            : 'New articles will not be suggested to you.'
+                            ? wording.user.doSuggest
+                            : wording.user.notSuggest
                     }
                 />
                 <SwitchRow
-                    title="Dark Mode"
+                    title={wording.user.darkMode}
                     switchState={userData.darkMode}
                     handleClick={e => {
                         setDarkState(!userData.darkMode);
@@ -67,8 +68,8 @@ function Preferences({ userData, setUserData, setDarkState, setFeedback }) {
                 <SubtitleRow
                     right={
                         userData.darkMode
-                            ? 'Dark Mode is enabled.'
-                            : 'Dark Mode is disabled.'
+                            ? wording.user.doDarkMode
+                            : wording.user.notDarkMode
                     }
                 />
             </div>

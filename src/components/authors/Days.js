@@ -7,6 +7,7 @@ import { XYPlot, ArcSeries, Hint } from 'react-vis';
 
 import { COLORS } from '../../constants/ChartColors';
 import SentiPopover from './SentiPopover';
+import { WEEKDAY } from '../../constants/Weekdays';
 
 /**
  * Represents statistics for the days an author has published articles on.
@@ -40,7 +41,7 @@ export default function Days(props) {
                         radius0: 0,
                         color: COLORS[index],
                         count: dep._2,
-                        day: dep._1,
+                        day: WEEKDAY()[dep._1],
                         sent: sent._2
                     });
                 }
@@ -58,7 +59,7 @@ export default function Days(props) {
             radius0: 0,
             color: COLORS[index],
             count: dep._2,
-            day: dep._1
+            day: WEEKDAY()[dep._1]
         });
     }
 

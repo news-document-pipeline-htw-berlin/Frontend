@@ -11,25 +11,26 @@ const ArticleOverview = ({ articles, async, handleArticleClick }) => {
         <p>{wording.error}</p>
     ) : (
         <Grid container>
-            {articles.map(article => {
-                const { id } = article;
-                return (
-                    <Grid
-                        xs={12}
-                        sm={6}
-                        md={4}
-                        item
-                        style={{ marginBottom: 20 }}
-                        key={id}
-                    >
-                        <ArticlePreview
-                            article={article}
-                            onClick={() => handleArticleClick(article)}
-                            isLoading={isLoading}
-                        />
-                    </Grid>
-                );
-            })}
+            {articles &&
+                articles.map(article => {
+                    const { id } = article;
+                    return (
+                        <Grid
+                            xs={12}
+                            sm={6}
+                            md={4}
+                            item
+                            style={{ marginBottom: 20 }}
+                            key={id}
+                        >
+                            <ArticlePreview
+                                article={article}
+                                onClick={() => handleArticleClick(article)}
+                                isLoading={isLoading}
+                            />
+                        </Grid>
+                    );
+                })}
         </Grid>
     );
 };

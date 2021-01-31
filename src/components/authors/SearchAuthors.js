@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import SearchBar from 'material-ui-search-bar';
+import { wording } from '../common/common';
 
 /**
  * A search bar for authors. The search term will be used as author id.
@@ -12,7 +13,7 @@ export default function SearchAuthors({ setId }) {
 
     return (
         <SearchBar
-            placeholder="Search Authors..."
+            placeholder={wording.author.search}
             value={search}
             onChange={newValue => setSearch(newValue)}
             onRequestSearch={() => setId(search)}

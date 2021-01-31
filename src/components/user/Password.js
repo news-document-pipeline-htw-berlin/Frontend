@@ -10,6 +10,7 @@ import {
     FieldRow,
     ButtonRow
 } from './profileElements';
+import { wording } from '../common/common';
 
 /**
  * Displays a panel with the functionality to change the user's password.
@@ -33,10 +34,10 @@ function Password({ userData, setFeedback }) {
             <form validate onSubmit={handleSubmit} autoComplete="off">
                 <TitleRow
                     icon={<LockIcon fontSize="large" />}
-                    title="Change Password"
+                    title={wording.user.changePW}
                 />
                 <FieldRow
-                    text="Current Password"
+                    text={wording.user.currentPW}
                     required="true"
                     type="password"
                     handleChange={e =>
@@ -47,7 +48,7 @@ function Password({ userData, setFeedback }) {
                     }
                 />
                 <FieldRow
-                    text="New Password"
+                    text={wording.user.newPW}
                     required="true"
                     type="password"
                     handleChange={e =>
@@ -58,7 +59,7 @@ function Password({ userData, setFeedback }) {
                     }
                 />
                 <FieldRow
-                    text="Confirm Password"
+                    text={wording.user.repeatPW}
                     required="true"
                     type="password"
                     handleChange={e =>
@@ -68,7 +69,11 @@ function Password({ userData, setFeedback }) {
                         })
                     }
                 />
-                <ButtonRow label="Save" variant="contained" color="primary" />
+                <ButtonRow
+                    label={wording.user.save}
+                    variant="contained"
+                    color="primary"
+                />
             </form>
         </ElementContainer>
     );

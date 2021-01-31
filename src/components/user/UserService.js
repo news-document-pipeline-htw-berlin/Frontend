@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { httpInstance } from '../../state/httpInstance';
 import Feedback from '../common/Feedback';
 import { getAccessToken, removeAccessToken, getSuggest } from '../auth/JWT';
+import { wording } from '../common/common';
 
 /**
  * Updates keywords for current user.
@@ -19,6 +20,21 @@ export function updateKeywords(keywords) {
 }
 
 /**
+ * Returns true if user has no keywords in database.
+ */
+export function useKeywords() {
+    const [keywords, setKeywords] = useState(0);
+    const get = async () => {
+        await httpInstance.get('/users/keywords').then(res => {
+            setKeywords(res.data);
+        });
+    };
+    useEffect(() => {
+        get();
+    }, []);
+    return [keywords === 0];
+}
+/**
  * Retrieves article suggestions for use if functionality is enabled.
  * @param {*} param0
  */
@@ -28,26 +44,24 @@ export function getSuggestions({
     setListMetaInformation
 }) {
     const get = async () => {
-        let count = -1;
         await httpInstance
             .get('/users/suggestions')
             .then(res => {
-                count = res.data.resultCount;
-                if (count > 0) {
+                if (res.data.resultCount > 0) {
                     setArticles(res.data.articles);
                     setListMetaInformation({
                         total: res.data.resultCount
                     });
                     setAsync({ isLoading: false, error: null });
+                } else {
+                    setAsync({ isLoading: true, error: null });
                 }
             })
             .catch(err => setAsync({ isLoading: false, error: err }));
-        return count;
     };
     if (getAccessToken() && getSuggest()) {
-        return get();
+        get();
     }
-    return 0;
 }
 
 /**
@@ -63,7 +77,7 @@ export function updateUserData(userData, setFeedback) {
                 setFeedback(
                     <Feedback
                         severity="success"
-                        message="Profile has been updated."
+                        message={wording.user.success.profile}
                         setFeedback={setFeedback}
                     />
                 );
@@ -81,7 +95,7 @@ export function updateUserData(userData, setFeedback) {
                     setFeedback(
                         <Feedback
                             severity="error"
-                            message="There was an internal server error."
+                            message={wording.error}
                             setFeedback={setFeedback}
                         />
                     );
@@ -104,7 +118,7 @@ export function changePassword(password, setFeedback) {
                 setFeedback(
                     <Feedback
                         severity="success"
-                        message="Password has been changed."
+                        message={wording.user.success.password}
                         setFeedback={setFeedback}
                     />
                 );
@@ -122,7 +136,7 @@ export function changePassword(password, setFeedback) {
                     setFeedback(
                         <Feedback
                             severity="success"
-                            message="There was an internal server error."
+                            message={wording.error}
                             setFeedback={setFeedback}
                         />
                     );
@@ -145,7 +159,7 @@ export function deleteData(authRequest, setFeedback) {
                 setFeedback(
                     <Feedback
                         severity="success"
-                        message="Data has been deleted."
+                        message={wording.user.success.data}
                         setFeedback={setFeedback}
                     />
                 );
@@ -163,7 +177,7 @@ export function deleteData(authRequest, setFeedback) {
                     setFeedback(
                         <Feedback
                             severity="error"
-                            message="There was an internal server error."
+                            message={wording.error}
                             setFeedback={setFeedback}
                         />
                     );
@@ -187,7 +201,7 @@ export function deleteAccount(authRequest, setFeedback, history) {
                 setFeedback(
                     <Feedback
                         severity="success"
-                        message="Account has been deleted."
+                        message={wording.user.success.account}
                         setFeedback={setFeedback}
                     />
                 );
@@ -207,7 +221,7 @@ export function deleteAccount(authRequest, setFeedback, history) {
                     setFeedback(
                         <Feedback
                             severity="error"
-                            message="There was an internal server error."
+                            message={wording.error}
                             setFeedback={setFeedback}
                         />
                     );
