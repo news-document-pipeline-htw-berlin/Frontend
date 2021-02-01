@@ -18,6 +18,7 @@ const Article = () => {
 
     const [article, setArticle] = useState(null);
     const [async, setAsync] = useState({ isLoading: false, error: null });
+    const [highlight, setHighlight] = useState(false);
 
     function handleClose() {
         if (location.state && location.state.fromHome) {
@@ -58,8 +59,18 @@ const Article = () => {
 
     return (
         <Dialog open={id} fullScreen onClose={handleClose}>
-            <ArticleHeader article={article} handleClose={handleClose} />
-            <ArticleContent article={article} async={async} />
+            <ArticleHeader
+                article={article}
+                handleClose={handleClose}
+                highlight={highlight}
+                setHighlight={setHighlight}
+            />
+            <ArticleContent
+                article={article}
+                async={async}
+                highlight={highlight}
+                setHighlight={setHighlight}
+            />
         </Dialog>
     );
 };

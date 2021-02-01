@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { XYPlot, ArcSeries, Hint } from 'react-vis';
 
 import { COLORS } from '../../constants/ChartColors';
-import SentiPopover from './SentiPopover';
+import SentiPopover from '../sentiments/SentiPopover';
 import { WEEKDAY } from '../../constants/Weekdays';
 
 /**

@@ -6,7 +6,15 @@ export const wording = {
             error:
                 'Beim Laden des Artikels ist ein Fehler aufgetreten. Bitte versuche, die Seite neu zu laden.'
         },
-        articles: 'Artikel'
+        articles: 'Artikel',
+        highlight: 'Hervorheben',
+        eval: {
+            vn: 'Sehr negativ',
+            n: 'Negativ',
+            neutral: 'Neutral',
+            p: 'Positiv',
+            vp: 'Sehr positiv'
+        }
     },
     analytics: {
         startDate: 'Startdatum',
@@ -92,7 +100,7 @@ export const wording = {
         wordCount: 'Wortanzahl',
         days: 'Wochentage',
         author: 'Autor',
-        occupation: 'Tätigkeit',
+        occupation: 'Schreibt für',
         favDep: 'Lieblingsrubrik',
         score: 'Score',
         back: 'Zurück zu',

@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Typography, Paper } from '@material-ui/core';
-import SentiScore from '../article/SentiScore';
+import SentiScore from './SentiScore';
 import { wording } from '../common/common';
+import { EVAL } from './sentiEval';
 
 /**
  * A popover element containing the weekday, amount of articles and correspinding SentScore.
@@ -19,7 +20,10 @@ export default function SentiPopover({ value }) {
             {value.sent && (
                 <div>
                     <Typography>
-                        Sentiment: {Number(value.sent).toFixed(2)}
+                        Sentiment:{' '}
+                        {`${Number(value.sent).toFixed(2)} (${
+                            EVAL[Math.round(value.sent) - 1]
+                        })`}
                     </Typography>
                     <SentiScore senti={value.sent} />
                 </div>

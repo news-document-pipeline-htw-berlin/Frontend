@@ -13,7 +13,7 @@ import ReadingTime from './ReadingTime';
 import { ArticlePropTypes } from '../../constants/NewsPropTypes';
 import headerPhoto from '../../assets/images/stock.jpg';
 import Departments from './Departments';
-import SentiScore from './SentiScore';
+import SentiScore from '../sentiments/SentiScore';
 
 const ArticlePreview = ({ onClick, isLoading, article }) => {
     const { title, authors, readingTime, imageLinks, department } = article;

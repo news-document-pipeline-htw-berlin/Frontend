@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { stringify } from 'query-string';
 import uuidv4 from 'uuid/v4';
 import moment from 'moment';
@@ -16,6 +17,8 @@ import {
     AccordionDetails
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 import LoadingAnimation from '../common/LoadingAnimation';
 import ErrorInfo from '../common/ErrorInfo';
 import ReadingTime from './ReadingTime';
@@ -24,10 +27,10 @@ import {
     AsyncPropTypes
 } from '../../constants/NewsPropTypes';
 import { wording } from '../common/common';
-import SentiScore from './SentiScore';
+import SentiScore from '../sentiments/SentiScore';
 import { updateKeywords } from '../user/UserService';
 
-const ArticleContent = ({ article, async }) => {
+const ArticleContent = ({ article, async, highlight, setHighlight }) => {
     const history = useHistory();
 
     const { publishedTime, authors } = article;
@@ -37,12 +40,17 @@ const ArticleContent = ({ article, async }) => {
         updateKeywords(article.keywordsExtracted);
     }, [article]);
 
-    function highlight(text, entities) {
+    function highlightText(text, entities) {
         let res = text;
         new Set(entities).forEach(e => {
-            res = res.replace(e, `<strong>${e}</strong>`);
-            // '<strong style=\"background-color: rgba(29, 233, 182, 0.3); padding: 4px; border-radius: 5px\">' + e + '</strong>')
-            // '<span style=\"background-color: rgba(29, 233, 182, 0.3); padding-top: 2px; padding-bottom: 2px; border-radius: 5px\">' + e + '</span>')
+            res = res.replace(
+                e, // `<strong>${e}</strong>`);
+                // '<strong style=\"background-color: rgba(29, 233, 182, 0.3); padding: 4px; border-radius: 5px\">' + e + '</strong>')
+                highlight
+                    ? `<span style="background-color: rgba(255, 238, 98, 0.2); padding-top: 1px; padding-bottom: 1px; border-radius: 2px">${e}</span>`
+                    : // : (`<strong>${e}</strong>`))
+                      e
+            );
         });
         return res;
     }
@@ -50,7 +58,7 @@ const ArticleContent = ({ article, async }) => {
     function renderText() {
         return (
             <div>
-                {highlight(article.text, article.entities)
+                {highlightText(article.text, article.entities)
                     .split('\n')
                     .map((paragraph, key) => {
                         return (
@@ -136,7 +144,7 @@ const ArticleContent = ({ article, async }) => {
     return (
         <React.Fragment>
             <Grid container justify="center">
-                <Grid item xs={10} md={8} lg={6}>
+                <Grid item xs={12} sm={10} md={10} lg={8} xl={7}>
                     <DialogContent>
                         {article.imageLinks.length && (
                             <CardMedia
@@ -163,6 +171,7 @@ const ArticleContent = ({ article, async }) => {
                                 <SentiScore senti={article.sentiments} />
                             </Grid>
                         </Grid>
+
                         {renderTextSum()}
                         {renderText()}
                         <div style={{ marginTop: 20, marginBottom: 20 }}>
@@ -213,7 +222,9 @@ const ArticleContent = ({ article, async }) => {
 
 ArticleContent.propTypes = {
     article: ArticlePropTypes.isRequired,
-    async: AsyncPropTypes.isRequired
+    async: AsyncPropTypes.isRequired,
+    highlight: PropTypes.bool.isRequired,
+    setHighlight: PropTypes.func.isRequired
 };
 
 export default ArticleContent;

@@ -4,10 +4,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Stepper, Step, StepLabel, Tooltip } from '@material-ui/core';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { EVAL } from './sentiEval';
 
-function Icon(active) {
-    return <FiberManualRecordIcon color={active ? 'secondary' : 'primary'} />;
+function Icon(active, val) {
+    if (active) {
+        switch (val) {
+            case 1:
+                return <RemoveCircleIcon style={{ fill: '#f44336' }} />; // very negative
+            case 2:
+                return <RemoveCircleIcon style={{ fill: '#fb8c00' }} />; // negative
+            case 3:
+                return <RadioButtonCheckedIcon style={{ fill: '#b0bec5' }} />; // neutral
+            case 4:
+                return <AddCircleIcon style={{ fill: '#8bc34a' }} />; // positive
+            case 5:
+                return <AddCircleIcon style={{ fill: '#00c853' }} />; // very positive
+            default:
+                return null;
+        }
+    }
+    return <RadioButtonUncheckedIcon style={{ fill: '#cfd8dc' }} />;
 }
 
 /**
@@ -33,12 +53,14 @@ export default function SentiScore({ senti }) {
                 ) {
                     return (
                         <Tooltip
-                            title={`SentScore: ${Number(senti).toFixed(2)}`}
+                            title={`SentScore: ${Number(senti).toFixed(2)} (${
+                                EVAL[v - 1]
+                            })`}
                             placement="top-start"
                         >
                             <Step>
                                 <StepLabel
-                                    StepIconComponent={t => Icon(true)}
+                                    StepIconComponent={t => Icon(true, v)}
                                 />
                             </Step>
                         </Tooltip>
