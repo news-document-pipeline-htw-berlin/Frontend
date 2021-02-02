@@ -1,5 +1,8 @@
 import { wording } from '../common/common';
 
+/**
+ * Index equals evaluation from very negative to very positive.
+ */
 export const EVAL = [
     wording.article.eval.vn,
     wording.article.eval.n,

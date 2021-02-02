@@ -20,7 +20,9 @@ const SelectNewspaper = ({ reloadArticles }) => {
     const newspaperMapping = {
         taz: 'Taz',
         sz: 'Süddeutsche Zeitung',
-        heise: 'Heise'
+        heise: 'Heise',
+        golem: 'Golem',
+        postillon: 'Postillon'
     };
 
     // ['sz', 'taz', 'heise']
