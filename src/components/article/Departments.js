@@ -2,7 +2,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { stringify } from 'query-string';
+
 import { Chip } from '@material-ui/core';
+
 import { ARTICLES_PER_PAGE } from '../../constants/CommonConstants';
 
 const Departments = ({ departments }) => {

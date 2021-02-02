@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+
+import {
+    AppBar,
+    Toolbar,
+    IconButton,
+    Typography,
+    Grid,
+    Tooltip
+} from '@material-ui/core';
 import FormatColorTextIcon from '@material-ui/icons/FormatColorText';
 import CloseIcon from '@material-ui/icons/Close';
-import { Grid, Tooltip } from '@material-ui/core';
+
 import { ArticlePropTypes } from '../../constants/NewsPropTypes';
 import { wording } from '../common/common';
 

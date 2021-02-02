@@ -1,6 +1,8 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
+
+import { Typography } from '@material-ui/core';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 

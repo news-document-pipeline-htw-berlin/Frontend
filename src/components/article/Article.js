@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import { stringify } from 'query-string';
 import { useRouteMatch, useHistory, useLocation } from 'react-router-dom';
+import { stringify } from 'query-string';
+
+import Dialog from '@material-ui/core/Dialog';
+
 import EndpointConstants from '../../constants/EndpointConstants';
 import { unauthorized } from '../../state/httpClient';
 import ArticleContent from './ArticleContent';
@@ -49,7 +51,6 @@ const Article = () => {
                 setAsync({ isLoading: false, error });
             }
         }
-
         fetchArticle();
     }, [id, setAsync]);
 
@@ -69,7 +70,6 @@ const Article = () => {
                 article={article}
                 async={async}
                 highlight={highlight}
-                setHighlight={setHighlight}
             />
         </Dialog>
     );

@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ContentLoader from 'react-content-loader';
-import Card from '@material-ui/core/Card';
+
 import {
+    Card,
     CardHeader,
     CardMedia,
     CardActionArea,
     Paper,
     Grid
 } from '@material-ui/core';
+
 import ReadingTime from './ReadingTime';
 import { ArticlePropTypes } from '../../constants/NewsPropTypes';
 import headerPhoto from '../../assets/images/stock.jpg';

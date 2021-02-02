@@ -1,5 +1,4 @@
 /* eslint-disable no-plusplus */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,6 +7,7 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+
 import { EVAL } from './sentiEval';
 
 function Icon(active, val) {

@@ -2,11 +2,12 @@
 /* eslint-disable prefer-spread */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-restricted-syntax */
+/* eslint-disable func-names */
 
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Card, CardContent, Typography, Paper } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 import Score from './Score';
 import { wording } from '../common/common';

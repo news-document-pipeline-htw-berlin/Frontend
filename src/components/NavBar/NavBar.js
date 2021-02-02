@@ -4,12 +4,16 @@ import { NavLink, useHistory } from 'react-router-dom';
 import cookies from 'js-cookies';
 import jwt from 'jwt-decode';
 
-import { Toolbar, Grid, IconButton, Typography } from '@material-ui/core';
+import {
+    Toolbar,
+    Grid,
+    IconButton,
+    Menu,
+    MenuItem,
+    Divider
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Divider from '@material-ui/core/Divider';
 
 import { ARTICLES_PER_PAGE, TOKEN } from '../../constants/CommonConstants';
 import logo from '../../assets/images/logo.png';

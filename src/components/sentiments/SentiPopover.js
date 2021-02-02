@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Typography, Paper } from '@material-ui/core';
+
 import SentiScore from './SentiScore';
 import { wording } from '../common/common';
 import { EVAL } from './sentiEval';

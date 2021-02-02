@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { stringify } from 'query-string';
 import uuidv4 from 'uuid/v4';
 import moment from 'moment';
 import parse from 'html-react-parser';
 import { useHistory } from 'react-router-dom';
+
 import {
     DialogContent,
     Grid,
@@ -17,8 +18,7 @@ import {
     AccordionDetails
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+
 import LoadingAnimation from '../common/LoadingAnimation';
 import ErrorInfo from '../common/ErrorInfo';
 import ReadingTime from './ReadingTime';
@@ -30,7 +30,7 @@ import { wording } from '../common/common';
 import SentiScore from '../sentiments/SentiScore';
 import { updateKeywords } from '../user/UserService';
 
-const ArticleContent = ({ article, async, highlight, setHighlight }) => {
+const ArticleContent = ({ article, async, highlight }) => {
     const history = useHistory();
 
     const { publishedTime, authors } = article;
@@ -44,12 +44,10 @@ const ArticleContent = ({ article, async, highlight, setHighlight }) => {
         let res = text;
         new Set(entities).forEach(e => {
             res = res.replace(
-                e, // `<strong>${e}</strong>`);
-                // '<strong style=\"background-color: rgba(29, 233, 182, 0.3); padding: 4px; border-radius: 5px\">' + e + '</strong>')
+                e,
                 highlight
-                    ? `<span style="background-color: rgba(255, 238, 98, 0.2); padding-top: 1px; padding-bottom: 1px; border-radius: 2px">${e}</span>`
-                    : // : (`<strong>${e}</strong>`))
-                      e
+                    ? `<span style="background-color: rgba(255, 238, 98, 0.2); padding-top: 1px; padding-bottom: 0px; border-radius: 2px">${e}</span>`
+                    : e
             );
         });
         return res;
@@ -223,8 +221,7 @@ const ArticleContent = ({ article, async, highlight, setHighlight }) => {
 ArticleContent.propTypes = {
     article: ArticlePropTypes.isRequired,
     async: AsyncPropTypes.isRequired,
-    highlight: PropTypes.bool.isRequired,
-    setHighlight: PropTypes.func.isRequired
+    highlight: PropTypes.bool.isRequired
 };
 
 export default ArticleContent;

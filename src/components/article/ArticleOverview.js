@@ -1,6 +1,8 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
+
+import { Grid } from '@material-ui/core';
+
 import ArticlePreview from './ArticlePreview';
 import { ArticlePropTypes } from '../../constants/NewsPropTypes';
 import { wording } from '../common/common';

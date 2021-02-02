@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import cookies from 'js-cookies';
 
 import { TOKEN } from '../../constants/CommonConstants';
 
+/**
+ * A public route which can only be accessed by users who are NOT logged in.
+ * @param {*} props
+ */
 function PublicRoute(props) {
     const { children } = props;
 
