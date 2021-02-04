@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getSuggestions, useKeywords } from '../components/user/UserService';
+import {
+    getSuggestions,
+    useSuggestionsActive
+} from '../components/user/UserService';
 import EndpointConstants from '../constants/EndpointConstants';
 import { unauthorized } from '../state/httpClient';
 
@@ -10,18 +13,18 @@ export function useArticles(queryParams, articlesPerPage) {
     const [async, setAsync] = useState({ isLoading: false, error: null });
     const [articles, setArticles] = useState([]);
     const [listMetaInformation, setListMetaInformation] = useState({});
-    const [fetch] = useKeywords();
+    const [suggestionsActive] = useSuggestionsActive();
 
     useEffect(() => {
+        const options = {
+            offset: (currentPage - 1) * articlesPerPage,
+            count: articlesPerPage,
+            department,
+            newspaper,
+            query,
+            author
+        };
         async function fetchArticles() {
-            const options = {
-                offset: (currentPage - 1) * articlesPerPage,
-                count: articlesPerPage,
-                department,
-                newspaper,
-                query,
-                author
-            };
             try {
                 const { method, path } = EndpointConstants.ARTICLE_LIST;
                 setAsync({ isLoading: true, error: null });
@@ -40,10 +43,15 @@ export function useArticles(queryParams, articlesPerPage) {
                 setAsync({ isLoading: false, error: err });
             }
         }
-        if (department || newspaper || query || author || fetch) {
+        if (department || newspaper || query || author || !suggestionsActive) {
             fetchArticles();
         } else {
-            getSuggestions({ setArticles, setAsync, setListMetaInformation });
+            getSuggestions({
+                setArticles,
+                setAsync,
+                setListMetaInformation,
+                options
+            });
         }
     }, [
         currentPage,
@@ -52,7 +60,7 @@ export function useArticles(queryParams, articlesPerPage) {
         query,
         author,
         articlesPerPage,
-        fetch
+        suggestionsActive
     ]);
 
     return {

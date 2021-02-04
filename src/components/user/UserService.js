@@ -21,9 +21,9 @@ export function updateKeywords(keywords) {
 }
 
 /**
- * Returns true if user has no keywords in database.
+ * Returns true if user has suggestions enabled and keywords in database.
  */
-export function useKeywords() {
+export function useSuggestionsActive() {
     const [keywords, setKeywords] = useState(0);
     const get = async () => {
         await httpInstance.get('/users/keywords').then(res => {
@@ -31,9 +31,9 @@ export function useKeywords() {
         });
     };
     useEffect(() => {
-        get();
+        if (getSuggest()) get();
     }, []);
-    return [keywords === 0];
+    return [keywords !== 0];
 }
 /**
  * Retrieves article suggestions for use if functionality is enabled.
@@ -42,11 +42,13 @@ export function useKeywords() {
 export function getSuggestions({
     setArticles,
     setAsync,
-    setListMetaInformation
+    setListMetaInformation,
+    options
 }) {
+    const { offset, count } = options;
     const get = async () => {
         await httpInstance
-            .get('/users/suggestions')
+            .get(`/users/suggestions?offset=${offset}&count=${count}`)
             .then(res => {
                 if (res.data.resultCount > 0) {
                     setArticles(res.data.articles);
