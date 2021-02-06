@@ -128,86 +128,115 @@ export default function UserProfile({ setDarkState }) {
 
     return (
         <div>
-            <Container>
+            {(userData && (
+                <Container>
+                    <Grid
+                        container
+                        direction="column"
+                        justify="space-around"
+                        className={classes.container}
+                    >
+                        <Grid container>
+                            <Paper
+                                variant="outlined"
+                                className={classes.vertical}
+                            >
+                                <Tabs
+                                    orientation="vertical"
+                                    variant="scrollable"
+                                    value={value}
+                                    onChange={handleChange}
+                                >
+                                    <Tab
+                                        label={wording.user.edit}
+                                        {...a11yProps(0)}
+                                    />
+                                    <Tab
+                                        label={wording.user.preferences}
+                                        {...a11yProps(1)}
+                                    />
+                                    <Tab
+                                        label={wording.auth.password}
+                                        {...a11yProps(2)}
+                                    />
+                                    <Tab
+                                        label={wording.user.data}
+                                        {...a11yProps(3)}
+                                    />
+                                </Tabs>
+                            </Paper>
+                            <div
+                                variant="outlined"
+                                className={classes.horizontal}
+                            >
+                                <Tabs
+                                    orientation="horizontal"
+                                    variant="scrollable"
+                                    value={value}
+                                    onChange={handleChange}
+                                >
+                                    <Tab
+                                        label="Edit Profile"
+                                        {...a11yProps(0)}
+                                    />
+                                    <Tab
+                                        label="Preferences"
+                                        {...a11yProps(1)}
+                                    />
+                                    <Tab label="Password" {...a11yProps(2)} />
+                                    <Tab label="Data" {...a11yProps(3)} />
+                                </Tabs>
+                            </div>
+                            <Paper
+                                variant="outlined"
+                                className={classes.content}
+                            >
+                                <TabPanel value={value} index={0}>
+                                    <EditProfile
+                                        userData={userData}
+                                        setUserData={setUserData}
+                                        setFeedback={setFeedback}
+                                    />
+                                </TabPanel>
+                                <TabPanel value={value} index={1}>
+                                    <Preferences
+                                        userData={userData}
+                                        setUserData={setUserData}
+                                        setDarkState={setDarkState}
+                                        setFeedback={setFeedback}
+                                    />
+                                </TabPanel>
+                                <TabPanel value={value} index={2}>
+                                    <Password
+                                        userData={userData}
+                                        setUserData={setUserData}
+                                        setFeedback={setFeedback}
+                                    />
+                                </TabPanel>
+                                <TabPanel value={value} index={3}>
+                                    <Data
+                                        userData={userData}
+                                        setUserData={setUserData}
+                                        setFeedback={setFeedback}
+                                    />
+                                </TabPanel>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                </Container>
+            )) || (
                 <Grid
                     container
                     direction="column"
-                    justify="space-around"
-                    className={classes.container}
+                    minHeight="70vh"
+                    justify="center"
+                    alignItems="center"
                 >
-                    <Grid container>
-                        <Paper variant="outlined" className={classes.vertical}>
-                            <Tabs
-                                orientation="vertical"
-                                variant="scrollable"
-                                value={value}
-                                onChange={handleChange}
-                            >
-                                <Tab
-                                    label={wording.user.edit}
-                                    {...a11yProps(0)}
-                                />
-                                <Tab
-                                    label={wording.user.preferences}
-                                    {...a11yProps(1)}
-                                />
-                                <Tab
-                                    label={wording.auth.password}
-                                    {...a11yProps(2)}
-                                />
-                                <Tab
-                                    label={wording.user.data}
-                                    {...a11yProps(3)}
-                                />
-                            </Tabs>
-                        </Paper>
-                        <div variant="outlined" className={classes.horizontal}>
-                            <Tabs
-                                orientation="horizontal"
-                                variant="scrollable"
-                                value={value}
-                                onChange={handleChange}
-                            >
-                                <Tab label="Edit Profile" {...a11yProps(0)} />
-                                <Tab label="Preferences" {...a11yProps(1)} />
-                                <Tab label="Password" {...a11yProps(2)} />
-                                <Tab label="Data" {...a11yProps(3)} />
-                            </Tabs>
-                        </div>
-                        <Paper variant="outlined" className={classes.content}>
-                            <TabPanel value={value} index={0}>
-                                <EditProfile
-                                    userData={userData}
-                                    setUserData={setUserData}
-                                    setFeedback={setFeedback}
-                                />
-                            </TabPanel>
-                            <TabPanel value={value} index={1}>
-                                <Preferences
-                                    userData={userData}
-                                    setUserData={setUserData}
-                                    setDarkState={setDarkState}
-                                    setFeedback={setFeedback}
-                                />
-                            </TabPanel>
-                            <TabPanel value={value} index={2}>
-                                <Password
-                                    userData={userData}
-                                    setUserData={setUserData}
-                                    setFeedback={setFeedback}
-                                />
-                            </TabPanel>
-                            <TabPanel value={value} index={3}>
-                                <Data
-                                    userData={userData}
-                                    setUserData={setUserData}
-                                    setFeedback={setFeedback}
-                                />
-                            </TabPanel>
-                        </Paper>
+                    <Grid item>
+                        <Typography>{wording.error}</Typography>
                     </Grid>
                 </Grid>
-            </Container>
+            )}
             {feedback}
         </div>
     );
