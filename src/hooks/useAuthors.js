@@ -18,7 +18,7 @@ function useAuthor(id) {
                 }
             })
             .then(response => {
-                setAuthor(stringToJSON(response.data));
+                setAuthor(response.data);
             })
             .catch(error => {
                 setAuthor(null);

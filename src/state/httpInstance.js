@@ -13,8 +13,8 @@ httpInstance.interceptors.request.use(
     config => {
         const { origin } = new URL(`${LOCAL}`);
         const allowedOrigins = [`${LOCAL}`];
-        const token = cookies.getItem(TOKEN);
-        if (allowedOrigins.includes(origin)) {
+        if (allowedOrigins.includes(origin) && cookies.hasItem(TOKEN)) {
+            const token = cookies.getItem(TOKEN);
             config.headers.authorization = `${token}`;
         }
         return config;

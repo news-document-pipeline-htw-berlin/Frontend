@@ -14,7 +14,7 @@ function useUserData(userId) {
         httpInstance
             .get('/users/account')
             .then(response => {
-                setUserData(stringToJSON(response.data));
+                setUserData(response.data);
             })
             .catch(error => {
                 setUserData(null);
