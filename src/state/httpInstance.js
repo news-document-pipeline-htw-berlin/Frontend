@@ -4,6 +4,10 @@ import cookies from 'js-cookies';
 import { PROXY, LOCAL } from './config';
 import { TOKEN } from '../constants/CommonConstants';
 
+/**
+ * HTTP instance for axios.
+ * Adds allowed origins and token (if present) to request headers.
+ */
 const httpInstance = axios.create({
     baseURL: PROXY,
     withCredentials: true

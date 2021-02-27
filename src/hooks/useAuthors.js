@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 import { httpInstance } from '../state/httpInstance';
-import stringToJSON from '../components/common/stringToJSON';
 
 /**
  * Retrieves author data by id.

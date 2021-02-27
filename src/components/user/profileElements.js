@@ -203,7 +203,7 @@ CheckboxRow.propTypes = {
  * @param {*} props
  */
 export const ButtonRow = props => {
-    const { text, color, label, variant, handleSubmit } = props;
+    const { text, color, label, variant } = props;
     return (
         <Row
             left={
@@ -231,8 +231,7 @@ ButtonRow.propTypes = {
     text: PropTypes.string,
     color: PropTypes.string,
     label: PropTypes.string,
-    variant: PropTypes.string,
-    handleSubmit: PropTypes.func.isRequired
+    variant: PropTypes.string
 };
 
 /**

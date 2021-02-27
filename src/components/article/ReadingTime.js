@@ -10,7 +10,8 @@ const ReadingTime = ({ readingTime }) => {
     if (!readingTime) {
         return null;
     }
-    const t = Math.round(readingTime / 60);
+    let t = readingTime / 60;
+    t = t < 1 ? Number(t).toFixed(2) : Number(t).toFixed(0);
     return (
         <React.Fragment>
             <Typography paragraph>
